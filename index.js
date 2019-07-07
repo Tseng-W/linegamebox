@@ -95,7 +95,7 @@ bot.on('message', function(event) {
                     var msg = event.message.text;
                     if (msg.indexOf('擲骰') != -1) {
                     	console.log('收到擲骰請求');
-                        event.reply(getRandomInt(6))
+                        event.reply("骰子結果："+getRandomInt(6))
                             .then(function(data) {
                                 console.log('擲骰成功', data);
                             });
@@ -167,5 +167,6 @@ app.listen(process.env.PORT || 80, function() {
 });
 
 function getRandomInt(max) {
+	console.log();
     return Math.floor(Math.random() * Math.floor(max));
 }
