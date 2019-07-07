@@ -8,29 +8,12 @@ const bot = new LineBot({
   // sendMethod: 'reply', // Default: 'push'
 });
 
-const handler = new LineHandler()
-  .onText(/yo/i, async context => {
-    await context.sendText('Hi there!');
-  })
-  .onEvent(async context => {
-    await context.sendText("I don't know what you say.");
-    await context.reply([
-    	Line.createText('Hello'),
-    	Line.createImage({
-    originalContentUrl: 'https://example.com/original.jpg',
-    previewImageUrl: 'https://example.com/preview.jpg',
-  }),
-  Line.createText('End'),
-    	]);
-  })
-  .onError(async context => {
-    await context.sendText('Something wrong happened.');
-  });
-
-bot.onEvent(handler);	
+bot.onEvent(async context => {
+  await context.sendText('Hello World');
+});
 
 const server = createServer(bot);
 
-server.listen((process.env.PORT || 8080), () => {
+server.listen((process.env.PORT || 5000), () => {
   console.log('server is running on 5000 port...');
 });
