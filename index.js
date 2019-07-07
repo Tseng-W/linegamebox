@@ -94,17 +94,15 @@ bot.on('message', function(event) {
                 default:
                     var msg = event.message.text;
                     if (msg.indexOf('擲骰') != -1) {
-                    	console.log('收到擲骰請求');
-                        event.reply("骰子結果："+getRandomInt(6))
+                        console.log('收到擲骰請求');
+                        event.reply("骰子結果：" + getRandomInt(6))
                             .then(function(data) {
                                 console.log('擲骰成功', data);
-                            });
+                            })
+                            .catch(function(error) {
+                                console.log('Error', error);
+                            });;
                     }
-                    event.reply(event.message.text).then(function(data) {
-                        console.log('Success', data);
-                    }).catch(function(error) {
-                        console.log('Error', error);
-                    });
                     break;
             }
             break;
@@ -167,6 +165,5 @@ app.listen(process.env.PORT || 80, function() {
 });
 
 function getRandomInt(max) {
-	console.log();
     return Math.floor(Math.random() * Math.floor(max));
 }
