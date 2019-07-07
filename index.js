@@ -166,5 +166,5 @@ app.listen(process.env.PORT || 80, function() {
 });
 
 function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(Max));
+    return Math.floor(Math.random() * Math.floor(max));
 }
