@@ -1,13 +1,11 @@
 const { LineBot } = require('bottender');
 const { createServer } = require('bottender/express');
 
-const config = require('./bottender.config.js').line;
-
 const bot = new LineBot({
   accessToken: process.env.CHANNEL_ACCESS_TOKEN,
   channelID: process.env.CHANNEL_ID,
   channelSecret: process.env.CHANNEL_SECRET,
-  sendMethod: 'reply', // Default: 'push'
+  // sendMethod: 'reply', // Default: 'push'
 });
 
 bot.onEvent(async context => {
