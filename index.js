@@ -22,14 +22,24 @@ bot.on('message', function (event) {
     case 'text':
       switch (event.message.text) {
         case 'Me':
-          event.source.profile().then(function (profile) {
+          event.source.profile()
+          .then(function (profile) {	
             return event.reply('Hello ' + profile.displayName + ' ' + profile.userId);
+          })
+          .catch(function(error){
+          	console.log(error);
+          	return event.reply('error');
           });
           break;
         case 'Member':
-          event.source.member().then(function (member) {
+          event.source.member()
+          .then(function (member) {
             return event.reply(JSON.stringify(member));
-          });
+          })
+          .catch(function(error){
+          	console.log(error);
+          	return event.reply('error');
+          });;
           break;
         case 'Picture':
           event.reply({
