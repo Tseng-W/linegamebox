@@ -115,9 +115,7 @@ bot.on('message', function(event) {
                 return event.reply(err.toString());
             });
             break;
-        case 'video'
-        key:
-            "value",
+        case 'video':
             event.reply('Nice video!');
             break;
         case 'audio':
