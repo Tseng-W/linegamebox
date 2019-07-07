@@ -1,4 +1,4 @@
-const { LineBot, LineHandler } = require('bottender');
+const { LineBot, LineHandler, Line } = require('bottender');
 const { createServer } = require('bottender/express');
 
 const bot = new LineBot({
@@ -14,6 +14,14 @@ const handler = new LineHandler()
   })
   .onEvent(async context => {
     await context.sendText("I don't know what you say.");
+    await context.reply([
+    	Line.createText('Hello'),
+    	Line.createImage({
+    originalContentUrl: 'https://example.com/original.jpg',
+    previewImageUrl: 'https://example.com/preview.jpg',
+  }),
+  Line.createText('End'),
+    	]);
   })
   .onError(async context => {
     await context.sendText('Something wrong happened.');
