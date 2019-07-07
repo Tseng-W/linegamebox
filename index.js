@@ -31,16 +31,16 @@ bot.on('message', function(event) {
                             return event.reply('error');
                         });
                     break;
-                    // case 'Member':
-                    //   event.source.member()
-                    //   .then(function (member) {
-                    //     return event.reply(JSON.stringify(member));
-                    //   })
-                    //   .catch(function(error){
-                    //   	console.log(error);
-                    //   	return event.reply('error');
-                    //   });;
-                    //   break;
+                    case 'Member':
+                      event.source.member()
+                      .then(function (member) {
+                        return event.reply(JSON.stringify(member));
+                      })
+                      .catch(function(error){
+                      	console.log(error);
+                      	return event.reply('error');
+                      });;
+                      break;
                 case 'Picture':
                     event.reply({
                         type: 'image',
@@ -97,7 +97,7 @@ bot.on('message', function(event) {
                         console.log('收到擲骰請求');
                         event.reply("骰子結果：" + getRandomInt(6))
                             .then(function(data) {
-                                console.log('擲骰成功', data);
+                                console.log('擲骰成功', data);	
                             })
                             .catch(function(error) {
                                 console.log('Error', error);
