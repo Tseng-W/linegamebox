@@ -19,9 +19,7 @@ app.post('/linewebhook', linebotParser);
 
 bot.on('message', function(event) {
     switch (event.message.type) {
-        case 'text'
-        key:
-            "value",
+        case 'text':
             switch (event.message.text) {
                 case 'Me':
                     event.source.profile()
@@ -96,10 +94,10 @@ bot.on('message', function(event) {
                 default:
                     var msg = event.message.text;
                     if (msg.indexOf('擲骰') != -1) {
-                    	event.reply(getRandomInt(6))
-                    	.then(function(data){
-                    		console.log('擲骰成功', data);
-                    	});
+                        event.reply(getRandomInt(6))
+                            .then(function(data) {
+                                console.log('擲骰成功', data);
+                            });
                     }
                     event.reply(event.message.text).then(function(data) {
                         console.log('Success', data);
@@ -169,6 +167,6 @@ app.listen(process.env.PORT || 80, function() {
     console.log('LineBot is running.');
 });
 
-function getRandomInt(max){
-	return Math.floor(Math.random() * Math.floor(Max));
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(Max));
 }
