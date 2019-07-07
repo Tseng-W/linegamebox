@@ -1,4 +1,4 @@
-const { LineBot } = require('bottender');
+const { LineBot, LineHandler } = require('bottender');
 const { createServer } = require('bottender/express');
 
 const bot = new LineBot({
