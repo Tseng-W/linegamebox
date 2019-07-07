@@ -1,0 +1,16 @@
+{
+  "name": "linegamebox",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "bottender": "0.15.17",
+    "nodemon": "1.19.1"
+  },
+  "engines": {
+    "node": ">= 7.6.0"
+  }
+}
