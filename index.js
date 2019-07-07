@@ -31,6 +31,6 @@ bot.onEvent(handler);
 
 const server = createServer(bot);
 
-server.listen((process.env.PORT || 5000), () => {
+server.listen((process.env.PORT || 8080), () => {
   console.log('server is running on 5000 port...');
 });
