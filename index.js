@@ -99,7 +99,7 @@ bot.on('message', function(event) {
                         var diceRequest = diceRule.exec(msg) + '';
                         console.log("diceRequest = " + diceRequest);
                         console.log("diceRequest.length = " + diceRequest.length);
-                        if (diceRequest.length > 0) {
+                        if (diceRequest != 'null') {
                             var diceParamater = diceRequest.split('d');
                             console.log("diceParamater[0] = " + diceParamater[0]);
                             console.log("diceParamater[1] = " + diceParamater[1]);
@@ -189,14 +189,16 @@ app.listen(process.env.PORT || 80, function() {
 });
 
 function getRandomInt(max) {
-    return Math.ceil(Math.random() * Math.ceil(max));
+    return Math.ceil(Math.random() * Math.floor(max));
 }
 
 function getRandomInt(max, amount) {
     var result = [''];
     for (var i = 0; i < amount; i++) {
-        result.push(getRandomInt(max));
-        console.log('tempResult : '+result);
+        var value = getRandomInt(max);
+        result.push(value);
+        console.log('value: ' + value);
+        console.log('tempResult : ' + result);
     }
     return result;
 }
