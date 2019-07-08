@@ -31,32 +31,32 @@ bot.on('message', function(event) {
                             return event.reply('error');
                         });
                     break;
-                    case 'Member':
-                      event.source.member()
-                      .then(function (member) {
-                        return event.reply(JSON.stringify(member));
-                      })
-                      .catch(function(error){
-                      	console.log(error);
-                      	return event.reply('error');
-                      });;
-                      break;
-                case 'Picture':
-                    event.reply({
-                        type: 'image',
-                        originalContentUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png',
-                        previewImageUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png'
-                    });
+                case 'Member':
+                    event.source.member()
+                        .then(function(member) {
+                            return event.reply(JSON.stringify(member));
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                            return event.reply('error');
+                        });;
                     break;
-                case 'Location':
-                    event.reply({
-                        type: 'location',
-                        title: 'LINE Plus Corporation',
-                        address: '1 Empire tower, Sathorn, Bangkok 10120, Thailand',
-                        latitude: 13.7202068,
-                        longitude: 100.5298698
-                    });
-                    break;
+                    // case 'Picture':
+                    //     event.reply({
+                    //         type: 'image',
+                    //         originalContentUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png',
+                    //         previewImageUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png'
+                    //     });
+                    //     break;
+                    // case 'Location':
+                    //     event.reply({
+                    //         type: 'location',
+                    //         title: 'LINE Plus Corporation',
+                    //         address: '1 Empire tower, Sathorn, Bangkok 10120, Thailand',
+                    //         latitude: 13.7202068,
+                    //         longitude: 100.5298698
+                    //     });
+                    //     break;
                 case 'Push':
                     bot.push('U17448c796a01b715d293c34810985a4c', ['Hey!', 'สวัสดี ' + String.fromCharCode(0xD83D, 0xDE01)]);
                     break;
@@ -69,70 +69,93 @@ bot.on('message', function(event) {
                 case 'Broadcast':
                     bot.broadcast('Broadcast!');
                     break;
-                case 'Confirm':
-                    event.reply({
-                        type: 'template',
-                        altText: 'this is a confirm template',
-                        template: {
-                            type: 'confirm',
-                            text: 'Are you sure?',
-                            actions: [{
-                                type: 'message',
-                                label: 'Yes',
-                                text: 'yes'
-                            }, {
-                                type: 'message',
-                                label: 'No',
-                                text: 'no'
-                            }]
-                        }
-                    });
-                    break;
-                case 'Multiple':
-                    return event.reply(['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']);
-                    break;
+                    // case 'Confirm':
+                    //     event.reply({
+                    //         type: 'template',
+                    //         altText: 'this is a confirm template',
+                    //         template: {
+                    //             type: 'confirm',
+                    //             text: 'Are you sure?',
+                    //             actions: [{
+                    //                 type: 'message',
+                    //                 label: 'Yes',
+                    //                 text: 'yes'
+                    //             }, {
+                    //                 type: 'message',
+                    //                 label: 'No',
+                    //                 text: 'no'
+                    //             }]
+                    //         }
+                    //     });
+                    //     break;
+                    // case 'Multiple'://     return event.reply(['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']);
+                    //     break;
                 default:
                     var msg = event.message.text;
                     if (msg.indexOf('擲骰') != -1) {
                         console.log('收到擲骰請求');
-                        event.reply("骰子結果：" + getRandomInt(6))
-                            .then(function(data) {
-                                console.log('擲骰成功', data);	
-                            })
-                            .catch(function(error) {
-                                console.log('Error', error);
-                            });;
+                        var diceRule = /\d*[d|D]\d*/;
+                        var diceRequest = diceRule.exec(msg);
+                        console.log("diceRequest = " + diceRequest);
+                        if (diceRequest.indexOf('d') != -1) {
+                            var diceParamater = diceRequest.split('d');
+                            console.log("diceParamater[0] = " + diceParamater[0]);
+                            console.log("diceParamater[1] = " + diceParamater[1]);
+                            if (diceParamater[0] != "" && diceParamater[1] != "") {
+                                let total = 0;
+                                for (var i = 0; i < diceParamater[1]; i++) {
+                                    let dice = getRandomInt(diceParamater[0]);
+                                    event.reply(["擲出" + diceParamater[0] + "面骰！"],
+                                            ["擲骰結果：" + dice + "點！"])
+                                        .then(function(data) {
+                                            console.log('擲骰成功', data);
+                                        })
+                                        .catch(function(error) {
+                                            console.log('Error', error);
+                                        });;
+                                }
+                                event.reply(["總點數為："+total+"點！"]);
+                            }
+                        } else {
+                            event.reply(["擲出1個6面骰"], ["擲骰結果：" + getRandomInt(6)])
+                                .then(function(data) {
+                                    console.log('擲骰成功', data);
+                                })
+                                .catch(function(error) {
+                                    console.log('Error', error);
+                                });;
+                        }
                     }
                     break;
             }
             break;
-        case 'image':
-            event.message.content().then(function(data) {
-                const s = data.toString('hex').substring(0, 32);
-                return event.reply('Nice picture! ' + s);
-            }).catch(function(err) {
-                return event.reply(err.toString());
-            });
-            break;
-        case 'video':
-            event.reply('Nice video!');
-            break;
-        case 'audio':
-            event.reply('Nice audio!');
-            break;
-        case 'location':
-            event.reply(['That\'s a good location!', 'Lat:' + event.message.latitude, 'Long:' + event.message.longitude]);
-            break;
-        case 'sticker':
-            event.reply({
-                type: 'sticker',
-                packageId: 1,
-                stickerId: 1
-            });
-            break;
-        default:
-            event.reply('Unknow message: ' + JSON.stringify(event));
-            break;
+            // case 'image':
+            //     event.message.content().then(function(data) {
+            //         const s = data.toString('hex').substring(0, 32);
+            //         return event.reply('Nice picture! ' + s);
+            //     }).catch(function(err) {
+            //         return event.reply(err.toString());
+            //     });
+            //     break;
+            // case 'video':
+            //     event.reply('Nice video!');
+            //     break;
+            // case 'audio':
+            //     event.reply('Nice audio!');
+            //     break;
+            // case 'location':
+            //     event.reply(['That\'s a good location!', 'Lat:' + event.message.latitude, 'Long:' + event.message.longitude]);
+            //     break;
+            // case 'sticker':
+            //     event.reply({
+            //         type: 'sticker',
+            //         packageId: 1,
+            //         stickerId: 1
+            //     });
+            //     break;
+            // default:
+            //     event.reply('Unknow message: ' + JSON.stringify(event));
+            //     break;
     }
 });
 
@@ -165,5 +188,5 @@ app.listen(process.env.PORT || 80, function() {
 });
 
 function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
+    return Math.ceil(Math.random() * Math.ceil(max));
 }
