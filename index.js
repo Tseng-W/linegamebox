@@ -197,6 +197,7 @@ function getRandomInt(max, amount) {
     for (var i = 0; i < amount; i++) {
         var value = getRandomInt(max);
         result.push(value);
+        console.log('max: '+max);
         console.log('value: ' + value);
         console.log('tempResult : ' + result);
     }
