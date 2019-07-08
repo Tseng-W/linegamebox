@@ -97,34 +97,35 @@ bot.on('message', function(event) {
                         var diceRule = /\d*[d|D]\d*/;
                         var diceRequest = diceRule.exec(msg);
                         console.log("diceRequest = " + diceRequest);
-                        if (diceRequest.indexOf('d') != -1) {
-                            var diceParamater = diceRequest.split('d');
-                            console.log("diceParamater[0] = " + diceParamater[0]);
-                            console.log("diceParamater[1] = " + diceParamater[1]);
-                            if (diceParamater[0] != "" && diceParamater[1] != "") {
-                                let total = 0;
-                                for (var i = 0; i < diceParamater[1]; i++) {
-                                    let dice = getRandomInt(diceParamater[0]);
-                                    event.reply(["擲出" + diceParamater[0] + "面骰！"],
-                                            ["擲骰結果：" + dice + "點！"])
-                                        .then(function(data) {
-                                            console.log('擲骰成功', data);
-                                        })
-                                        .catch(function(error) {
-                                            console.log('Error', error);
-                                        });;
+                        if (diceRequest != null)
+                            if (diceRequest.indexOf('d') != -1) {
+                                var diceParamater = diceRequest.split('d');
+                                console.log("diceParamater[0] = " + diceParamater[0]);
+                                console.log("diceParamater[1] = " + diceParamater[1]);
+                                if (diceParamater[0] != "" && diceParamater[1] != "") {
+                                    let total = 0;
+                                    for (var i = 0; i < diceParamater[1]; i++) {
+                                        let dice = getRandomInt(diceParamater[0]);
+                                        event.reply(["擲出" + diceParamater[0] + "面骰！"],
+                                                ["擲骰結果：" + dice + "點！"])
+                                            .then(function(data) {
+                                                console.log('擲骰成功', data);
+                                            })
+                                            .catch(function(error) {
+                                                console.log('Error', error);
+                                            });;
+                                    }
+                                    event.reply(["總點數為：" + total + "點！"]);
                                 }
-                                event.reply(["總點數為："+total+"點！"]);
+                            } else {
+                                event.reply(["擲出1個6面骰"], ["擲骰結果：" + getRandomInt(6)])
+                                    .then(function(data) {
+                                        console.log('擲骰成功', data);
+                                    })
+                                    .catch(function(error) {
+                                        console.log('Error', error);
+                                    });;
                             }
-                        } else {
-                            event.reply(["擲出1個6面骰"], ["擲骰結果：" + getRandomInt(6)])
-                                .then(function(data) {
-                                    console.log('擲骰成功', data);
-                                })
-                                .catch(function(error) {
-                                    console.log('Error', error);
-                                });;
-                        }
                     }
                     break;
             }
