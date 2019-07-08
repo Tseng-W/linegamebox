@@ -98,6 +98,7 @@ bot.on('message', function(event) {
                         var diceRule = /\d*[d|D]\d*/;
                         var diceRequest = diceRule.exec(msg) + '';
                         console.log("diceRequest = " + diceRequest);
+                        console.log("diceRequest.length = " + diceRequest.length);
                         if (diceRequest.length > 0) {
                             var diceParamater = diceRequest.split('d');
                             console.log("diceParamater[0] = " + diceParamater[0]);
@@ -192,9 +193,10 @@ function getRandomInt(max) {
 }
 
 function getRandomInt(max, amount) {
-    var result = [];
+    var result = [''];
     for (var i = 0; i < amount; i++) {
         result.push(getRandomInt(max));
+        console.log('tempResult : '+result);
     }
     return result;
 }
