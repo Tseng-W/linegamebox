@@ -189,11 +189,10 @@ app.listen(process.env.PORT || 80, function() {
 });
 
 function getRandomInt(max) {
-	console.log('Random:'+Math.floor(Math.random() * max) + 1);
     return Math.floor(Math.random() * max) + 1;
 }
 
-function getRandomInt(max, amount) {
+function getRandomInts(max, amount) {
     var result = [''];
     for (var i = 0; i < amount; i++) {
         var value = getRandomInt(max);
