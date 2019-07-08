@@ -98,14 +98,14 @@ bot.on('message', function(event) {
                         var diceRule = /\d*[d|D]\d*/;
                         var diceRequest = diceRule.exec(msg) + '';
                         console.log("diceRequest = " + diceRequest);
-                        if (diceRequest) {
+                        if (diceRequest.length > 0) {
                             var diceParamater = diceRequest.split('d');
                             console.log("diceParamater[0] = " + diceParamater[0]);
                             console.log("diceParamater[1] = " + diceParamater[1]);
                             if (diceParamater[0] != "" && diceParamater[1] != "") {
                                 let diceResult = getRandomInt(diceParamater[0], diceParamater[1]);
-                                console.log("diceResult="+diceResult);
-                                console.log("加總="+diceResult.reduce((a, b) => a + b, 0));
+                                console.log("diceResult=" + diceResult);
+                                console.log("加總=" + diceResult.reduce((a, b) => a + b, 0));
                                 event.reply(['擲出' + diceParamater[1] + '個' + diceParamater[0] + '面骰！',
                                         '擲骰結果：' + diceResult + '點！',
                                         '總數為：' + diceResult.reduce((a, b) => a + b, 0) + '點！'
