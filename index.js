@@ -88,8 +88,9 @@ bot.on('message', function(event) {
                     //         }
                     //     });
                     //     break;
-                    // case 'Multiple'://     return event.reply(['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']);
-                    //     break;
+                case 'Multiple':
+                    return event.reply(['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']);
+                    break;
                 default:
                     var msg = event.message.text;
                     if (msg.indexOf('擲骰') != -1) {
@@ -105,8 +106,8 @@ bot.on('message', function(event) {
                                 let total = 0;
                                 for (var i = 0; i < diceParamater[1]; i++) {
                                     let dice = getRandomInt(diceParamater[0]);
-                                    event.reply(["擲出" + diceParamater[0] + "面骰！"],
-                                            ["擲骰結果：" + dice + "點！"])
+                                    event.reply(["擲出" + diceParamater[0] + "面骰！",
+                                            "擲骰結果：" + dice + "點！"])
                                         .then(function(data) {
                                             console.log('擲骰成功', data);
                                         })
