@@ -104,7 +104,7 @@ bot.on('message', function(event) {
                             console.log("diceParamater[0] = " + diceParamater[0]);
                             console.log("diceParamater[1] = " + diceParamater[1]);
                             if (diceParamater[0] != "" && diceParamater[1] != "") {
-                                let diceResult = getRandomInt(diceParamater[0], diceParamater[1]);
+                                var diceResult = getRandomInts(diceParamater[0], diceParamater[1]);
                                 console.log("diceResult=" + diceResult);
                                 event.reply(['擲出' + diceParamater[1] + '個' + diceParamater[0] + '面骰！',
                                         '擲骰結果：' + diceResult + '點！',
