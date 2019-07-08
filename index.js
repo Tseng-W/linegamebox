@@ -193,7 +193,7 @@ function getRandomInt(max) {
 }
 
 function getRandomInts(max, amount) {
-    var result = [''];
+    var result = [];
     for (var i = 0; i < amount; i++) {
         var value = getRandomInt(max);
         result.push(value);
