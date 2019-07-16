@@ -1,5 +1,13 @@
 const linebot = require('linebot');
 const express = require('express');
+const {Client} = require('pg');
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
+
+client.connect();
 
 const bot = linebot({
     channelId: process.env.CHANNEL_ID,
@@ -76,7 +84,7 @@ bot.on('message', function(event) {
                     //         template: {
                     //             type: 'confirm',
                     //             text: 'Are you sure?',
-                    //             actions: [{
+                    //             actions: 	[{
                     //                 type: 'message',
                     //                 label: 'Yes',
                     //                 text: 'yes'
