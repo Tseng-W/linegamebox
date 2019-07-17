@@ -103,8 +103,8 @@ bot.on('message', function(event) {
                     client.query('INSERT INTO User(name, str, userid) VALUES ("TEST","10","id")',
                         (err)=>{if(err) throw err; client.end();});
                     break;
-                    case 'CreateDB':
-                    client.query('CREATE DATABASE testdb',
+                    case 'CreateTable':
+                    client.query('CREATE TABLE test_table(NAME INT PRIMARY KEY NOT NULL, DEPT CHAR(50) NOT NULL, EXP_ID INT NOT NULL);',
                         (err)=>{if(err) throw err; client.end();});
                     break;
                 default:
