@@ -2,12 +2,28 @@ const linebot = require('linebot');
 const express = require('express');
 const {Client} = require('pg');
 
+// const config = {
+//     host: 'ec2-174-129-227-205.compute-1.amazonaws.com',
+//     // Do not hard code your username and password.
+//     // Consider using Node environment variables.
+//     user: 'yfqwtlcqklltsf',     
+//     password: '123fcb85f17cc4233729ea77e0fa69e5a8048e5269a6c3af49e576867c59be5d',
+//     database: 'dai9s7ljceh6ei',
+//     port: 5432,
+//     ssl: true
+// };
+
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: true,
 });
 
-client.connect();
+client.connect(err => {
+    if (err) throw err;
+    else {
+        queryDatabase();
+    }
+});
 
 const bot = linebot({
     channelId: process.env.CHANNEL_ID,
@@ -99,13 +115,25 @@ bot.on('message', function(event) {
                 case 'Multiple':
                     return event.reply(['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']);
                     break;
-                    case 'Insert':
-                    client.query('INSERT INTO User(name, str, userid) VALUES ("TEST","10","id")',
-                        (err)=>{if(err) throw err; client.end();});
-                    break;
-                    case 'CreateTable':
-                    client.query('CREATE TABLE test_table(NAME INT PRIMARY KEY NOT NULL, DEPT CHAR(50) NOT NULL, EXP_ID INT NOT NULL);',
-                        (err)=>{if(err) throw err; client.end();});
+                case 'DB':
+                    const query = `
+                    DROP TABLE IF EXISTS inventory;
+                    CREATE TABLE inventory (id serial PRIMARY KEY, name VARCHAR(50), quantity INTEGER);
+                    INSERT INTO inventory (name, quantity) VALUES ('banana', 150);
+                    INSERT INTO inventory (name, quantity) VALUES ('orange', 154);
+                    INSERT INTO inventory (name, quantity) VALUES ('apple', 100);
+                    `;
+                    client
+                    .query(query)
+                    .then(() => {
+                        console.log('Table created successfully!');
+                        client.end(console.log('Closed client connection'));
+                    })
+                    .catch(err => console.log(err))
+                    .then(() => {
+                        console.log('Finished execution, exiting now');
+                        process.exit();
+                    });
                     break;
                 default:
                     var msg = event.message.text;
