@@ -99,6 +99,10 @@ bot.on('message', function(event) {
                 case 'Multiple':
                     return event.reply(['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']);
                     break;
+                    case 'Insert':
+                    client.query('INSERT INTO USER(name, str, userid) VALUES ("TEST","10","id") ',
+                        (err) => if(err) throw err);
+                    break;
                 default:
                     var msg = event.message.text;
                     if (msg.indexOf('擲骰') != -1) {
