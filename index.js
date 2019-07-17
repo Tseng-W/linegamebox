@@ -20,9 +20,9 @@ const client = new Client({
 
 client.connect(err => {
     if (err) throw err;
-    else {
-        queryDatabase();
-    }
+    // else {
+    //     queryDatabase();
+    // }
 });
 
 const bot = linebot({
