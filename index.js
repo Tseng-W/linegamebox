@@ -103,6 +103,10 @@ bot.on('message', function(event) {
                     client.query('INSERT INTO User(name, str, userid) VALUES ("TEST","10","id")',
                         (err)=>{if(err) throw err; client.end();});
                     break;
+                    case 'CreateDB':
+                    client.query('CREATE DATABASE testdb',
+                        (err)=>{if(err) throw err; client.end();});
+                    break;
                 default:
                     var msg = event.message.text;
                     if (msg.indexOf('擲骰') != -1) {
