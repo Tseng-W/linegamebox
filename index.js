@@ -239,12 +239,12 @@ function getUserDataFromDatabase(id) {
     SELECT * FROM public."USER_DATA"
     WHERE id = '` + id + `'
     `
+    console.log('query = '+query);
     client
         .query(query, function(err, result,fields){
             console.log("result = " + result);
             console.log("field = "+fields);
             if(err) throw err;
-
             return result;
         });
 }
