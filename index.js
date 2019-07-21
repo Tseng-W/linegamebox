@@ -59,7 +59,7 @@ bot.on('message', function(event) {
                     event.source.profile()
                     .then(function(profile){
                         const query = `
-                        INSERT INTO public."USER_ID"(id,name,str)
+                        INSERT INTO public."USER_DATA"(id,name,str)
                         VALUES ('`+profile.userId+`','`+profile.userId+`',10)
                         `
                         client
