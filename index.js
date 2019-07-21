@@ -60,7 +60,7 @@ bot.on('message', function(event) {
                     .then(function(profile){
                         const query = `
                         INSERT INTO public."USER_ID"(id,name,str)
-                        VALUES ('`+profile.userId+`','`+profile.userId+`',`+getRandomInt(10)`)
+                        VALUES ('`+profile.userId+`','`+profile.userId+`',10)
                         `
                         client
                         .query(query)
