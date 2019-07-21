@@ -54,8 +54,8 @@ bot.on('message', function(event) {
                             //嘗試取得用戶資料
                             id = profile.userId;
                             name = profile.displayName;
+                            console.log("getUserDataFromDatabase(id) = "+getUserDataFromDatabase(id));
                             return event.reply(getUserDataFromDatabase(id));
-                            console.log("Output result at event : " + getUserDataFromDatabase(id));
                         })
                         .catch(function(error) {
                             console.log(error);
