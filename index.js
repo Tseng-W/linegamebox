@@ -239,12 +239,12 @@ function getUserDataFromDatabase(id) {
             for(var i in result)
                 console.log("result["+i+"] = " + result[i]);
             if(result.rowCount==0)
-                return null;
+                return 2000;
             if(err) throw err;
             console.log("result.rows = "+result.rows);
             for(var i in result.rows[0])
                 console.log("result.rows[0]["+i+"] = "+result.rows[0].i);
-            return result.rows[0];
+            return 10;
         });
 }
 
