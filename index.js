@@ -54,7 +54,7 @@ bot.on('message', function(event) {
                         })
                         .then(function(result) {
                             console.log("******RESULT******* = "+result);
-                            if(result.id === undefined){
+                            if(result === undefined){
                                 var str = getRandomInt(10);
                                 var hp = getRandomInt(50);
                                 var spd = getRandomInt(10);
