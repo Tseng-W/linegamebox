@@ -237,7 +237,7 @@ app.listen(process.env.PORT || 80, function() {
 function getUserDataFromDatabase(id) {
     const query = `
     SELECT * FROM public."USER_DATA"
-    WHERE id = ` + id + `
+    WHERE id = '` + id + `'
     `
     client
         .query(query)
