@@ -1,6 +1,6 @@
 const linebot = require('linebot');
 const express = require('express');
-const {Client} = require('pg');
+const { Client } = require('pg');
 
 // const config = {
 //     host: 'ec2-174-129-227-205.compute-1.amazonaws.com',
@@ -14,8 +14,8 @@ const {Client} = require('pg');
 // };
 
 const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
 });
 
 client.connect(err => {
@@ -49,20 +49,16 @@ bot.on('message', function(event) {
                     event.source.profile()
                         .then(function(profile) {
                             //嘗試取得用戶資料
-                            const query = `
-                            SELECT * FROM public."USER_DATA"
-                            WHERE id = `+profile.userId`
-                            `
-                            client.query(query)
-                            .then((result)=>{
-                                if(result){
-                                    result = getUserDataFromDatabase(profile.userId);
-                                    return event.reply('Hello ' + result);
-                                }else{
-                                    insertUserDataToDatabase(profile.userId,profile.displayName,getRandomInt(10));
-                                }
-                            })
-                            
+                            result = getUserDataFromDatabase(profile.userId);
+                            if (result) {
+                                result = getUserDataFromDatabase(profile.userId);
+                                return event.reply('Hello ' + result);
+                            } else {
+                                insertUserDataToDatabase(profile.userId, profile.displayName, getRandomInt(10));
+                                result = getUserDataFromDatabase(profile.userId);
+                                return event.reply('Hello ' + result);
+                            }
+
                         })
                         .catch(function(error) {
                             console.log(error);
@@ -70,11 +66,11 @@ bot.on('message', function(event) {
                         });
 
                     break;
-                    case 'inital':
+                case 'inital':
                     event.source.profile()
-                    .then(function(profile){
-                        insertUserDataToDatabase(profile.userId, profile.displayName, getRandomInt(10));
-                    });
+                        .then(function(profile) {
+                            insertUserDataToDatabase(profile.userId, profile.displayName, getRandomInt(10));
+                        });
                     break;
                 case 'DB':
                     const query = `
@@ -85,27 +81,27 @@ bot.on('message', function(event) {
                     INSERT INTO inventory (name, quantity) VALUES ('apple', 100);
                     `;
                     client
-                    .query(query)
-                    .then(() => {
-                        console.log('Table created successfully!');
-                        client.end(console.log('Closed client connection'));
-                    })
-                    .catch(err => console.log(err))
-                    .then(() => {
-                        console.log('Finished execution, exiting now');
-                        process.exit();
-                    });
+                        .query(query)
+                        .then(() => {
+                            console.log('Table created successfully!');
+                            client.end(console.log('Closed client connection'));
+                        })
+                        .catch(err => console.log(err))
+                        .then(() => {
+                            console.log('Finished execution, exiting now');
+                            process.exit();
+                        });
                     break;
-                                    // case 'Member':
-                //     event.source.member()
-                //         .then(function(member) {
-                //             return event.reply(JSON.stringify(member));
-                //         })
-                //         .catch(function(error) {
-                //             console.log(error);
-                //             return event.reply('error');
-                //         });;
-                //     break;
+                    // case 'Member':
+                    //     event.source.member()
+                    //         .then(function(member) {
+                    //             return event.reply(JSON.stringify(member));
+                    //         })
+                    //         .catch(function(error) {
+                    //             console.log(error);
+                    //             return event.reply('error');
+                    //         });;
+                    //     break;
                     // case 'Picture':
                     //     event.reply({
                     //         type: 'image',
@@ -238,36 +234,36 @@ app.listen(process.env.PORT || 80, function() {
     console.log('LineBot is running.');
 });
 
-function getUserDataFromDatabase(id){
+function getUserDataFromDatabase(id) {
     const query = `
     SELECT * FROM public."USER_DATA"
-    WHERE id = `+id+`
+    WHERE id = ` + id + `
     `
     client
-    .query(query)
-    .then((result)=>{
-        console.log('SELECT success, data = '+result);
-        return result;
-    })
-    .then((err)=>{
-        console.log('Failed.')
-    });
+        .query(query)
+        .then((result) => {
+            console.log('SELECT success, data = ' + result);
+            return result;
+        })
+        .then((err) => {
+            console.log('Failed.')
+        });
 }
 
-function insertUserDataToDatabase(id,name,str){
-                            const query = `
-                        INSERT INTO public."USER_DATA"(id,name,str)
-                        VALUES ('`+id+`','`+name+`',`+str+`)
-                        `
-                        client
-                        .query(query)
-                        .then(()=>{
-                            console.log('Insert success.');
-                        })
-                        .catch(err => console.log(err))
-                        .then(()=>{
-                            console.log('Failed')
-                        });
+function insertUserDataToDatabase(id, name, str) {
+    const query = `
+    INSERT INTO public."USER_DATA"(id,name,str)
+    VALUES ('` + id + `','` + name + `',` + str + `)
+    `
+    client
+        .query(query)
+        .then(() => {
+            console.log('Insert success.');
+        })
+        .catch(err => console.log(err))
+        .then(() => {
+            console.log('Failed')
+        });
 }
 
 function getRandomInt(max) {
@@ -279,7 +275,7 @@ function getRandomInts(max, amount) {
     for (var i = 0; i < amount; i++) {
         var value = getRandomInt(max);
         result.push(value);
-        console.log('max: '+max);
+        console.log('max: ' + max);
         console.log('value: ' + value);
         console.log('tempResult : ' + result);
     }
