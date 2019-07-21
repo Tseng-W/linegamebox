@@ -54,7 +54,7 @@ bot.on('message', function(event) {
                                 result = getUserDataFromDatabase(profile.userId);
                                 return event.reply('Hello ' + result);
                             } else {
-                                // insertUserDataToDatabase(profile.userId, profile.displayName, getRandomInt(10));
+                                insertUserDataToDatabase(profile.userId, profile.displayName, getRandomInt(10));
                                 result = getUserDataFromDatabase(profile.userId);
                                 return event.reply('Hello ' + result);
                             }
@@ -241,13 +241,12 @@ function getUserDataFromDatabase(id) {
     `
     console.log('query = '+query);
     client
-        .query(query, function(err, rows){
-            if(rows===undefined)
+        .query(query, function(err, result){
+            if(result.rowCount===undefined)
                 return null;
-            for(var i in rows)
-                console.log('rows['+i+'] = '+rows[i]);
             if(err) throw err;
-            return rows;
+            console.log("result.rows = "+result.rows);
+            return result.rows[0];
         });
 }
 
