@@ -243,7 +243,9 @@ function getUserDataFromDatabase(id) {
     console.log('query = '+query);
     client
         .query(query, function(err, result){
-            if(result.rowCount===0)
+            for(var i in result)
+                console.log("result["+i+"] = " + result[i]);
+            if(result.rowCount==0)
                 return null;
             if(err) throw err;
             console.log("result.rows = "+result.rows);
