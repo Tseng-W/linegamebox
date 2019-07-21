@@ -54,11 +54,11 @@ bot.on('message', function(event) {
                             //嘗試取得用戶資料
                             id = profile.userId;
                             name = profile.displayName;
-                            result = getUserDataFromDatabase(id);
+                            result = await getUserDataFromDatabase(id);
                             return result;
                             // console.log("Output result at event : " + getUserDataFromDatabase(id));
-                        })
-                        .then(function(result) {
+                        })  
+                        .then(function() {
                             console.log("******RESULT******* = "+result);
                             if(result === undefined){
                                 var str = getRandomInt(10);
