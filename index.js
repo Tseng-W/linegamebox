@@ -46,6 +46,7 @@ bot.on('message', function(event) {
         case 'text':
             switch (event.message.text) {
                 case 'Me':
+                var result;
                     event.source.profile()
                         .then(function(profile) {
                             //嘗試取得用戶資料
