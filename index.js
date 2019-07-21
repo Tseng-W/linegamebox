@@ -268,6 +268,7 @@ function insertUserDataToDatabase(id, name, hp, str ,spd) {
     INSERT INTO public."USER_DATA"(id,name,hp,str,spd)
     VALUES ('` + id + `','` + name + `',` + hp +',' + str + ',' spd +`)
     `
+    console.log(query);
     client
         .query(query)
         .then(() => {
