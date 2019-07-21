@@ -54,8 +54,30 @@ bot.on('message', function(event) {
                             //嘗試取得用戶資料
                             id = profile.userId;
                             name = profile.displayName;
-                            console.log("getUserDataFromDatabase(id) = "+getUserDataFromDatabase(id));
-                            return event.reply(getUserDataFromDatabase(id));
+                            result = getUserDataFromDatabase(id);
+                            console.log("Output result at event : " + getUserDataFromDatabase(id));
+                        })
+                        .then(function() {
+                            console.log("******RESULT******* = "+result);
+                            if(result === undefined){
+                                console.log("<<<<result === undefined");
+                                var str = getRandomInt(10);
+                                var hp = getRandomInt(50);
+                                var spd = getRandomInt(10);
+                                insertUserDataToDatabase(id,name,hp,str,spd);
+                                return event.reply([
+                                    "恭喜你成為新的冒險者~",
+                                    "初始化屬性...",
+                                    "生命："+hp+"  力量："+str+"  敏捷："+spd,
+                                    "註冊完畢！"
+                                    ]);
+                            }else{
+                                console.log("<<<<ELSE");
+                                return event.reply([
+                                    "冒險者 "+name+" 的屬性是：",
+                                    "生命："+result.hp+"  力量："+result.str+"  敏捷："+result.spd
+                                    ]);
+                            }
                         })
                         .catch(function(error) {
                             console.log(error);
@@ -231,27 +253,8 @@ app.listen(process.env.PORT || 80, function() {
     console.log('LineBot is running.');
 });
 
-function showData(result){
-    console.log("******RESULT******* = "+result);
-    if(result === undefined){
-        var str = getRandomInt(10);
-        var hp = getRandomInt(50);
-        var spd = getRandomInt(10);
-        insertUserDataToDatabase(id,name,hp,str,spd);
-        console.log("創建成功");
-        return [
-            "恭喜你成為新的冒險者~",
-            "初始化屬性...",
-            "生命："+result.hp+"  力量："+result.str+"  敏捷："+result.spd,
-            "註冊完畢！"
-            ];
-    }else{
-        console.log("無需創建");
-        return [
-            "冒險者 "+result.name+" 的屬性是：",
-            "生命："+result.hp+"  力量："+result.str+"  敏捷："+result.spd
-            ];
-    }
+function showData(){
+
 }
 
 function getUserDataFromDatabase(id) {
@@ -264,11 +267,11 @@ function getUserDataFromDatabase(id) {
         .query(query, function(err, result){
             console.log("result.rowCount = " + result.rowCount);
             if(result.rowCount==0)
-                return showData(null);
+                return null;
             if(err) throw err;
             console.log("Get data and return : " + result.rows[0]);
             console.log("str = " + result.rows[0].str);
-            return showData(result.rows[0]);
+            return result.rows[0];
         });
 }
 
