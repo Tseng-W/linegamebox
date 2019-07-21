@@ -241,10 +241,12 @@ function getUserDataFromDatabase(id) {
     `
     console.log('query = '+query);
     client
-        .query(query, function(err, result,fields){
+        .query(query, function(err, result){
+            if(result===undefined)
+                return null;
             console.log("result = " + result);
-            console.log("result[0] = " + result[0]);
-            console.log("field = "+fields);
+            for(var i in result)
+                console.log(result[i]);
             if(err) throw err;
             return result;
         });
