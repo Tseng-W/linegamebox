@@ -245,7 +245,7 @@ function getUserDataFromDatabase(id) {
             if(result===undefined)
                 return null;
             for(var i in result)
-                console.log('result['+i+'] = 'result[i]);
+                console.log('result['+i+'] = '+result[i]);
             if(err) throw err;
             return result[3];
         });
