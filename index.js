@@ -54,6 +54,24 @@ bot.on('message', function(event) {
                         })
                         .then(function(result) {
                             console.log("******RESULT******* = "+result);
+                            if(result.id == undefined){
+                                var str = getRandomInt(10);
+                                var hp = getRandomInt(50);
+                                var spd = getRandomInt(10);
+                                insertUserDataToDatabase(profile.userId,profile.displayName,
+                                    hp,str,spd);
+                                return event.reply([
+                                    "恭喜你成為新的冒險者~",
+                                    "初始化屬性...",
+                                    "生命："+hp+"  力量："+str+"  敏捷："+spd,
+                                    "註冊完畢！"
+                                    ]);
+                            }else{
+                                return event.reply([
+                                    "冒險者"+profile.displayName+"的屬性是：",
+                                    "生命："+result.hp+"  力量："+result.str+"  敏捷："+result.spd
+                                    ]);
+                            }
                         })
                         .catch(function(error) {
                             console.log(error);
@@ -245,10 +263,10 @@ function getUserDataFromDatabase(id) {
         });
 }
 
-function insertUserDataToDatabase(id, name, str) {
+function insertUserDataToDatabase(id, name, hp, str ,spd) {
     const query = `
-    INSERT INTO public."USER_DATA"(id,name,str)
-    VALUES ('` + id + `','` + name + `',` + str + `)
+    INSERT INTO public."USER_DATA"(id,name,hp,str,spd)
+    VALUES ('` + id + `','` + name + `',` + hp +',' + str + ',' spd +`)
     `
     client
         .query(query)
