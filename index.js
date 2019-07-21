@@ -50,16 +50,9 @@ bot.on('message', function(event) {
                         .then(function(profile) {
                             //嘗試取得用戶資料
                             result = getUserDataFromDatabase(profile.userId);
-                            console.log("Return Value result = "+result);
-                            if (result===undefined) {
-                                insertUserDataToDatabase(profile.userId, profile.displayName, getRandomInt(10));
-                                result = getUserDataFromDatabase(profile.userId);
-                                return event.reply('Hello ' + result);
-                            } else {
-                                result = getUserDataFromDatabase(profile.userId);
-                                return event.reply('Hello ' + result);
-                            }
-
+                        })
+                        .then(function(result) {
+                            console.log("******RESULT******* = "+result);
                         })
                         .catch(function(error) {
                             console.log(error);
@@ -249,7 +242,8 @@ function getUserDataFromDatabase(id) {
                 return null;
             if(err) throw err;
             console.log("result.rows = "+result.rows);
-            console.log("result.rows[0] = "+result.rows[0]);
+            for(var i in result.rows[0])
+                console.log("result.rows[0]["+i+"] = "+result.rows[0].i);
             return result.rows[0];
         });
 }
