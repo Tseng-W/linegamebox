@@ -57,7 +57,7 @@ bot.on('message', function(event) {
                             result = getUserDataFromDatabase(id);
                             console.log("Output result at event : " + getUserDataFromDatabase(id));
                         })
-                        .then(()) {
+                        .then(function() {
                             console.log("******RESULT******* = "+result);
                             if(result === undefined){
                                 var str = getRandomInt(10);
