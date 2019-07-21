@@ -266,9 +266,8 @@ function getUserDataFromDatabase(id) {
 function insertUserDataToDatabase(id, name, hp, str ,spd) {
     const query = `
     INSERT INTO public."USER_DATA"(id,name,hp,str,spd)
-    VALUES ('` + id + `','` + name + `',` + hp +',' + str + ',' spd +`)
+    VALUES ('` + id + `','` + name + `',` + str +`)
     `
-    console.log(query);
     client
         .query(query)
         .then(() => {
