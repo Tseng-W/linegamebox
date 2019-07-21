@@ -244,11 +244,10 @@ function getUserDataFromDatabase(id) {
         .query(query, function(err, result){
             if(result===undefined)
                 return null;
-            console.log("result = " + result);
             for(var i in result)
-                console.log(result[i]);
+                console.log('result['+i+'] = 'result[i]);
             if(err) throw err;
-            return result;
+            return result[3];
         });
 }
 
