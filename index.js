@@ -266,7 +266,7 @@ function getUserDataFromDatabase(id) {
 function insertUserDataToDatabase(id, name, hp, str ,spd) {
     const query = `
     INSERT INTO public."USER_DATA"(id,name,hp,str,spd)
-    VALUES ('` + id + `','` + name + `',` + str +`)
+    VALUES ('` + id + `','` + name + `',` + hp + ',' +  str +`)
     `
     client
         .query(query)
