@@ -242,8 +242,8 @@ function getUserDataFromDatabase(id) {
     client
         .query(query)
         .then((result) => {
-            console.log('SELECT success, data = ' + result);
-            return result;
+            console.log('SELECT success, data = ' + result[0]);
+            return result[0];
         })
         .then((err) => {
             console.log('Failed.')
