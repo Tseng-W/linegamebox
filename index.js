@@ -54,7 +54,7 @@ bot.on('message', function(event) {
                             //嘗試取得用戶資料
                             id = profile.userId;
                             name = profile.displayName;
-                            result = getUserDataFromDatabase(id);
+                            event.reply(getUserDataFromDatabase(id));
                             console.log("Output result at event : " + getUserDataFromDatabase(id));
                         })
                         .catch(function(error) {
@@ -238,17 +238,17 @@ function showData(result){
         var hp = getRandomInt(50);
         var spd = getRandomInt(10);
         insertUserDataToDatabase(id,name,hp,str,spd);
-        return event.reply([
+        return [
             "恭喜你成為新的冒險者~",
             "初始化屬性...",
             "生命："+result.hp+"  力量："+result.str+"  敏捷："+result.spd,
             "註冊完畢！"
-            ]);
+            ];
     }else{
-        return event.reply([
+        return [
             "冒險者 "+result.name+" 的屬性是：",
             "生命："+result.hp+"  力量："+result.str+"  敏捷："+result.spd
-            ]);
+            ];
     }
 }
 
@@ -262,11 +262,11 @@ function getUserDataFromDatabase(id) {
         .query(query, function(err, result){
             console.log("result.rowCount = " + result.rowCount);
             if(result.rowCount==0)
-                showData(null);
+                return showData(null);
             if(err) throw err;
             console.log("Get data and return : " + result.rows[0]);
             console.log("str = " + result.rows[0].str);
-            showData(result.rows[0]);
+            return showData(result.rows[0]);
         });
 }
 
