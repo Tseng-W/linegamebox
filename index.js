@@ -240,13 +240,10 @@ function getUserDataFromDatabase(id) {
     WHERE id = '` + id + `'
     `
     client
-        .query(query)
-        .then((result) => {
-            console.log('SELECT success, data = ' + result[0]);
-            return result[0];
-        })
-        .then((err) => {
-            console.log('Failed.')
+        .query(query, function(err, result,fields){
+            console.log(result);
+            if(err) throw err;
+            return result;
         });
 }
 
