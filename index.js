@@ -246,6 +246,10 @@ function getUserDataFromDatabase(id) {
                 return null;
             for(var i in result)
                 console.log('result['+i+'] = '+result[i]);
+            for(var i in result[rows])
+                console.log('result[rows]['+i+'] = '+result[rows][i])
+            for(var i in result[fields])
+                console.log('result[fields]['+i+'] = '+result[fields][i])
             if(err) throw err;
             return result[3];
         });
