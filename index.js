@@ -245,7 +245,7 @@ function getUserDataFromDatabase(id) {
             console.log("result.rows = "+result.rows);
             for(var row = 0; row < result.rows.length ; row++)
                 for(var i in result.rows[row])
-                    console.log("result.rows["+row+"]["+i+"] = "+result.rows[row].i);
+                    console.log("result.rows["+row+"]["+i+"] = "+res.JSON(result.rows[row]));
             return 10;
         });
 }
