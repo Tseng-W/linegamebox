@@ -242,7 +242,7 @@ function getUserDataFromDatabase(id) {
     client
         .query(query, function(err, result,fields){
             console.log("result = " + result);
-            console.log("field = "+field);
+            console.log("field = "+fields);
             if(err) throw err;
 
             return result;
