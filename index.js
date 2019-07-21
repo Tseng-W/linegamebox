@@ -241,17 +241,13 @@ function getUserDataFromDatabase(id) {
     `
     console.log('query = '+query);
     client
-        .query(query, function(err, result){
-            if(result===undefined)
+        .query(query, function(err, rows){
+            if(rows===undefined)
                 return null;
-            for(var i in result)
-                console.log('result['+i+'] = '+result[i]);
-            for(var i in result[rows])
-                console.log('result[rows]['+i+'] = '+result[rows][i])
-            for(var i in result[fields])
-                console.log('result[fields]['+i+'] = '+result[fields][i])
+            for(var i in rows)
+                console.log('rows['+i+'] = '+rows[i]);
             if(err) throw err;
-            return result[3];
+            return rows;
         });
 }
 
