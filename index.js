@@ -54,7 +54,7 @@ bot.on('message', function(event) {
                             //嘗試取得用戶資料
                             id = profile.userId;
                             name = profile.displayName;
-                            event.reply(getUserDataFromDatabase(id));
+                            return event.reply(getUserDataFromDatabase(id));
                             console.log("Output result at event : " + getUserDataFromDatabase(id));
                         })
                         .catch(function(error) {
@@ -238,6 +238,7 @@ function showData(result){
         var hp = getRandomInt(50);
         var spd = getRandomInt(10);
         insertUserDataToDatabase(id,name,hp,str,spd);
+        console.log("創建成功");
         return [
             "恭喜你成為新的冒險者~",
             "初始化屬性...",
@@ -245,6 +246,7 @@ function showData(result){
             "註冊完畢！"
             ];
     }else{
+        console.log("無需創建");
         return [
             "冒險者 "+result.name+" 的屬性是：",
             "生命："+result.hp+"  力量："+result.str+"  敏捷："+result.spd
