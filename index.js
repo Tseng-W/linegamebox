@@ -237,18 +237,11 @@ function getUserDataFromDatabase(id) {
     console.log('query = '+query);
     client
         .query(query, function(err, result){
-            for(var i in result)
-                console.log("result["+i+"] = " + result[i]);
+                console.log("result.rowCount = " + result.rowCount);
             if(result.rowCount==0)
                 return null;
             if(err) throw err;
-            console.log("result.rows = "+result.rows);
-            console.log("result.parseRow = "+result.parseRow);
-            for(var row = 0; row < result.rows.length ; row++)
-                for(var i in result.rows[row])
-                    console.log("result.rows["+row+"]["+i+"] = "+result.rows[row].i);
-            console.log("///////////////GET /////////. = " + result.rows[0].str);
-            return result;
+            return result.rows[0];
         });
 }
 
