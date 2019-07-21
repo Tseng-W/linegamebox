@@ -48,29 +48,32 @@ bot.on('message', function(event) {
                 case 'Me':
                     event.source.profile()
                         .then(function(profile) {
-                            return event.reply('Hello ' + profile.displayName + ' ' + profile.userId);
+                            //嘗試取得用戶資料
+                            const query = `
+                            SELECT * FROM public."USER_DATA"
+                            WHERE id = `+profile.userId`
+                            `
+                            client.query(query)
+                            .then((result)=>{
+                                if(result){
+                                    result = getUserDataFromDatabase(profile.userId);
+                                    return event.reply('Hello ' + result);
+                                }else{
+                                    insertUserDataToDatabase(profile.userId,profile.displayName,getRandomInt(10));
+                                }
+                            })
+                            
                         })
                         .catch(function(error) {
                             console.log(error);
                             return event.reply('error');
                         });
+
                     break;
                     case 'inital':
                     event.source.profile()
                     .then(function(profile){
-                        const query = `
-                        INSERT INTO public."USER_DATA"(id,name,str)
-                        VALUES ('`+profile.userId+`','`+profile.userId+`',10)
-                        `
-                        client
-                        .query(query)
-                        .then(()=>{
-                            console.log('Insert success.');
-                        })
-                        .catch(err => console.log(err))
-                        .then(()=>{
-                            console.log('Failed')
-                        });
+                        insertUserDataToDatabase(profile.userId, profile.displayName, getRandomInt(10));
                     });
                     break;
                 case 'DB':
@@ -234,6 +237,38 @@ bot.on('beacon', function(event) {
 app.listen(process.env.PORT || 80, function() {
     console.log('LineBot is running.');
 });
+
+function getUserDataFromDatabase(id){
+    const query = `
+    SELECT * FROM public."USER_DATA"
+    WHERE id = `+id+`
+    `
+    client
+    .query(query)
+    .then((result)=>{
+        console.log('SELECT success, data = '+result);
+        return result;
+    })
+    .then((err)=>{
+        console.log('Failed.')
+    });
+}
+
+function insertUserDataToDatabase(id,name,str){
+                            const query = `
+                        INSERT INTO public."USER_DATA"(id,name,str)
+                        VALUES ('`+id+`','`+name+`',`+str+`)
+                        `
+                        client
+                        .query(query)
+                        .then(()=>{
+                            console.log('Insert success.');
+                        })
+                        .catch(err => console.log(err))
+                        .then(()=>{
+                            console.log('Failed')
+                        });
+}
 
 function getRandomInt(max) {
     return Math.floor(Math.random() * max) + 1;
