@@ -242,10 +242,11 @@ function getUserDataFromDatabase(id) {
     console.log('query = '+query);
     client
         .query(query, function(err, result){
-            if(result.rowCount===undefined)
+            if(result.rowCount===0)
                 return null;
             if(err) throw err;
             console.log("result.rows = "+result.rows);
+            console.log("result.rows[0] = "+result.rows[0]);
             return result.rows[0];
         });
 }
