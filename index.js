@@ -55,6 +55,7 @@ bot.on('message', function(event) {
                             id = profile.userId;
                             name = profile.displayName;
                             result = getUserDataFromDatabase(id);
+                            console.log("Output result at event : " + getUserDataFromDatabase(id));
                         })
                         .then(function(result) {
                             console.log("******RESULT******* = "+result);
