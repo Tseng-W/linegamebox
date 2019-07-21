@@ -258,10 +258,12 @@ function getUserDataFromDatabase(id) {
     console.log('query = '+query);
     client
         .query(query, function(err, result){
-                console.log("result.rowCount = " + result.rowCount);
+            console.log("result.rowCount = " + result.rowCount);
             if(result.rowCount==0)
                 return null;
             if(err) throw err;
+            console.log("Get data and return : " + result.rows[0]);
+            console.log("str = " + result.rows[0].str);
             return result.rows[0];
         });
 }
