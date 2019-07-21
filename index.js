@@ -47,10 +47,14 @@ bot.on('message', function(event) {
             switch (event.message.text) {
                 case 'Me':
                 var result;
+                var id;
+                var name;
                     event.source.profile()
                         .then(function(profile) {
                             //嘗試取得用戶資料
-                            result = getUserDataFromDatabase(profile.userId);
+                            id = profile.userId;
+                            name = profile.displayName;
+                            result = getUserDataFromDatabase(id);
                         })
                         .then(function(result) {
                             console.log("******RESULT******* = "+result);
@@ -58,8 +62,7 @@ bot.on('message', function(event) {
                                 var str = getRandomInt(10);
                                 var hp = getRandomInt(50);
                                 var spd = getRandomInt(10);
-                                insertUserDataToDatabase(profile.userId,profile.displayName,
-                                    hp,str,spd);
+                                insertUserDataToDatabase(id,name,hp,str,spd);
                                 return event.reply([
                                     "恭喜你成為新的冒險者~",
                                     "初始化屬性...",
@@ -68,7 +71,7 @@ bot.on('message', function(event) {
                                     ]);
                             }else{
                                 return event.reply([
-                                    "冒險者"+profile.displayName+"的屬性是：",
+                                    "冒險者 "+name+" 的屬性是：",
                                     "生命："+result.hp+"  力量："+result.str+"  敏捷："+result.spd
                                     ]);
                             }
@@ -266,7 +269,7 @@ function getUserDataFromDatabase(id) {
 function insertUserDataToDatabase(id, name, hp, str ,spd) {
     const query = `
     INSERT INTO public."USER_DATA"(id,name,hp,str,spd)
-    VALUES ('` + id + `','` + name + `',` + hp + ',' +  str +`)
+    VALUES ('` + id + `','` + name + `',` + hp + ',' +  str + ',' + spd+`)
     `
     client
         .query(query)
