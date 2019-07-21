@@ -50,7 +50,8 @@ bot.on('message', function(event) {
                         .then(function(profile) {
                             //嘗試取得用戶資料
                             result = getUserDataFromDatabase(profile.userId);
-                            if (result===null) {
+                            console.log("Return Value result = "+result);
+                            if (result==null) {
                                 insertUserDataToDatabase(profile.userId, profile.displayName, getRandomInt(10));
                                 result = getUserDataFromDatabase(profile.userId);
                                 return event.reply('Hello ' + result);
