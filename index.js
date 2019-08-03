@@ -1,5 +1,7 @@
 const linebot = require('linebot');
 const express = require('express');
+const fgoproperty = [0.7,1,4,44,48,60,100];
+
 const { Client } = require('pg');
 
 // const config = {
@@ -156,6 +158,18 @@ bot.on('message', function(event) {
                     //         }
                     //     });
                     //     break;
+                case '測風向':
+                    let result = ["拔草測風向！"];
+                    let drawRsult = getRandomInt(100);
+                    result += drawRsult;
+                    event.reply(result)
+                    .then(function(data){
+                        console.log('拔草大成功',data);
+                    })
+                    .catch(function(error){
+                        console.log('error',error);
+                    });
+                    break;
                 default:
                     var msg = event.message.text;
                     if (msg.indexOf('擲骰') != -1) {
