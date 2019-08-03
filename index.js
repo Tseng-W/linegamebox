@@ -159,10 +159,10 @@ bot.on('message', function(event) {
                     //     });
                     //     break;
                 case '測風向':
-                    let result = ["拔草測風向！"];
+                    let drawResult = ["拔草測風向！"];
                     let drawRsult = getRandomInt(100);
-                    result += drawRsult;
-                    event.reply(result)
+                    drawResult += drawRsult;
+                    event.reply(drawResult)
                     .then(function(data){
                         console.log('拔草大成功',data);
                     })
