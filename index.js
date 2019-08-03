@@ -48,9 +48,9 @@ bot.on('message', function(event) {
         case 'text':
             switch (event.message.text) {
                 case 'Me':
-                var result;
-                var id;
-                var name;
+                let result;
+                let id;
+                let name;
                     event.source.profile()
                         .then(function(profile) {
                             //嘗試取得用戶資料
@@ -63,9 +63,9 @@ bot.on('message', function(event) {
                             console.log("******RESULT******* = "+result);
                             if(result === undefined){
                                 console.log("<<<<result === undefined");
-                                var str = getRandomInt(10);
-                                var hp = getRandomInt(50);
-                                var spd = getRandomInt(10);
+                                let str = getRandomInt(10);
+                                let hp = getRandomInt(50);
+                                let spd = getRandomInt(10);
                                 insertUserDataToDatabase(id,name,hp,str,spd);
                                 return event.reply([
                                     "恭喜你成為新的冒險者~",
