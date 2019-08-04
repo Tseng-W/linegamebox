@@ -175,7 +175,7 @@ bot.on('message', function(event) {
                     let drawResult = ["召喚次數"+drawTimes];
                     for(let index = 0 ; index < fgoDrawResult.length; index++){
                         if(fgoDrawResult[index]!=0){
-                            drawResult= drawResult + " " + fgoDrawResultText[index]+" : "+fgoDrawResult[index];
+                            drawResult.push(fgoDrawResultText[index]+" : "+fgoDrawResult[index]);
                         }
                     }
                     event.reply(drawResult)
