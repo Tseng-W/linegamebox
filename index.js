@@ -162,16 +162,7 @@ bot.on('message', function(event) {
                 case '測風向':
                     let drawTimes = 10;
                     let fgoDrawResult = [0,0,0,0,0,0,0];
-                    for (let draw = 0; draw < drawTimes; draw++) {
-                        let drawResult = Math.random() * 100;
-                        console.log("Draw:"+draw+" = "+drawResult);
-                        for (var i = 0; i < fgoDrawProperty.length; i++) {
-                            if (drawResult < fgoDrawProperty[i]){
-                                fgoDrawResult[i]++;
-                                break;
-                            }
-                        }
-                    }
+                    fgoDrawResult = fgoDraw10Times(fgoDrawResult);
                     let drawResult = ["召喚次數"+drawTimes];
                     for(let index = 0 ; index < fgoDrawResult.length; index++){
                         if(fgoDrawResult[index]!=0){
@@ -334,5 +325,32 @@ function getRandomInts(max, amount) {
         console.log('value: ' + value);
         console.log('tempResult : ' + result);
     }
+    return result;
+}
+
+function fgoDraw(result,isGuarantee){
+    let drawResult = Math.random() * 100;
+    for (var i = 0; i < fgoDrawProperty.length; i++) {
+        if (drawResult < fgoDrawProperty[i]){
+            if(isGuarantee && i == fgoDrawProperty.length-1)
+                result[i-1]++;
+            else
+               result[i]++;
+            break;
+        }
+    }
+    return result;
+}
+
+function fgoDraw10Times(result){
+    let drawTimes = 10;
+    let isGuarantee = false;
+    for (let draw = 0; draw < drawTimes; draw++) {
+        if(draw % 10 == 0)
+            isGuarantee = true;
+        else isGuarantee = false;
+        result = fgoDraw(result,isGuarantee);
+
+    }  
     return result;
 }
