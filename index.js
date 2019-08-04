@@ -161,6 +161,7 @@ bot.on('message', function(event) {
                     //     break;
                 case '測風向':
                     let drawTimes = 10;
+                    let fgoDrawResult = [0,0,0,0,0,0,0];
                     for (let draw = 0; draw < drawTimes; draw++) {
                         let drawResult = Math.random() * 100;
                         console.log("Draw:"+draw+" = "+drawResult);
