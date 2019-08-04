@@ -45,6 +45,7 @@ app.get('/', function(req, res) {
 app.post('/linewebhook', linebotParser);
 
 bot.on('message', function(event) {
+    var tenDrawTimes = 1;
     switch (event.message.type) {
         case 'text':
             switch (event.message.text) {
@@ -159,12 +160,18 @@ bot.on('message', function(event) {
                     //         }
                     //     });
                     //     break;
+                case '瘋狂拔草測風向':
+                    var crazyDraw = true;
+                    tenDrawTimes = 10;
                 case '測風向':
+                    tenDrawTimes = 1;
                     let drawTimes = 10;
-                    let fgoDrawResult = [0,0,0,0,0,0,0];
-                    fgoDrawResult = fgoDraw10Times(fgoDrawResult);
-                    let drawResult = ["召喚次數"+drawTimes];
-                    for(let index = 0 ; index < fgoDrawResult.length; index++){
+                    let fgoDrawResult = [0,0,0,0,0,0,0,0];
+                    for(let index 0; index < tenDrawTimes; index++)
+                        fgoDrawResult = fgoDraw10Times(fgoDrawResult);
+                    let drawResult = ["十抽次數:"+tenDrawTimes];
+                    drawResult.push("保底次數:"+fgoDrawResult[fgoDrawResult.length-1]);
+                    for(let index = 0 ; index < fgoDrawResult.length-1; index++){
                         if(fgoDrawResult[index]!=0){
                             drawResult.push(fgoDrawResultText[index]+" : "+fgoDrawResult[index]);
                         }
@@ -328,22 +335,26 @@ function getRandomInts(max, amount) {
     return result;
 }
 
-function fgoDraw(result,isGuarantee){
+function fgoDraw(result, isGuarantee) {
     let drawResult = Math.random() * 100;
     let propertyLevel = 0;
-    if(isGuarantee) console.log("<<<<<<<此抽保底>>>>>>");
+    if (isGuarantee) {
+        console.log("<<<<<<<此抽保底>>>>>>");
+        result[result.length - 1] += 1;
+    };
     for (var i = 0; i < fgoDrawProperty.length; i++) {
         propertyLevel += fgoDrawProperty[i];
-        if(propertyLevel > 100)
+        if (propertyLevel > 100)
             console.log("錯誤：機率大於100");
-        if (drawResult < propertyLevel){
-            if(isGuarantee){
-                        console.log("drawResult = "+drawResult);
-                        console.log("propertyLevel = "+propertyLevel);}
-            if(isGuarantee && i == fgoDrawProperty.length-1)
+        if (drawResult < propertyLevel) {
+            if (isGuarantee) {
+                console.log("drawResult = " + drawResult);
+                console.log("propertyLevel = " + propertyLevel);
+            }
+            if (isGuarantee && i > 4)
                 result[4]++;
             else
-               result[i]++;
+                result[i]++;
             break;
         }
     }
@@ -351,19 +362,18 @@ function fgoDraw(result,isGuarantee){
     return result;
 }
 
-function fgoDraw10Times(result){
+function fgoDraw10Times(result) {
     let drawTimes = 10;
     let isGuarantee = false;
-    for (let draw = 1; draw < drawTimes+1; draw++) {
-        if(draw == 10){
-            let nonThree = result.slice(0,5);
+    for (let draw = 1; draw < drawTimes + 1; draw++) {
+        if (draw == 10) {
+            let nonThree = result.slice(0, 5);
             console.log(nonThree);
             isGuarantee = true;
-            for(let index = 0; index < nonThree.length; index++)
-                if(nonThree[index] != 0) isGuarantee = false;
-        }
-        else isGuarantee = false;
-        result = fgoDraw(result,isGuarantee);
-    }  
+            for (let index = 0; index < nonThree.length; index++)
+                if (nonThree[index] != 0) isGuarantee = false;
+        } else isGuarantee = false;
+        result = fgoDraw(result, isGuarantee);
+    }
     return result;
 }
