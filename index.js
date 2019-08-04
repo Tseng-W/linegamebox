@@ -1,6 +1,7 @@
 const linebot = require('linebot');
 const express = require('express');
 const fgoproperty = [0.7,1,4,44,48,60,100];
+const fgoDrawResultText = ["PU五星從者","非PU五星從者","四星從者","三星從者","五星禮裝","四星禮裝","三星禮裝"];
 
 const { Client } = require('pg');
 
@@ -159,9 +160,22 @@ bot.on('message', function(event) {
                     //     });
                     //     break;
                 case '測風向':
-                    let drawResult = ["拔草測風向！"];
-                    let drawRsult = getRandomInt(100);
-                    drawResult += drawRsult;
+                    for (let draw = 0; draw < drawTimes; draw++) {
+                        let drawResult = Math.random() * 100;
+                        console.log("Draw:"+draw+" = "+drawResult);
+                        for (var i = 0; i < fgoDrawProperty.length; i++) {
+                            if (drawResult < fgoDrawProperty[i]){
+                                fgoDrawResult[i]++;
+                                break;
+                            }
+                        }
+                    }
+                    let drawResult = ["召喚次數"+drawTimes];
+                    for(let index = 0 ; index < fgoDrawResult.length; index++){
+                        if(fgoDrawResult[index]!=0){
+                            drawResult= drawResult + " " + fgoDrawResultText[index]+" : "+fgoDrawResult[index];
+                        }
+                    }
                     event.reply(drawResult)
                     .then(function(data){
                         console.log('拔草大成功',data);
