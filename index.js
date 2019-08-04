@@ -330,27 +330,40 @@ function getRandomInts(max, amount) {
 
 function fgoDraw(result,isGuarantee){
     let drawResult = Math.random() * 100;
+    let propertyLevel = 0;
+    if(isGuarantee) console.log("<<<<<<<此抽保底>>>>>>");
     for (var i = 0; i < fgoDrawProperty.length; i++) {
-        if (drawResult < fgoDrawProperty[i]){
+        propertyLevel += fgoDrawProperty[i];
+        if(propertyLevel > 100)
+            console.log("錯誤：機率大於100");
+        if (drawResult < propertyLevel){
+            if(isGuarantee){
+                        console.log("drawResult = "+drawResult);
+                        console.log("propertyLevel = "+propertyLevel);}
             if(isGuarantee && i == fgoDrawProperty.length-1)
-                result[i-1]++;
+                result[4]++;
             else
                result[i]++;
             break;
         }
     }
+    console.log("-----------------");
     return result;
 }
 
 function fgoDraw10Times(result){
     let drawTimes = 10;
     let isGuarantee = false;
-    for (let draw = 0; draw < drawTimes; draw++) {
-        if(draw % 10 == 0)
+    for (let draw = 1; draw < drawTimes+1; draw++) {
+        if(draw == 10){
+            let nonThree = result.slice(0,5);
+            console.log(nonThree);
             isGuarantee = true;
+            for(let index = 0; index < nonThree.length; index++)
+                if(nonThree[index] != 0) isGuarantee = false;
+        }
         else isGuarantee = false;
         result = fgoDraw(result,isGuarantee);
-
     }  
     return result;
 }
