@@ -167,7 +167,7 @@ bot.on('message', function(event) {
                     tenDrawTimes = 1;
                     let drawTimes = 10;
                     let fgoDrawResult = [0,0,0,0,0,0,0,0];
-                    for(let index 0; index < tenDrawTimes; index++)
+                    for(let index = 0; index < tenDrawTimes; index++)
                         fgoDrawResult = fgoDraw10Times(fgoDrawResult);
                     let drawResult = ["十抽次數:"+tenDrawTimes];
                     drawResult.push("保底次數:"+fgoDrawResult[fgoDrawResult.length-1]);
