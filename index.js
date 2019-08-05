@@ -1,7 +1,7 @@
 const linebot = require('linebot');
 const express = require('express');
 const fgoDrawProperty = [0.7,1,4,44,48,60,100];
-const fgoDrawResultText = ["PU五星從者","非PU五星從者","四星從者",,"五星禮裝","四星禮裝","三星禮裝","三星從者"];
+const fgoDrawResultText = ["PU五星從者","非PU五星從者","四星從者",,"五星禮裝","四星禮裝","三星禮裝","三星從者"	];
 
 const { Client } = require('pg');
 
@@ -160,8 +160,25 @@ bot.on('message', function(event) {
                     //         }
                     //     });
                     //     break;
+				case '單抽':
+				case '呼符':
+					let fgoDrawResult = [0,0,0,0,0,0,0,0];
+					fgoDrawResult = fgoDraw(fgoDrawResult,false);
+					for(let index = 0 ; index < fgoDrawResult.length-1; index++){
+                        if(fgoDrawResult[index]!=0){
+                            drawResult[2] += "\n" +fgoDrawResultText[index] + " : " + fgoDrawResult[index];
+                        }
+                    }
+					event.reply(drawResult)
+                    .catch(function(error){
+                        console.log('error',error);
+                    });
+					break;
                 case '瘋狂拔草':
                     var crazyDraw = true;
+				case '10連':
+				case '十連':
+				case '拔草':
                 case '測風向':
                     if(crazyDraw) tenDrawTimes = 10;
                     else tenDrawTimes = 1;
