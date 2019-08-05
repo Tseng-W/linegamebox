@@ -173,7 +173,7 @@ bot.on('message', function(event) {
                     drawResult.push("保底次數:"+fgoDrawResult[fgoDrawResult.length-1]);
                     for(let index = 0 ; index < fgoDrawResult.length-1; index++){
                         if(fgoDrawResult[index]!=0){
-                            drawResult.push(fgoDrawResultText[index]+" : "+fgoDrawResult[index]);
+                            drawResult[3] = drawResult + "\n" +fgoDrawResultText[index] + " : " + fgoDrawResult[index];
                         }
                     }
                     event.reply(drawResult)
