@@ -165,8 +165,10 @@ bot.on('message', function(event) {
 					let fgoSingleDrawResult = [0,0,0,0,0,0,0,0];
 					let singleDrawResult;
 					fgoSingleDrawResult = fgoDraw(fgoSingleDrawResult,false);
+					console.log("單抽結果:"+fgoSingleDrawResult);
 					for(let index = 0 ; index < fgoSingleDrawResult.length-1; index++){
                         if(fgoSingleDrawResult[index]!=0){
+							console.log("index = "+index);
                             singleDrawResult = fgoDrawResultText[index] + " : " + fgoSingleDrawResult[index];
                         }
                     }
