@@ -46,6 +46,8 @@ app.post('/linewebhook', linebotParser);
 
 bot.on('message', function(event) {
     var tenDrawTimes = 1;
+	let returnText;
+	let drawResult;
     switch (event.message.type) {
         case 'text':
             switch (event.message.text) {
@@ -162,19 +164,18 @@ bot.on('message', function(event) {
                     //     break;
 				case '抽卡測試':
 					tenDrawTimes = 1000;
-                    let drawTimes = 10;
-                    let fgoDrawResult = [0,0,0,0,0,0,0,0];
+                    drawResult = [0,0,0,0,0,0,0,0];
                     for(let index = 0; index < tenDrawTimes; index++)
-                        fgoDrawResult = fgoDraw10Times(fgoDrawResult);
-                    let drawResult = ["十抽次數:"+tenDrawTimes];
-                    drawResult.push("保底次數:"+fgoDrawResult[fgoDrawResult.length-1]);
-                    drawResult.push("抽卡結果:");
-                    for(let index = 0 ; index < fgoDrawResult.length-1; index++){
-                        if(fgoDrawResult[index]!=0){
-                            drawResult[2] += "\n" +fgoDrawResultText[index] + " : " + fgoDrawResult[index];
+                        drawResult = fgoDraw10Times(drawResult);
+                    returnText = ["十抽次數:"+tenDrawTimes];
+                    returnText.push("保底次數:"+drawResult[drawResult.length-1]);
+                    returnText.push("抽卡結果:");
+                    for(let index = 0 ; index < drawResult.length-1; index++){
+                        if(drawResult[index]!=0){
+                            returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
                         }
                     }
-                    event.reply(drawResult)
+                    event.reply(returnText)
                     .then(function(data){
                         console.log('拔草大成功',data);
                     })
@@ -186,16 +187,15 @@ bot.on('message', function(event) {
 				case '單抽':
 				case '呼符':
 					let fgoSingleDrawResult = [0,0,0,0,0,0,0,0];
-					let singleDrawResult;
 					fgoSingleDrawResult = fgoDraw(fgoSingleDrawResult,false);
 					console.log("單抽結果:"+fgoSingleDrawResult);
 					for(let index = 0 ; index < fgoSingleDrawResult.length-1; index++){
                         if(fgoSingleDrawResult[index]!=0){
 							console.log("index = "+index);
-                            singleDrawResult = fgoDrawResultText[index] + " : " + fgoSingleDrawResult[index];
+                            returnText = fgoDrawResultText[index] + " : " + fgoSingleDrawResult[index];
                         }
                     }
-					event.reply(singleDrawResult)
+					event.reply(returnText)
                     .catch(function(error){
                         console.log('error',error);
                     });
@@ -208,19 +208,18 @@ bot.on('message', function(event) {
                 case '測風向':
                     if(crazyDraw) tenDrawTimes = 10;
                     else tenDrawTimes = 1;
-                    let drawTimes = 10;
-                    let fgoDrawResult = [0,0,0,0,0,0,0,0];
+                    drawResult = [0,0,0,0,0,0,0,0];
                     for(let index = 0; index < tenDrawTimes; index++)
-                        fgoDrawResult = fgoDraw10Times(fgoDrawResult);
-                    let drawResult = ["十抽次數:"+tenDrawTimes];
-                    drawResult.push("保底次數:"+fgoDrawResult[fgoDrawResult.length-1]);
-                    drawResult.push("抽卡結果:");
-                    for(let index = 0 ; index < fgoDrawResult.length-1; index++){
-                        if(fgoDrawResult[index]!=0){
-                            drawResult[2] += "\n" +fgoDrawResultText[index] + " : " + fgoDrawResult[index];
+                        drawResult = fgoDraw10Times(drawResult);
+                    returnText = ["十抽次數:"+tenDrawTimes];
+                    returnText.push("保底次數:"+drawResult[drawResult.length-1]);
+                    returnText.push("抽卡結果:");
+                    for(let index = 0 ; index < drawResult.length-1; index++){
+                        if(drawResult[index]!=0){
+                            returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
                         }
                     }
-                    event.reply(drawResult)
+                    event.reply(returnText)
                     .then(function(data){
                         console.log('拔草大成功',data);
                     })
