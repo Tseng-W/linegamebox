@@ -162,11 +162,11 @@ bot.on('message', function(event) {
                     //     break;
 				case '單抽':
 				case '呼符':
-					let fgoDrawResult = [0,0,0,0,0,0,0,0];
-					fgoDrawResult = fgoDraw(fgoDrawResult,false);
-					for(let index = 0 ; index < fgoDrawResult.length-1; index++){
-                        if(fgoDrawResult[index]!=0){
-                            drawResult[2] += "\n" +fgoDrawResultText[index] + " : " + fgoDrawResult[index];
+					let fgoSingleDrawResult = [0,0,0,0,0,0,0,0];
+					fgoSingleDrawResult = fgoDraw(fgoSingleDrawResult,false);
+					for(let index = 0 ; index < fgoSingleDrawResult.length-1; index++){
+                        if(fgoSingleDrawResult[index]!=0){
+                            drawResult[2] += "\n" +fgoDrawResultText[index] + " : " + fgoSingleDrawResult[index];
                         }
                     }
 					event.reply(drawResult)
