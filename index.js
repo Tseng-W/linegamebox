@@ -160,7 +160,7 @@ bot.on('message', function(event) {
                     //         }
                     //     });
                     //     break;
-                case '瘋狂拔草測風向':
+                case '瘋狂拔草':
                     var crazyDraw = true;
                     tenDrawTimes = 10;
                 case '測風向':
@@ -171,7 +171,7 @@ bot.on('message', function(event) {
                         fgoDrawResult = fgoDraw10Times(fgoDrawResult);
                     let drawResult = ["十抽次數:"+tenDrawTimes];
                     drawResult.push("保底次數:"+fgoDrawResult[fgoDrawResult.length-1]);
-                    drawResult.push("");
+                    drawResult.push("抽卡結果:");
                     for(let index = 0 ; index < fgoDrawResult.length-1; index++){
                         if(fgoDrawResult[index]!=0){
                             drawResult[2] += "\n" +fgoDrawResultText[index] + " : " + fgoDrawResult[index];
