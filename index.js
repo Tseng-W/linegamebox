@@ -163,13 +163,14 @@ bot.on('message', function(event) {
 				case '單抽':
 				case '呼符':
 					let fgoSingleDrawResult = [0,0,0,0,0,0,0,0];
+					let singleDrawResult;
 					fgoSingleDrawResult = fgoDraw(fgoSingleDrawResult,false);
 					for(let index = 0 ; index < fgoSingleDrawResult.length-1; index++){
                         if(fgoSingleDrawResult[index]!=0){
-                            drawResult[2] += "\n" +fgoDrawResultText[index] + " : " + fgoSingleDrawResult[index];
+                            singleDrawResult = fgoDrawResultText[index] + " : " + fgoSingleDrawResult[index];
                         }
                     }
-					event.reply(drawResult)
+					event.reply(singleDrawResult)
                     .catch(function(error){
                         console.log('error',error);
                     });
