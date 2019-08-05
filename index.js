@@ -160,6 +160,29 @@ bot.on('message', function(event) {
                     //         }
                     //     });
                     //     break;
+				case '抽卡測試':
+					tenDrawTimes = 1000;
+                    let drawTimes = 10;
+                    let fgoDrawResult = [0,0,0,0,0,0,0,0];
+                    for(let index = 0; index < tenDrawTimes; index++)
+                        fgoDrawResult = fgoDraw10Times(fgoDrawResult);
+                    let drawResult = ["十抽次數:"+tenDrawTimes];
+                    drawResult.push("保底次數:"+fgoDrawResult[fgoDrawResult.length-1]);
+                    drawResult.push("抽卡結果:");
+                    for(let index = 0 ; index < fgoDrawResult.length-1; index++){
+                        if(fgoDrawResult[index]!=0){
+                            drawResult[2] += "\n" +fgoDrawResultText[index] + " : " + fgoDrawResult[index];
+                        }
+                    }
+                    event.reply(drawResult)
+                    .then(function(data){
+                        console.log('拔草大成功',data);
+                    })
+                    .catch(function(error){
+                        console.log('error',error);
+                    });
+                    break;
+					break;
 				case '單抽':
 				case '呼符':
 					let fgoSingleDrawResult = [0,0,0,0,0,0,0,0];
