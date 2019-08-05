@@ -171,9 +171,10 @@ bot.on('message', function(event) {
                         fgoDrawResult = fgoDraw10Times(fgoDrawResult);
                     let drawResult = ["十抽次數:"+tenDrawTimes];
                     drawResult.push("保底次數:"+fgoDrawResult[fgoDrawResult.length-1]);
+                    drawResult.push("");
                     for(let index = 0 ; index < fgoDrawResult.length-1; index++){
                         if(fgoDrawResult[index]!=0){
-                            drawResult[3] = drawResult + "\n" +fgoDrawResultText[index] + " : " + fgoDrawResult[index];
+                            drawResult[2] += "\n" +fgoDrawResultText[index] + " : " + fgoDrawResult[index];
                         }
                     }
                     event.reply(drawResult)
