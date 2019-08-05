@@ -1,6 +1,6 @@
 const linebot = require('linebot');
 const express = require('express');
-const fgoDrawProperty = [0.7,1,5,8,20,60,100];
+const fgoDrawProperty = [0.7,0.3,4,3,12,40,40];
 const fgoDrawResultText = ["PU五星從者","非PU五星從者","五星禮裝","四星從者","四星禮裝","三星禮裝","三星從者"];
 
 const { Client } = require('pg');
@@ -379,7 +379,8 @@ function getRandomInts(max, amount) {
 }
 
 function fgoDraw(result, isGuarantee) {
-    let drawResult = Math.random() * 100;
+    let randomNumber = Math.random() * 100;
+	console.log("randomNumber = "+randomNumber);
     let propertyLevel = 0;
     if (isGuarantee) {
         console.log("<<<<<<<此抽保底>>>>>>");
@@ -389,10 +390,10 @@ function fgoDraw(result, isGuarantee) {
         propertyLevel += fgoDrawProperty[i];
         if (propertyLevel > 100)
             console.log("錯誤：機率大於100");
-        if (drawResult < propertyLevel) {
+        if (randomNumber < propertyLevel) {
             if (isGuarantee) {
-                console.log("drawResult = " + drawResult);
-                console.log("propertyLevel = " + propertyLevel);
+                console.log("(isisGuarantee)randomNumber = " + randomNumber);
+                console.log("(isisGuarantee)propertyLevel = " + propertyLevel);
             }
             if (isGuarantee && i > 4)
                 result[4]++;
