@@ -1,7 +1,7 @@
 const linebot = require('linebot');
 const express = require('express');
-const fgoDrawProperty = [0.7,1,4,44,48,60,100];
-const fgoDrawResultText = ["PU五星從者","非PU五星從者","四星從者",,"五星禮裝","四星禮裝","三星禮裝","三星從者"	];
+const fgoDrawProperty = [0.7,1,5,8,20,60,100];
+const fgoDrawResultText = ["PU五星從者","非PU五星從者","五星禮裝","四星從者","四星禮裝","三星禮裝","三星從者"];
 
 const { Client } = require('pg');
 
