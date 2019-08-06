@@ -184,6 +184,8 @@ bot.on('message', function(event) {
                     });
                     break;
 					break;
+				case '抽卡':
+				case '抖肉':
 				case '單抽':
 				case '呼符':
 					drawResult = [0,0,0,0,0,0,0,0];
