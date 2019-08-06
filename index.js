@@ -244,6 +244,8 @@ bot.on('message', function(event) {
                             var diceParamater = diceRequest.split('d');
                             console.log("diceParamater[0] = " + diceParamater[0]);
                             console.log("diceParamater[1] = " + diceParamater[1]);
+							if(diceParamater[0] > 100)
+								event.reply('骰子太多拿不動啦！最多一次擲出100顆骰子');
                             if (diceParamater[0] != "" && diceParamater[1] != "") {
                                 var diceResult = getRandomInts(diceParamater[0], diceParamater[1]);
                                 console.log("diceResult=" + diceResult);
