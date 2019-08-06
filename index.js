@@ -186,15 +186,18 @@ bot.on('message', function(event) {
 					break;
 				case '單抽':
 				case '呼符':
-					let fgoSingleDrawResult = [0,0,0,0,0,0,0,0];
-					fgoSingleDrawResult = fgoDraw(fgoSingleDrawResult,false);
-					console.log("單抽結果:"+fgoSingleDrawResult);
-					for(let index = 0 ; index < fgoSingleDrawResult.length-1; index++){
-                        if(fgoSingleDrawResult[index]!=0){
+					drawResult = [0,0,0,0,0,0,0,0];
+					let singleDrawFive = {type:'image',originalContentUrl:'https://i.imgur.com/bZY2D65.jpg', previewImageUrl:'https://i.imgur.com/bZY2D65.jpg'};
+					drawResult = fgoDraw(drawResult,false);
+					console.log("單抽結果:"+drawResult);
+					for(let index = 0 ; index < drawResult.length-1; index++){
+                        if(drawResult[index]!=0){
 							console.log("index = "+index);
-                            returnText = fgoDrawResultText[index] + " : " + fgoSingleDrawResult[index];
+                            returnText = fgoDrawResultText[index] + " : " + drawResult[index];
                         }
                     }
+					if(drawResult[0] != 0 || drawResult[1] != 0)
+						returnText.push(singleDrawFive);
 					event.reply(returnText)
                     .catch(function(error){
                         console.log('error',error);
@@ -426,8 +429,15 @@ function fgoDraw10Times(result) {
 }
 
 function fgoDrawResultPicture(result, returnText){
-	let black = {type:'image',originalContentUrl: 'https://i.imgur.com/HSehNpD.gif',previewImageUrl: 'https://i.imgur.com/HSehNpD.gif'};
+	let black = {type:'image',originalContentUrl: 'https://truth.bahamut.com.tw/s01/201901/7716563a47b4196cafaeff388e8637fa.JPG',previewImageUrl: 'https://truth.bahamut.com.tw/s01/201901/7716563a47b4196cafaeff388e8637fa.JPG'};
+	let veryBlack = {type : 'image', originalContentUrl:'https://truth.bahamut.com.tw/s01/201902/a25b18fedf67c3fcbac442fea775c341.JPG',previewImageUrl:'https://truth.bahamut.com.tw/s01/201902/a25b18fedf67c3fcbac442fea775c341.JPG'};
+	let veryVeryBlack = {type:'image',originalContentUrl:'https://truth.bahamut.com.tw/s01/201902/0f595554af88c42c095243128ca912c5.JPG',previewImageUrl:'https://truth.bahamut.com.tw/s01/201902/0f595554af88c42c095243128ca912c5.JPG'};
+	let returnBlack = {type:'image',originalContentUrl:'https://truth.bahamut.com.tw/s01/201902/d5b4ee85bb697e896aeef32c1454161e.JPG',previewImageUrl:'https://truth.bahamut.com.tw/s01/201902/d5b4ee85bb697e896aeef32c1454161e.JPG'};
 	if(result[0] == 0 && result[1] == 0 && result[2] == 0)
 		returnText.push(black);
+	else if(result[result.length-1] != 0)
+		returnText.push(veryBlack);
+	else if(result[0] == 0 && result[1] == 1 && result[2] ==0)
+		returnText.push(returnBlack);
 	return returnText;
 }
