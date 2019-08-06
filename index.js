@@ -164,10 +164,6 @@ bot.on('message', function(event) {
                     //         }
                     //     });
                     //     break;
-				case 'PU':
-					console.log('currentPU = '+currentPU);
-					currentPU = event.message.text.slice(2,event.message.text.length);
-					break;
 				case '抽卡測試':
 					tenDrawTimes = 1000;
                     drawResult = [0,0,0,0,0,0,0,0];
@@ -279,7 +275,11 @@ bot.on('message', function(event) {
                                     console.log('Error', error);
                                 });;
                         }
-                    }
+                    }else if(msg.indexOf('PU') != -1){
+						console.log('currentPU = '+currentPU);
+						currentPU = msg.slice(2,msg.length);
+						console.log('currentPU = '+currentPU);
+					}
                     break;
             }
             break;
