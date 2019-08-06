@@ -426,7 +426,8 @@ function fgoDraw10Times(result) {
 }
 
 function fgoDrawResultPicture(result, returnText){
+	let black = {type:'image',originalContentUrl: 'https://i.imgur.com/HSehNpD.gif',previewImageUrl: 'https://i.imgur.com/HSehNpD.gif'};
 	if(result[0] == 0 && result[1] == 0 && result[2] == 0)
-		returnText.push("{type:'image',originalContentUrl: 'https://i.imgur.com/HSehNpD.gif',previewImageUrl: 'https://i.imgur.com/HSehNpD.gif'}");
+		returnText.push(black);
 	return returnText;
 }
