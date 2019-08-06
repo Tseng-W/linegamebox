@@ -432,7 +432,8 @@ function fgoDrawResultPicture(result, returnText){
 	let veryBlack = {type : 'image', originalContentUrl:'https://truth.bahamut.com.tw/s01/201902/a25b18fedf67c3fcbac442fea775c341.JPG',previewImageUrl:'https://truth.bahamut.com.tw/s01/201902/a25b18fedf67c3fcbac442fea775c341.JPG'};
 	let veryVeryBlack = {type:'image',originalContentUrl:'https://truth.bahamut.com.tw/s01/201902/0f595554af88c42c095243128ca912c5.JPG',previewImageUrl:'https://truth.bahamut.com.tw/s01/201902/0f595554af88c42c095243128ca912c5.JPG'};
 	let returnBlack = {type:'image',originalContentUrl:'https://truth.bahamut.com.tw/s01/201902/d5b4ee85bb697e896aeef32c1454161e.JPG',previewImageUrl:'https://truth.bahamut.com.tw/s01/201902/d5b4ee85bb697e896aeef32c1454161e.JPG'};
-	if(result[0] == 0 && result[1] == 0 && result[2] == 0)
+	let white = {type:'image',originalContentUrl:'https://i.imgur.com/bZY2D65.jpg', previewImageUrl:'https://i.imgur.com/bZY2D65.jpg'};
+	if(result[0] == 0 && result[1] == 0 && result[2] == 0 && result[3] == 0)
 		returnText.push(black);
 	else if(result[result.length-1] != 0)
 		returnText.push(veryBlack);
