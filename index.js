@@ -233,6 +233,7 @@ bot.on('message', function(event) {
                     break;
                 default:
 					console.log(event.message.text);
+					event.reply('(3 stars)');
                     var msg = event.message.text;
                     if (msg.indexOf('擲骰') != -1) {
                         console.log('收到擲骰請求');
