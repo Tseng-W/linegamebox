@@ -439,5 +439,7 @@ function fgoDrawResultPicture(result, returnText){
 		returnText.push(veryBlack);
 	else if(result[0] == 0 && result[1] == 1 && result[2] ==0)
 		returnText.push(returnBlack);
+	else if(result[0] != 0)
+		returnText.push(white);
 	return returnText;
 }
