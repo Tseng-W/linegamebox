@@ -128,11 +128,11 @@ bot.on('message', function(event) {
                     //         });;
                     //     break;
 					case 'Picture':
-						event.reply({
+						event.reply(["123456",{
 							type: 'image',
 							originalContentUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png',
 							previewImageUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png'
-						});
+						}]);
 						break;
                     // case 'Location':
                     //     event.reply({
