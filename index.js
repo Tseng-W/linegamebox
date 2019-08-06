@@ -5,6 +5,8 @@ const fgoDrawResultText = ["PU五星從者","非PU五星從者","五星禮裝","
 
 const { Client } = require('pg');
 
+var currentPU = "";
+
 // const config = {
 //     host: 'ec2-174-129-227-205.compute-1.amazonaws.com',
 //     // Do not hard code your username and password.
@@ -162,6 +164,10 @@ bot.on('message', function(event) {
                     //         }
                     //     });
                     //     break;
+				case 'PU':
+					console.log('currentPU = '+currentPU);
+					currentPU = event.message.text.slice(2,event.message.text.length);
+					break;
 				case '抽卡測試':
 					tenDrawTimes = 1000;
                     drawResult = [0,0,0,0,0,0,0,0];
