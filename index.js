@@ -204,13 +204,12 @@ bot.on('message', function(event) {
                     });
 					break;
                 //case '瘋狂拔草':
-                //    var crazyDraw = true;
+                //   var crazyDraw = true;
 				case '10連':
 				case '十連':
 				case '拔草':
                 case '測風向':
-                    if(crazyDraw) tenDrawTimes = 10;
-                    else tenDrawTimes = 1;
+					tenDrawTimes = 1;
                     drawResult = [0,0,0,0,0,0,0,0];
                     for(let index = 0; index < tenDrawTimes; index++)
                         drawResult = fgoDraw10Times(drawResult);
