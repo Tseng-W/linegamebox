@@ -203,8 +203,8 @@ bot.on('message', function(event) {
                         console.log('error',error);
                     });
 					break;
-                case '瘋狂拔草':
-                    var crazyDraw = true;
+                //case '瘋狂拔草':
+                //    var crazyDraw = true;
 				case '10連':
 				case '十連':
 				case '拔草':
