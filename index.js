@@ -219,6 +219,8 @@ bot.on('message', function(event) {
                             returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
                         }
                     }
+					returnText = fgoDrawResultPicture(drawResult,returnText);
+					
                     event.reply(returnText)
                     .then(function(data){
                         console.log('拔草大成功',data);
@@ -421,4 +423,10 @@ function fgoDraw10Times(result) {
         result = fgoDraw(result, isGuarantee);
     }
     return result;
+}
+
+function fgoDrawResultPicture(result, returnText){
+	if(result[0] == 0 && result[1] == 0 && result[2] == 0)
+		returnText.push("{type:'image',originalContentUrl: 'https://i.imgur.com/HSehNpD.gif',previewImageUrl: 'https://i.imgur.com/HSehNpD.gif'}");
+	return returnText;
 }
