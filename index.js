@@ -48,8 +48,13 @@ app.post('/linewebhook', linebotParser);
 
 bot.on('message', function(event) {
     var tenDrawTimes = 1;
+	var userName;
 	let returnText;
 	let drawResult;
+	event.source.profile()
+	.then(function(profile){
+		userName = profile.displayName;
+	});
     switch (event.message.type) {
         case 'text':
             switch (event.message.text) {
@@ -168,7 +173,7 @@ bot.on('message', function(event) {
                     drawResult = [0,0,0,0,0,0,0,0];
                     for(let index = 0; index < tenDrawTimes; index++)
                         drawResult = fgoDraw10Times(drawResult);
-                    returnText = [event.source.profile.displayName + " 十抽次數:"+tenDrawTimes];
+                    returnText = ["@"+userName + " 十抽次數:"+tenDrawTimes];
                     returnText.push("保底次數:"+drawResult[drawResult.length-1]);
                     returnText.push("抽卡結果:");
                     for(let index = 0 ; index < drawResult.length-1; index++){
