@@ -171,7 +171,7 @@ bot.on('message', function(event) {
 						drawResult = [0,0,0,0,0,0,0,0];
 						for(let index = 0; index < tenDrawTimes; index++)
 							drawResult = fgoDraw10Times(drawResult);
-						returnText = ["@"+profile.displayName + " 十抽次數:"+tenDrawTimes];
+						returnText = [profile.displayName + " 十抽次數:"+tenDrawTimes];
 						returnText.push("保底次數:"+drawResult[drawResult.length-1]);
 						returnText.push("抽卡結果:");
 						for(let index = 0 ; index < drawResult.length-1; index++){
@@ -189,22 +189,25 @@ bot.on('message', function(event) {
 				case '抖肉':
 				case '單抽':
 				case '呼符':
-					drawResult = [0,0,0,0,0,0,0,0];
-					let singleDrawFive = {type:'image',originalContentUrl:'https://i.imgur.com/bZY2D65.jpg', previewImageUrl:'https://i.imgur.com/bZY2D65.jpg'};
-					drawResult = fgoDraw(drawResult,false);
-					console.log("單抽結果:"+drawResult);
-					for(let index = 0 ; index < drawResult.length-1; index++){
-                        if(drawResult[index]!=0){
-							console.log("index = "+index);
-                            returnText = fgoDrawResultText[index] + " : " + drawResult[index];
-                        }
-                    }
-					if(drawResult[0] != 0 || drawResult[1] != 0)
-						returnText.push(singleDrawFive);
-					event.reply(returnText)
-                    .catch(function(error){
-                        console.log('error',error);
-                    });
+				event.source.profile()
+					.then(function(profile){
+						drawResult = [0,0,0,0,0,0,0,0];
+						let singleDrawFive = {type:'image',originalContentUrl:'https://i.imgur.com/bZY2D65.jpg', previewImageUrl:'https://i.imgur.com/bZY2D65.jpg'};
+						drawResult = fgoDraw(drawResult,false);
+						returnText.push(profile.displayName+" 單抽結果:"+drawResult);
+						for(let index = 0 ; index < drawResult.length-1; index++){
+							if(drawResult[index]!=0){
+								console.log("index = "+index);
+								returnText.push(fgoDrawResultText[index] + " : " + drawResult[index]);
+							}
+						}
+						if(drawResult[0] != 0 || drawResult[1] != 0)
+							returnText.push(singleDrawFive);
+						event.reply(returnText)
+						.catch(function(error){
+							console.log('error',error);
+						});
+					});
 					break;
                 //case '瘋狂拔草':
                 //   var crazyDraw = true;
@@ -212,27 +215,30 @@ bot.on('message', function(event) {
 				case '十連':
 				case '拔草':
                 case '測風向':
-					tenDrawTimes = 1;
-                    drawResult = [0,0,0,0,0,0,0,0];
-                    for(let index = 0; index < tenDrawTimes; index++)
-                        drawResult = fgoDraw10Times(drawResult);
-                    returnText = ["十抽次數:"+tenDrawTimes];
-                    returnText.push("保底次數:"+drawResult[drawResult.length-1]);
-                    returnText.push("抽卡結果:");
-                    for(let index = 0 ; index < drawResult.length-1; index++){
-                        if(drawResult[index]!=0){
-                            returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
-                        }
-                    }
-					returnText = fgoDrawResultPicture(drawResult,returnText);
-					
-                    event.reply(returnText)
-                    .then(function(data){
-                        console.log('拔草大成功',data);
-                    })
-                    .catch(function(error){
-                        console.log('error',error);
-                    });
+					event.source.profile()
+					.then(function(profile){
+						tenDrawTimes = 1;
+						drawResult = [0,0,0,0,0,0,0,0];
+						for(let index = 0; index < tenDrawTimes; index++)
+							drawResult = fgoDraw10Times(drawResult);
+						returnText = [profile.displayName+" 十抽次數:"+tenDrawTimes];
+						returnText.push("保底次數:"+drawResult[drawResult.length-1]);
+						returnText.push("抽卡結果:");
+						for(let index = 0 ; index < drawResult.length-1; index++){
+							if(drawResult[index]!=0){
+								returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
+							}
+						}
+						returnText = fgoDrawResultPicture(drawResult,returnText);
+						
+						event.reply(returnText)
+						.then(function(data){
+							console.log('拔草大成功',data);
+						})
+						.catch(function(error){
+							console.log('error',error);
+						});
+					});
                     break;
                 default:
 					console.log(event.message.text);
