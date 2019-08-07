@@ -168,7 +168,7 @@ bot.on('message', function(event) {
                     drawResult = [0,0,0,0,0,0,0,0];
                     for(let index = 0; index < tenDrawTimes; index++)
                         drawResult = fgoDraw10Times(drawResult);
-                    returnText = [event.source.user.userId + " 十抽次數:"+tenDrawTimes];
+                    returnText = [event.source.profile.displayName + " 十抽次數:"+tenDrawTimes];
                     returnText.push("保底次數:"+drawResult[drawResult.length-1]);
                     returnText.push("抽卡結果:");
                     for(let index = 0 ; index < drawResult.length-1; index++){
@@ -397,7 +397,7 @@ function getRandomInts(max, amount) {
 
 function fgoDraw(result, isGuarantee) {
     let randomNumber = Math.random() * 100;
-	console.log("randomNumber = "+randomNumber);
+	//console.log("randomNumber = "+randomNumber);
     let propertyLevel = 0;
     if (isGuarantee) {
         console.log("<<<<<<<此抽保底>>>>>>");
