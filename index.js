@@ -57,41 +57,40 @@ bot.on('message', function(event) {
                 let result;
                 let id;
                 let name;
-                    event.source.profile()
-                        .then(function(profile) {
-                            //嘗試取得用戶資料
-                            id = profile.userId;
-                            name = profile.displayName;
-                            result = getUserDataFromDatabase(id);
-                            console.log("Output result at event : " + getUserDataFromDatabase(id));
-                        })
-                        .then(function() {
-                            console.log("******RESULT******* = "+result);
-                            if(result === undefined){
-                                console.log("<<<<result === undefined");
-                                let str = getRandomInt(10);
-                                let hp = getRandomInt(50);
-                                let spd = getRandomInt(10);
-                                insertUserDataToDatabase(id,name,hp,str,spd);
-                                return event.reply([
-                                    "恭喜你成為新的冒險者~",
-                                    "初始化屬性...",
-                                    "生命："+hp+"  力量："+str+"  敏捷："+spd,
-                                    "註冊完畢！"
-                                    ]);
-                            }else{
-                                console.log("<<<<ELSE");
-                                return event.reply([
-                                    "冒險者 "+name+" 的屬性是：",
-                                    "生命："+result.hp+"  力量："+result.str+"  敏捷："+result.spd
-                                    ]);
-                            }
-                        })
-                        .catch(function(error) {
-                            console.log(error);
-                            return event.reply('error');
-                        });
-
+					event.source.profile()
+						.then(function(profile) {
+							//嘗試取得用戶資料
+							id = profile.userId;
+							name = profile.displayName;
+							result = getUserDataFromDatabase(id);
+							console.log("Output result at event : " + result);
+						})
+						.then(function() {
+							console.log("******RESULT******* = "+result);
+							if(result === undefined){
+								console.log("<<<<result === undefined");
+								let str = getRandomInt(10);
+								let hp = getRandomInt(50);
+								let spd = getRandomInt(10);
+								insertUserDataToDatabase(id,name,hp,str,spd);
+								return event.reply([
+									"恭喜你成為新的冒險者~",
+									"初始化屬性...",
+									"生命："+hp+"  力量："+str+"  敏捷："+spd,
+									"註冊完畢！"
+									]);
+							}else{
+								console.log("<<<<ELSE");
+								return event.reply([
+									"冒險者 "+name+" 的屬性是：",
+									"生命："+result.hp+"  力量："+result.str+"  敏捷："+result.spd
+									]);
+							}
+						})
+						.catch(function(error) {
+							console.log(error);
+							return event.reply('error');
+						});
                     break;
                 case 'inital':
                     event.source.profile()
@@ -129,13 +128,13 @@ bot.on('message', function(event) {
                     //             return event.reply('error');
                     //         });;
                     //     break;
-					case 'Picture':
-						event.reply(["123456",{
-							type: 'image',
-							originalContentUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png',
-							previewImageUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png'
-						}]);
-						break;
+					//case 'Picture':
+					//	event.reply(["123456",{
+					//		type: 'image',
+					//		originalContentUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png',
+					//		previewImageUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png'
+					//	}]);
+					//	break;
                     // case 'Location':
                     //     event.reply({
                     //         type: 'location',
@@ -169,7 +168,7 @@ bot.on('message', function(event) {
                     drawResult = [0,0,0,0,0,0,0,0];
                     for(let index = 0; index < tenDrawTimes; index++)
                         drawResult = fgoDraw10Times(drawResult);
-                    returnText = ["十抽次數:"+tenDrawTimes];
+                    returnText = [event.source.user.userId + " 十抽次數:"+tenDrawTimes];
                     returnText.push("保底次數:"+drawResult[drawResult.length-1]);
                     returnText.push("抽卡結果:");
                     for(let index = 0 ; index < drawResult.length-1; index++){
