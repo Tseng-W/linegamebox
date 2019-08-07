@@ -194,7 +194,7 @@ bot.on('message', function(event) {
 						drawResult = [0,0,0,0,0,0,0,0];
 						let singleDrawFive = {type:'image',originalContentUrl:'https://i.imgur.com/bZY2D65.jpg', previewImageUrl:'https://i.imgur.com/bZY2D65.jpg'};
 						drawResult = fgoDraw(drawResult,false);
-						returnText.push(profile.displayName+" 單抽結果:"+drawResult);
+						returnText=[profile.displayName+" 單抽結果:"+drawResult];
 						for(let index = 0 ; index < drawResult.length-1; index++){
 							if(drawResult[index]!=0){
 								console.log("index = "+index);
