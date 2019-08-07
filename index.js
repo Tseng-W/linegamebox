@@ -51,10 +51,6 @@ bot.on('message', function(event) {
 	var userName;
 	let returnText;
 	let drawResult;
-	event.source.profile()
-	.then(function(profile){
-		userName = profile.displayName;
-	});
     switch (event.message.type) {
         case 'text':
             switch (event.message.text) {
@@ -169,27 +165,29 @@ bot.on('message', function(event) {
                     //     });
                     //     break;
 				case '抽卡測試':
-					tenDrawTimes = 1000;
-                    drawResult = [0,0,0,0,0,0,0,0];
-                    for(let index = 0; index < tenDrawTimes; index++)
-                        drawResult = fgoDraw10Times(drawResult);
-                    returnText = ["@"+userName + " 十抽次數:"+tenDrawTimes];
-                    returnText.push("保底次數:"+drawResult[drawResult.length-1]);
-                    returnText.push("抽卡結果:");
-                    for(let index = 0 ; index < drawResult.length-1; index++){
-                        if(drawResult[index]!=0){
-                            returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
-                        }
-                    }
-                    event.reply(returnText)
-                    .then(function(data){
-                        console.log('拔草大成功',data);
-                    })
-                    .catch(function(error){
-                        console.log('error',error);
-                    });
+					event.source.profile()
+					.then(function(profile){
+						tenDrawTimes = 1000;
+						drawResult = [0,0,0,0,0,0,0,0];
+						for(let index = 0; index < tenDrawTimes; index++)
+							drawResult = fgoDraw10Times(drawResult);
+						returnText = ["@"+profile + " 十抽次數:"+tenDrawTimes];
+						returnText.push("保底次數:"+drawResult[drawResult.length-1]);
+						returnText.push("抽卡結果:");
+						for(let index = 0 ; index < drawResult.length-1; index++){
+							if(drawResult[index]!=0){
+								returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
+							}
+						}
+						event.reply(returnText)
+						.then(function(data){
+							console.log('拔草大成功',data);
+						})
+						.catch(function(error){
+							console.log('error',error);
+						});
+					}
                     break;
-					break;
 				case '抽卡':
 				case '抖肉':
 				case '單抽':
