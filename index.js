@@ -186,7 +186,10 @@ bot.on('message', function(event) {
 						.catch(function(error){
 							console.log('error',error);
 						});
-					}
+					})
+					.catch(err){
+					console.log(err);
+					};
                     break;
 				case '抽卡':
 				case '抖肉':
