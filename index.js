@@ -171,7 +171,7 @@ bot.on('message', function(event) {
 						drawResult = [0,0,0,0,0,0,0,0];
 						for(let index = 0; index < tenDrawTimes; index++)
 							drawResult = fgoDraw10Times(drawResult);
-						returnText = ["@"+profile + " 十抽次數:"+tenDrawTimes];
+						returnText = ["@"+profile.displayName + " 十抽次數:"+tenDrawTimes];
 						returnText.push("保底次數:"+drawResult[drawResult.length-1]);
 						returnText.push("抽卡結果:");
 						for(let index = 0 ; index < drawResult.length-1; index++){
