@@ -182,14 +182,8 @@ bot.on('message', function(event) {
 						event.reply(returnText)
 						.then(function(data){
 							console.log('拔草大成功',data);
-						})
-						.catch(function(error){
-							console.log('error',error);
 						});
-					})
-					.catch(err){
-					console.log(err);
-					};
+					});
                     break;
 				case '抽卡':
 				case '抖肉':
