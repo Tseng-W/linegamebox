@@ -167,7 +167,7 @@ bot.on('message', function(event) {
 				case '抽卡測試':
 					event.source.profile()
 					.then(function(profile){
-						tenDrawTimes = 1000;
+						tenDrawTimes = 10000;
 						drawResult = [0,0,0,0,0,0,0,0];
 						for(let index = 0; index < tenDrawTimes; index++)
 							drawResult = fgoDraw10Times(drawResult);
