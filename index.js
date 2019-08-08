@@ -6,7 +6,7 @@ const fgoDrawResultText = ["PU五星從者","非PU五星從者","五星禮裝","
 
 const { Client } = require('pg');
 
-consle.log(db);
+console.log(db);
 
 var currentPU = "";
 
