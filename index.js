@@ -239,6 +239,8 @@ bot.on('message', function(event) {
 					break;
                 //case '瘋狂拔草':
                 //   var crazyDraw = true;
+				case '10抽':
+				case '十抽':
 				case '10連':
 				case '十連':
 				case '拔草':
