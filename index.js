@@ -481,13 +481,13 @@ function fgoDrawResultPicture(result, returnText){
 	let veryVeryBlack = {type:'image',originalContentUrl:'https://truth.bahamut.com.tw/s01/201902/0f595554af88c42c095243128ca912c5.JPG',previewImageUrl:'https://truth.bahamut.com.tw/s01/201902/0f595554af88c42c095243128ca912c5.JPG'};
 	let returnBlack = {type:'image',originalContentUrl:'https://truth.bahamut.com.tw/s01/201902/d5b4ee85bb697e896aeef32c1454161e.JPG',previewImageUrl:'https://truth.bahamut.com.tw/s01/201902/d5b4ee85bb697e896aeef32c1454161e.JPG'};
 	let white = {type:'image',originalContentUrl:'https://i.imgur.com/bZY2D65.jpg', previewImageUrl:'https://i.imgur.com/bZY2D65.jpg'};
-	if(result[0] == 0 && result[1] == 0 && result[2] == 0 && result[3] == 0)
+	if(result[0] != 0)
+		returnText.push(white);
+	else if(result[0] == 0 && result[1] == 0 && result[2] == 0 && result[3] == 0)
 		returnText.push(black);
 	else if(result[result.length-1] != 0)
 		returnText.push(veryBlack);
 	else if(result[0] == 0 && result[1] == 1 && result[2] ==0)
 		returnText.push(returnBlack);
-	else if(result[0] != 0)
-		returnText.push(white);
 	return returnText;
 }
