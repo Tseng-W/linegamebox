@@ -185,6 +185,34 @@ bot.on('message', function(event) {
 						});
 					});
                     break;
+				case '1單':
+				case '一單':
+					event.source.profile()
+					.then(function(profile){
+						tenDrawTimes = 5;
+						drawResult = [0,0,0,0,0,0,0,0];
+						for(let index = 0; index < tenDrawTimes; index++)
+							drawResult = fgoDraw10Times(drawResult);
+						drawResult = fgoDraw(drawResult,false);
+						returnText = [profile.displayName+" 抽卡次數: 51次 (10連*5+單抽)"];
+						returnText.push("保底次數:"+drawResult[drawResult.length-1]);
+						returnText.push("抽卡結果:");
+						for(let index = 0 ; index < drawResult.length-1; index++){
+							if(drawResult[index]!=0){
+								returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
+							}
+						}
+						returnText = fgoDrawResultPicture(drawResult,returnText);
+						
+						event.reply(returnText)
+						.then(function(data){
+							console.log('拔草大成功',data);
+						})
+						.catch(function(error){
+							console.log('error',error);
+						});
+					});
+					break;
 				case '抽卡':
 				case '抖肉':
 				case '單抽':
