@@ -7,5 +7,5 @@ const pg = 'postgres://yfqwtlcqklltsf:123fcb85f17cc4233729ea77e0fa69e5a8048e5269
 const db = pgPromise(pg);
 
 module.export = {
-    pgPromise, db;
+    pgPromise, db
 };
