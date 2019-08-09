@@ -222,11 +222,12 @@ bot.on('message', function(event) {
 				case '一單':
 					event.source.profile()
 					.then(function(profile){
-						tenDrawTimes = 5;
-						drawResult = [0,0,0,0,0,0,0,0];
-						for(let index = 0; index < tenDrawTimes; index++)
-							drawResult = fgoUtil.fgoDraw10Times(drawResult);
-						drawResult = fgoUtil.fgoDraw(drawResult,false);
+
+						// tenDrawTimes = 5;
+      //                   for(let index = 0; index < tenDrawTimes; index++)
+						// 	drawResult = fgoUtil.fgoDraw10Times(drawResult);
+						// drawResult = fgoUtil.fgoDraw(drawResult,false);
+                        drawResult = fgoUtil.getDrawResult(51);
 						returnText = [profile.displayName+" 抽卡次數: 51次 (10連*5+單抽)"];
 						returnText.push("保底次數:"+drawResult[drawResult.length-1]);
 						returnText.push("抽卡結果:");

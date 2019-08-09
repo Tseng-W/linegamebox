@@ -3,20 +3,40 @@ const fgoDrawResultText = ["PU五星從者", "非PU五星從者", "五星禮裝"
 
 var tenDrawTimes = 1;
 var returnText;
-var drawResult;
+var drawResult = [0,0,0,0,0,0,0,0];
 
 module.exports = {
     fgoDraw: function(result, isGuarantee) {
+    	initial();
         return fgoDraw(result, isGuarantee);
     },
 
     fgoDraw10Times: function(result) {
+    	initial();
     	return fgoDraw10Times(result);
     },
 
     fgoDrawResultPicture: function(result, returnText) {
+    	initial();
     	return fgoDrawResultPicture(result, returnText);
+    },
+    getDrawResult: function(times){
+    	initial();
+    	while(times>10){
+    		drawResult = fgoDraw10Times(drawResult);
+    		times-=10;
+    	}
+    	while(times > 0){
+    		drawResult = fgoDraw(drawResult,false);
+    		times--;
+    	}
+    	return drawResult;
     }
+}
+
+function initial(){
+	drawResult = [0,0,0,0,0,0,0,0];
+	returnText = "";
 }
 
 function fgoDraw(result, isGuarantee) {
