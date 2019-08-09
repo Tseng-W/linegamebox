@@ -12,6 +12,14 @@ console.log('connection ok');
 
 module.export = db;
 
+pgp(connectionString).any(`SELECT * FROM public."HERO_DATA"`)
+                        .then(data=>{
+                            console.log(data);
+                        })
+                        .catch(err=>{
+
+                        });
+
 // db.on('error', function(err){
 //     console.error("connection error;", err);
-// });
+// });	
