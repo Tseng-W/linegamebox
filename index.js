@@ -170,18 +170,19 @@ bot.on('message', function(event) {
 				case '抽卡測試':
 					event.source.profile()
 					.then(function(profile){
-						tenDrawTimes = 10000;
-						drawResult = [0,0,0,0,0,0,0,0];
-						for(let index = 0; index < tenDrawTimes; index++)
-							drawResult = fgoDraw10Times(drawResult);
-						returnText = [profile.displayName + " 十抽次數:"+tenDrawTimes];
-						returnText.push("保底次數:"+drawResult[drawResult.length-1]);
-						returnText.push("抽卡結果:");
-						for(let index = 0 ; index < drawResult.length-1; index++){
-							if(drawResult[index]!=0){
-								returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
-							}
-						}
+						// tenDrawTimes = 10000;
+						// drawResult = [0,0,0,0,0,0,0,0];
+						// for(let index = 0; index < tenDrawTimes; index++)
+						// 	drawResult = fgoDraw10Times(drawResult);
+						// returnText = [profile.displayName + " 十抽次數:"+tenDrawTimes];
+						// returnText.push("保底次數:"+drawResult[drawResult.length-1]);
+						// returnText.push("抽卡結果:");
+						// for(let index = 0 ; index < drawResult.length-1; index++){
+						// 	if(drawResult[index]!=0){
+						// 		returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
+						// 	}
+						// }
+                        returnText = fgoUtil.getDrawResult(profile.displayName,100000);
 						event.reply(returnText)
 						.then(function(data){
 							console.log('拔草大成功',data);
@@ -191,21 +192,22 @@ bot.on('message', function(event) {
                 case '抽到有':
                     event.source.profile()
                     .then(function(profile){
-                        drawResult = [0,0,0,0,0,0,0,0];
-                        let totalDrawTimes = 0;
-                        do{
-                            totalDrawTimes++
-                            drawResult = fgoDraw10Times(drawResult);
-                        }while(drawResult[0]==0);
-                        returnText = [profile.displayName+" 10抽次數: "+totalDrawTimes+"次！"];
-                        returnText.push("課了 "+Math.ceil(totalDrawTimes/5.1)+" 單！");
-                        returnText.push("保底次數:"+drawResult[drawResult.length-1]);
-                        returnText.push("抽卡結果:");
-                        for(let index = 0 ; index < drawResult.length-1; index++){
-                            if(drawResult[index]!=0){
-                                returnText[3] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
-                            }
-                        }
+                        // drawResult = [0,0,0,0,0,0,0,0];
+                        // let totalDrawTimes = 0;
+                        // do{
+                        //     totalDrawTimes++
+                        //     drawResult = fgoDraw10Times(drawResult);
+                        // }while(drawResult[0]==0);
+                        // returnText = [profile.displayName+" 10抽次數: "+totalDrawTimes+"次！"];
+                        // returnText.push("課了 "+Math.ceil(totalDrawTimes/5.1)+" 單！");
+                        // returnText.push("保底次數:"+drawResult[drawResult.length-1]);
+                        // returnText.push("抽卡結果:");
+                        // for(let index = 0 ; index < drawResult.length-1; index++){
+                        //     if(drawResult[index]!=0){
+                        //         returnText[3] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
+                        //     }
+                        // }
+                        returnText = fgoUtil.getDrawResult(profile.displayName,-1);
                         event.reply(returnText)
                         .then(function(data){
                             console.log('拔草大成功',data);
@@ -222,22 +224,8 @@ bot.on('message', function(event) {
 				case '一單':
 					event.source.profile()
 					.then(function(profile){
-
-						// tenDrawTimes = 5;
-      //                   for(let index = 0; index < tenDrawTimes; index++)
-						// 	drawResult = fgoUtil.fgoDraw10Times(drawResult);
-						// drawResult = fgoUtil.fgoDraw(drawResult,false);
                         returnText = fgoUtil.getDrawResult(profile.displayName,51);
-						// returnText = [profile.displayName+" 抽卡次數: 51次 (10連*5+單抽)"];
-						// returnText.push("保底次數:"+drawResult[drawResult.length-1]);
-						// returnText.push("抽卡結果:");
-						// for(let index = 0 ; index < drawResult.length-1; index++){
-						// 	if(drawResult[index]!=0){
-						// 		returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
-						// 	}
-						// }
-						// returnText = fgoUtil.fgoDrawResultPicture(drawResult,returnText);
-						
+
 						event.reply(returnText)
 						.then(function(data){
 							console.log('拔草大成功',data);
@@ -253,18 +241,20 @@ bot.on('message', function(event) {
 				case '呼符':
 				event.source.profile()
 					.then(function(profile){
-						drawResult = [0,0,0,0,0,0,0,0];
-						let singleDrawFive = {type:'image',originalContentUrl:'https://i.imgur.com/bZY2D65.jpg', previewImageUrl:'https://i.imgur.com/bZY2D65.jpg'};
-						drawResult = fgoDraw(drawResult,false);
-						returnText=[profile.displayName+" 單抽結果:"];
-						for(let index = 0 ; index < drawResult.length-1; index++){
-							if(drawResult[index]!=0){
-								console.log("index = "+index);
-								returnText.push(fgoDrawResultText[index] + " : " + drawResult[index]);
-							}
-						}
-						if(drawResult[0] != 0 || drawResult[1] != 0)
-							returnText.push(singleDrawFive);
+						// drawResult = [0,0,0,0,0,0,0,0];
+						// let singleDrawFive = {type:'image',originalContentUrl:'https://i.imgur.com/bZY2D65.jpg', previewImageUrl:'https://i.imgur.com/bZY2D65.jpg'};
+						// drawResult = fgoDraw(drawResult,false);
+						// returnText=[profile.displayName+" 單抽結果:"];
+						// for(let index = 0 ; index < drawResult.length-1; index++){
+						// 	if(drawResult[index]!=0){
+						// 		console.log("index = "+index);
+						// 		returnText.push(fgoDrawResultText[index] + " : " + drawResult[index]);
+						// 	}
+						// }
+						// if(drawResult[0] != 0 || drawResult[1] != 0)
+						// 	returnText.push(singleDrawFive);
+                        returnText = fgoUtil.getDrawResult(profile.displayName,1);
+
 						event.reply(returnText)
 						.catch(function(error){
 							console.log('error',error);
@@ -281,20 +271,20 @@ bot.on('message', function(event) {
                 case '測風向':
 					event.source.profile()
 					.then(function(profile){
-						tenDrawTimes = 1;
-						drawResult = [0,0,0,0,0,0,0,0];
-						for(let index = 0; index < tenDrawTimes; index++)
-							drawResult = fgoDraw10Times(drawResult);
-						returnText = [profile.displayName+" 十抽次數:"+tenDrawTimes];
-						returnText.push("保底次數:"+drawResult[drawResult.length-1]);
-						returnText.push("抽卡結果:");
-						for(let index = 0 ; index < drawResult.length-1; index++){
-							if(drawResult[index]!=0){
-								returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
-							}
-						}
-						returnText = fgoDrawResultPicture(drawResult,returnText);
-						
+						// tenDrawTimes = 1;
+						// drawResult = [0,0,0,0,0,0,0,0];
+						// for(let index = 0; index < tenDrawTimes; index++)
+						// 	drawResult = fgoDraw10Times(drawResult);
+						// returnText = [profile.displayName+" 十抽次數:"+tenDrawTimes];
+						// returnText.push("保底次數:"+drawResult[drawResult.length-1]);
+						// returnText.push("抽卡結果:");
+						// for(let index = 0 ; index < drawResult.length-1; index++){
+						// 	if(drawResult[index]!=0){
+						// 		returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
+						// 	}
+						// }
+						// returnText = fgoDrawResultPicture(drawResult,returnText);
+						returnText = fgoUtil.getDrawResult(profile.displayName,10);
 						event.reply(returnText)
 						.then(function(data){
 							console.log('拔草大成功',data);
