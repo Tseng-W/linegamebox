@@ -1,13 +1,12 @@
 const linebot = require('linebot');
 const express = require('express');
 const pgp = require('./pgp.js');
+const fgoUtil = require('./fgoUtil.js');
 const fgoDrawProperty = [0.7,0.3,4,3,12,40,40];
 const fgoDrawResultText = ["PU五星從者","非PU五星從者","五星禮裝","四星從者","四星禮裝","三星禮裝","三星從者"];
 
 const { Client } = require('pg');
  
-console.log(pgp.db);
-
 var currentPU = "";
 
 // const config = {
@@ -121,13 +120,7 @@ bot.on('message', function(event) {
                         });
                     break;
                     case 'PGP':
-                        pgp.db.any(`SELECT * FROM public."HERO_DATA"`)
-                        .then(data=>{
-                            console.log(data);
-                        })
-                        .catch(err=>{
 
-                        });
                     break;
                     // case 'Member':
                     //     event.source.member()
@@ -229,8 +222,8 @@ bot.on('message', function(event) {
 						tenDrawTimes = 5;
 						drawResult = [0,0,0,0,0,0,0,0];
 						for(let index = 0; index < tenDrawTimes; index++)
-							drawResult = fgoDraw10Times(drawResult);
-						drawResult = fgoDraw(drawResult,false);
+							drawResult = fgoUtil.fgoDraw10Times(drawResult);
+						drawResult = fgoUtil.fgoDraw(drawResult,false);
 						returnText = [profile.displayName+" 抽卡次數: 51次 (10連*5+單抽)"];
 						returnText.push("保底次數:"+drawResult[drawResult.length-1]);
 						returnText.push("抽卡結果:");
@@ -239,7 +232,7 @@ bot.on('message', function(event) {
 								returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
 							}
 						}
-						returnText = fgoDrawResultPicture(drawResult,returnText);
+						returnText = fgoUtil.fgoDrawResultPicture(drawResult,returnText);
 						
 						event.reply(returnText)
 						.then(function(data){
