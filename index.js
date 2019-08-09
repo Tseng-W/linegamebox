@@ -108,7 +108,6 @@ bot.on('message', function(event) {
                     INSERT INTO inventory (name, quantity) VALUES ('orange', 154);
                     INSERT INTO inventory (name, quantity) VALUES ('apple', 100);
                     `;
-                    console.log(db.any(query));
                     client
                         .query(query)
                         .then(() => {
@@ -119,6 +118,15 @@ bot.on('message', function(event) {
                         .then(() => {
                             console.log('Finished execution, exiting now');
                             process.exit();
+                        });
+                    break;
+                    case 'PGP':
+                        db.any(`SELECT * FROM public."HERO_DATA"`)
+                        .then(data=>{
+                            console.log(data);
+                        })
+                        .catch(err=>{
+
                         });
                     break;
                     // case 'Member':
