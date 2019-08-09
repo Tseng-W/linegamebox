@@ -9,6 +9,8 @@ var currentPU = "阿比";
 
 module.exports = {
 	getCurrentPU: function(){
+		console.log(db);
+		console.log(db.asd());
 		let dbResult = db.getHerosByStar(5);
 		console.log(dbResult);
 	},

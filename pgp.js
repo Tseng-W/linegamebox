@@ -19,5 +19,8 @@ module.export = {
 			console.log(err);
 			return null;
 		})
+	},	
+	asd: function(){
+		return 'asd';
 	}
 };
