@@ -215,6 +215,9 @@ bot.on('message', function(event) {
                         });
                     });
                     break;
+                case 'asd':
+                fgoUtil.asd();
+                    break;
 				case '1單':
 				case '一單':
 					event.source.profile()
