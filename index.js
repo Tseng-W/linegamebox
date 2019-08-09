@@ -199,6 +199,7 @@ bot.on('message', function(event) {
                         returnText = [profile.displayName+" 10抽次數: "+totalDrawTimes+"次！"];
                         returnText.push("課了 "+Math.ceil(totalDrawTimes/5.1)+" 單！");
                         returnText.push("保底次數:"+drawResult[drawResult.length-1]);
+                        returnText.push("抽卡結果:");
                         for(let index = 0 ; index < drawResult.length-1; index++){
                             if(drawResult[index]!=0){
                                 returnText[3] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
