@@ -1,12 +1,12 @@
 const linebot = require('linebot');
 const express = require('express');
-const db = require('./db.js');
+const pgp = require('./pgp.js');
 const fgoDrawProperty = [0.7,0.3,4,3,12,40,40];
 const fgoDrawResultText = ["PU五星從者","非PU五星從者","五星禮裝","四星從者","四星禮裝","三星禮裝","三星從者"];
 
 const { Client } = require('pg');
  
-console.log(db);
+console.log(pgp.db);
 
 var currentPU = "";
 
@@ -121,7 +121,7 @@ bot.on('message', function(event) {
                         });
                     break;
                     case 'PGP':
-                        db.any(`SELECT * FROM public."HERO_DATA"`)
+                        pgp.db.any(`SELECT * FROM public."HERO_DATA"`)
                         .then(data=>{
                             console.log(data);
                         })
