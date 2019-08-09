@@ -7,8 +7,7 @@ const pgp = require('pg-promise')(initOptions);
 const connectionString = process.env.DATABASE_URL;
 const db = pgp(connectionString);
 
-console.log('process.env.DATABASE_URL = '+process.env.DATABASE_URL);
-console.log('connection ok');
+// console.log('process.env.DATABASE_URL = '+process.env.DATABASE_URL);
 
 module.export = {
 	getHerosByStar: function(star){
