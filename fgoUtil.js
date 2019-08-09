@@ -41,7 +41,7 @@ module.exports = {
     	if(tenDrawTimes == 0)
     		returnText = [userName +" 抽卡總次數: "+ times+"次。"];
     	else returnText = [userName +" 抽卡總次數: "+ times+"次。  課了 "+ Math.ceil(tenDrawTimes*30/155)+" 單！"];
-    	let list;
+    	let list = "";
     	for(let index = 0 ; index < drawResult.length-1; index++){
 			if(drawResult[index]!=0){
 				list += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
