@@ -22,11 +22,3 @@ module.export = {
 		})
 	}
 };
-
-pgp(connectionString).any(`SELECT * FROM public."HERO_DATA"`)
-                        .then(data=>{
-                            console.log(data);
-                        })
-                        .catch(err=>{
-
-                        });

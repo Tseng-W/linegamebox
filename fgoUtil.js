@@ -9,7 +9,7 @@ var currentPU = "阿比";
 
 module.exports = {
 	getCurrentPU: function(){
-		console.log(db.getHeroByStart(5));
+		console.log(db.getHerosByStar(5));
 	},
     getDrawResult: function(userName, times){
     	initial();
