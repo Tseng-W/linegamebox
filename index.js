@@ -108,6 +108,7 @@ bot.on('message', function(event) {
                     INSERT INTO inventory (name, quantity) VALUES ('orange', 154);
                     INSERT INTO inventory (name, quantity) VALUES ('apple', 100);
                     `;
+                    console.log(db.any(query));
                     client
                         .query(query)
                         .then(() => {
@@ -185,6 +186,32 @@ bot.on('message', function(event) {
 							console.log('拔草大成功',data);
 						});
 					});
+                    break;
+                case '抽到有':
+                    event.source.profile()
+                    .then(function(profile){
+                        drawResult = [0,0,0,0,0,0,0,0];
+                        let totalDrawTimes = 0;
+                        do{
+                            totalDrawTimes++
+                            drawResult = fgoDraw10Times(drawResult);
+                        }while(drawResult[0]==0);
+                        returnText = [profile.displayName+" 10抽次數: "+totalDrawTimes+"次！"];
+                        returnText.push("課了 "+Math.ceil(totalDrawTimes/5.1)+" 單！");
+                        returnText.push("保底次數:"+drawResult[drawResult.length-1]);
+                        for(let index = 0 ; index < drawResult.length-1; index++){
+                            if(drawResult[index]!=0){
+                                returnText[3] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
+                            }
+                        }
+                        event.reply(returnText)
+                        .then(function(data){
+                            console.log('拔草大成功',data);
+                        })
+                        .catch(function(error){
+                            console.log('error',error);
+                        });
+                    });
                     break;
 				case '1單':
 				case '一單':
