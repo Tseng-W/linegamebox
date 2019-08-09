@@ -227,16 +227,16 @@ bot.on('message', function(event) {
       //                   for(let index = 0; index < tenDrawTimes; index++)
 						// 	drawResult = fgoUtil.fgoDraw10Times(drawResult);
 						// drawResult = fgoUtil.fgoDraw(drawResult,false);
-                        drawResult = fgoUtil.getDrawResult(51);
-						returnText = [profile.displayName+" 抽卡次數: 51次 (10連*5+單抽)"];
-						returnText.push("保底次數:"+drawResult[drawResult.length-1]);
-						returnText.push("抽卡結果:");
-						for(let index = 0 ; index < drawResult.length-1; index++){
-							if(drawResult[index]!=0){
-								returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
-							}
-						}
-						returnText = fgoUtil.fgoDrawResultPicture(drawResult,returnText);
+                        returnText = fgoUtil.getDrawResult(profile.displayName,51);
+						// returnText = [profile.displayName+" 抽卡次數: 51次 (10連*5+單抽)"];
+						// returnText.push("保底次數:"+drawResult[drawResult.length-1]);
+						// returnText.push("抽卡結果:");
+						// for(let index = 0 ; index < drawResult.length-1; index++){
+						// 	if(drawResult[index]!=0){
+						// 		returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
+						// 	}
+						// }
+						// returnText = fgoUtil.fgoDrawResultPicture(drawResult,returnText);
 						
 						event.reply(returnText)
 						.then(function(data){

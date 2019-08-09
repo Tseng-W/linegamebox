@@ -1,7 +1,7 @@
 const fgoDrawProperty = [0.7, 0.3, 4, 3, 12, 40, 40];
 const fgoDrawResultText = ["PU五星從者", "非PU五星從者", "五星禮裝", "四星從者", "四星禮裝", "三星禮裝", "三星從者"];
 
-var tenDrawTimes = 1;
+var tenDrawTimes = 0;
 var returnText;
 var drawResult = [0,0,0,0,0,0,0,0];
 
@@ -20,23 +20,41 @@ module.exports = {
     	initial();
     	return fgoDrawResultPicture(result, returnText);
     },
-    getDrawResult: function(times){
+    getDrawResult: function(userName, times){
     	initial();
-    	while(times>10){
-    		drawResult = fgoDraw10Times(drawResult);
-    		times-=10;
+    	if(times > 0){
+	    	while(times>10){
+	    		drawResult = fgoDraw10Times(drawResult);
+	    		times-=10;
+	    	}
+	    	while(times > 0){
+	    		drawResult = fgoDraw(drawResult,false);
+	    		times--;
+	    	}
+    	}else{
+    		do{
+    			drawResult = fgoDraw10Times(drawResult);
+    			tenDrawTimes++;
+    		}while(drawResult[0] == 0);
     	}
-    	while(times > 0){
-    		drawResult = fgoDraw(drawResult,false);
-    		times--;
-    	}
-    	return drawResult;
-    }
+    	if(tenDrawTimes == 0)
+    		returnText = userName +" 抽卡總次數: "+ times+"次。";
+    	else returnText = userName +" 抽卡總次數: "+ times+"次。  課了 "+ Math.ceil(tenDrawTimes*30/155)+" 單！";
+    	returnText.push("抽卡結果:");
+		for(let index = 0 ; index < drawResult.length-1; index++){
+			if(drawResult[index]!=0){
+				returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
+			}
+		}
+		returnText = fgoDrawResultPicture(drawResult,returnText);
+		return returnText;
+    },
 }
 
 function initial(){
 	drawResult = [0,0,0,0,0,0,0,0];
 	returnText = "";
+	tenDrawTimes = 0;
 }
 
 function fgoDraw(result, isGuarantee) {
