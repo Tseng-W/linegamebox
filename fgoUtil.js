@@ -1,25 +1,16 @@
+console db = require('./pgp.js');
 const fgoDrawProperty = [0.7, 0.3, 4, 3, 12, 40, 40];
 const fgoDrawResultText = ["PU五星從者", "非PU五星從者", "五星禮裝", "四星從者", "四星禮裝", "三星禮裝", "三星從者"];
 
 var tenDrawTimes = 0;
 var returnText;
 var drawResult = [0,0,0,0,0,0,0,0];
+var currentPU = "阿比";
 
 module.exports = {
-    fgoDraw: function(result, isGuarantee) {
-    	initial();
-        return fgoDraw(result, isGuarantee);
-    },
-
-    fgoDraw10Times: function(result) {
-    	initial();
-    	return fgoDraw10Times(result);
-    },
-
-    fgoDrawResultPicture: function(result, returnText) {
-    	initial();
-    	return fgoDrawResultPicture(result, returnText);
-    },
+	getCurrentPU: function(){
+		console.log(db.getHeroByStart(5));
+	},
     getDrawResult: function(userName, times){
     	initial();
     	let lastTimes = times;

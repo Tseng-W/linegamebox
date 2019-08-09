@@ -1,34 +1,6 @@
 const linebot = require('linebot');
 const express = require('express');
-const pgp = require('./pgp.js');
 const fgoUtil = require('./fgoUtil.js');
-const fgoDrawProperty = [0.7,0.3,4,3,12,40,40];
-const fgoDrawResultText = ["PU五星從者","非PU五星從者","五星禮裝","四星從者","四星禮裝","三星禮裝","三星從者"];
-
-const { Client } = require('pg');
- 
-var currentPU = "";
-
-// const config = {
-//     host: 'ec2-174-129-227-205.compute-1.amazonaws.com',
-//     // Do not hard code your username and password.
-//     // Consider using Node environment variables.
-//     user: 'yfqwtlcqklltsf',     
-//     password: '123fcb85f17cc4233729ea77e0fa69e5a8048e5269a6c3af49e576867c59be5d',
-//     database: 'dai9s7ljceh6ei',
-//     port: 5432,
-//     ssl: true
-// };
-
-const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: true,
-});
-
-
-client.connect(err => {
-    if (err) throw err;
-});
 
 const bot = linebot({
     channelId: process.env.CHANNEL_ID,
@@ -99,28 +71,8 @@ bot.on('message', function(event) {
                             insertUserDataToDatabase(profile.userId, profile.displayName, getRandomInt(10));
                         });
                     break;
-                case 'DB':
-                    const query = `
-                    DROP TABLE IF EXISTS inventory;
-                    CREATE TABLE inventory (id serial PRIMARY KEY, name VARCHAR(50), quantity INTEGER);
-                    INSERT INTO inventory (name, quantity) VALUES ('banana', 150);
-                    INSERT INTO inventory (name, quantity) VALUES ('orange', 154);
-                    INSERT INTO inventory (name, quantity) VALUES ('apple', 100);
-                    `;
-                    client
-                        .query(query)
-                        .then(() => {
-                            console.log('Table created successfully!');
-                            client.end(console.log('Closed client connection'));
-                        })
-                        .catch(err => console.log(err))
-                        .then(() => {
-                            console.log('Finished execution, exiting now');
-                            process.exit();
-                        });
-                    break;
                     case 'PGP':
-
+                        fgoUtil.getCurrentPU();
                     break;
                     // case 'Member':
                     //     event.source.member()
@@ -170,18 +122,6 @@ bot.on('message', function(event) {
 				case '抽卡測試':
 					event.source.profile()
 					.then(function(profile){
-						// tenDrawTimes = 10000;
-						// drawResult = [0,0,0,0,0,0,0,0];
-						// for(let index = 0; index < tenDrawTimes; index++)
-						// 	drawResult = fgoDraw10Times(drawResult);
-						// returnText = [profile.displayName + " 十抽次數:"+tenDrawTimes];
-						// returnText.push("保底次數:"+drawResult[drawResult.length-1]);
-						// returnText.push("抽卡結果:");
-						// for(let index = 0 ; index < drawResult.length-1; index++){
-						// 	if(drawResult[index]!=0){
-						// 		returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
-						// 	}
-						// }
                         returnText = fgoUtil.getDrawResult(profile.displayName,100000);
 						event.reply(returnText)
 						.then(function(data){
@@ -190,23 +130,9 @@ bot.on('message', function(event) {
 					});
                     break;
                 case '抽到有':
+                case '課到有':
                     event.source.profile()
                     .then(function(profile){
-                        // drawResult = [0,0,0,0,0,0,0,0];
-                        // let totalDrawTimes = 0;
-                        // do{
-                        //     totalDrawTimes++
-                        //     drawResult = fgoDraw10Times(drawResult);
-                        // }while(drawResult[0]==0);
-                        // returnText = [profile.displayName+" 10抽次數: "+totalDrawTimes+"次！"];
-                        // returnText.push("課了 "+Math.ceil(totalDrawTimes/5.1)+" 單！");
-                        // returnText.push("保底次數:"+drawResult[drawResult.length-1]);
-                        // returnText.push("抽卡結果:");
-                        // for(let index = 0 ; index < drawResult.length-1; index++){
-                        //     if(drawResult[index]!=0){
-                        //         returnText[3] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
-                        //     }
-                        // }
                         returnText = fgoUtil.getDrawResult(profile.displayName,-1);
                         event.reply(returnText)
                         .then(function(data){
@@ -216,9 +142,6 @@ bot.on('message', function(event) {
                             console.log('error',error);
                         });
                     });
-                    break;
-                case 'asd':
-                fgoUtil.asd();
                     break;
 				case '1單':
 				case '一單':
@@ -241,18 +164,6 @@ bot.on('message', function(event) {
 				case '呼符':
 				event.source.profile()
 					.then(function(profile){
-						// drawResult = [0,0,0,0,0,0,0,0];
-						// let singleDrawFive = {type:'image',originalContentUrl:'https://i.imgur.com/bZY2D65.jpg', previewImageUrl:'https://i.imgur.com/bZY2D65.jpg'};
-						// drawResult = fgoDraw(drawResult,false);
-						// returnText=[profile.displayName+" 單抽結果:"];
-						// for(let index = 0 ; index < drawResult.length-1; index++){
-						// 	if(drawResult[index]!=0){
-						// 		console.log("index = "+index);
-						// 		returnText.push(fgoDrawResultText[index] + " : " + drawResult[index]);
-						// 	}
-						// }
-						// if(drawResult[0] != 0 || drawResult[1] != 0)
-						// 	returnText.push(singleDrawFive);
                         returnText = fgoUtil.getDrawResult(profile.displayName,1);
 
 						event.reply(returnText)
@@ -271,19 +182,6 @@ bot.on('message', function(event) {
                 case '測風向':
 					event.source.profile()
 					.then(function(profile){
-						// tenDrawTimes = 1;
-						// drawResult = [0,0,0,0,0,0,0,0];
-						// for(let index = 0; index < tenDrawTimes; index++)
-						// 	drawResult = fgoDraw10Times(drawResult);
-						// returnText = [profile.displayName+" 十抽次數:"+tenDrawTimes];
-						// returnText.push("保底次數:"+drawResult[drawResult.length-1]);
-						// returnText.push("抽卡結果:");
-						// for(let index = 0 ; index < drawResult.length-1; index++){
-						// 	if(drawResult[index]!=0){
-						// 		returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
-						// 	}
-						// }
-						// returnText = fgoDrawResultPicture(drawResult,returnText);
 						returnText = fgoUtil.getDrawResult(profile.displayName,10);
 						event.reply(returnText)
 						.then(function(data){
@@ -400,44 +298,6 @@ app.listen(process.env.PORT || 80, function() {
     console.log('LineBot is running.');
 });
 
-function showData(){
-
-}
-
-function getUserDataFromDatabase(id) {
-    const query = `
-    SELECT * FROM public."USER_DATA"
-    WHERE id = '` + id + `'
-    `
-    console.log('query = '+query);
-    client
-        .query(query, function(err, result){
-            console.log("result.rowCount = " + result.rowCount);
-            if(result.rowCount==0)
-                return null;
-            if(err) throw err;
-            console.log("Get data and return : " + result.rows[0]);
-            console.log("str = " + result.rows[0].str);
-            return result.rows[0];
-        });
-}
-
-function insertUserDataToDatabase(id, name, hp, str ,spd) {
-    const query = `
-    INSERT INTO public."USER_DATA"(id,name,hp,str,spd)
-    VALUES ('` + id + `','` + name + `',` + hp + ',' +  str + ',' + spd+`)
-    `
-    client
-        .query(query)
-        .then(() => {
-            console.log('Insert success.');
-        })
-        .catch(err => console.log(err))
-        .then(() => {
-            console.log('Failed')
-        });
-}
-
 function getRandomInt(max) {
     return Math.floor(Math.random() * max) + 1;
 }
@@ -453,65 +313,4 @@ function getRandomInts(max, amount) {
 	console.log('result : ' + result);
 	console.log('----------------------------');
     return result;
-}
-
-function fgoDraw(result, isGuarantee) {
-    let randomNumber = Math.random() * 100;
-	//console.log("randomNumber = "+randomNumber);
-    let propertyLevel = 0;
-    if (isGuarantee) {
-        console.log("<<<<<<<此抽保底>>>>>>");
-        result[result.length - 1] += 1;
-    };
-    for (var i = 0; i < fgoDrawProperty.length; i++) {
-        propertyLevel += fgoDrawProperty[i];
-        if (propertyLevel > 100)
-            console.log("錯誤：機率大於100");
-        if (randomNumber < propertyLevel) {
-            if (isGuarantee) {
-                console.log("(isisGuarantee)randomNumber = " + randomNumber);
-                console.log("(isisGuarantee)propertyLevel = " + propertyLevel);
-            }
-            if (isGuarantee && i > 4)
-                result[4]++;
-            else
-                result[i]++;
-            break;
-        }
-    }
-    console.log("-----------------");
-    return result;
-}
-
-function fgoDraw10Times(result) {
-    let drawTimes = 10;
-    let isGuarantee = false;
-    for (let draw = 1; draw < drawTimes + 1; draw++) {
-        if (draw == 10) {
-            let nonThree = result.slice(0, 5);
-            console.log(nonThree);
-            isGuarantee = true;
-            for (let index = 0; index < nonThree.length; index++)
-                if (nonThree[index] != 0) isGuarantee = false;
-        } else isGuarantee = false;
-        result = fgoDraw(result, isGuarantee);
-    }
-    return result;
-}
-
-function fgoDrawResultPicture(result, returnText){
-	let black = {type:'image',originalContentUrl: 'https://truth.bahamut.com.tw/s01/201901/7716563a47b4196cafaeff388e8637fa.JPG',previewImageUrl: 'https://truth.bahamut.com.tw/s01/201901/7716563a47b4196cafaeff388e8637fa.JPG'};
-	let veryBlack = {type : 'image', originalContentUrl:'https://truth.bahamut.com.tw/s01/201902/a25b18fedf67c3fcbac442fea775c341.JPG',previewImageUrl:'https://truth.bahamut.com.tw/s01/201902/a25b18fedf67c3fcbac442fea775c341.JPG'};
-	let veryVeryBlack = {type:'image',originalContentUrl:'https://truth.bahamut.com.tw/s01/201902/0f595554af88c42c095243128ca912c5.JPG',previewImageUrl:'https://truth.bahamut.com.tw/s01/201902/0f595554af88c42c095243128ca912c5.JPG'};
-	let returnBlack = {type:'image',originalContentUrl:'https://truth.bahamut.com.tw/s01/201902/d5b4ee85bb697e896aeef32c1454161e.JPG',previewImageUrl:'https://truth.bahamut.com.tw/s01/201902/d5b4ee85bb697e896aeef32c1454161e.JPG'};
-	let white = {type:'image',originalContentUrl:'https://i.imgur.com/bZY2D65.jpg', previewImageUrl:'https://i.imgur.com/bZY2D65.jpg'};
-	if(result[0] != 0)
-		returnText.push(white);
-	else if(result[0] == 0 && result[1] == 0 && result[2] == 0 && result[3] == 0)
-		returnText.push(black);
-	else if(result[result.length-1] != 0)
-		returnText.push(veryBlack);
-	else if(result[0] == 0 && result[1] == 1 && result[2] ==0)
-		returnText.push(returnBlack);
-	return returnText;
 }

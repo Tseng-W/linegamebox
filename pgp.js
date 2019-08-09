@@ -10,7 +10,18 @@ const db = pgp(connectionString);
 console.log('process.env.DATABASE_URL = '+process.env.DATABASE_URL);
 console.log('connection ok');
 
-module.export = db;
+module.export = {
+	getHerosByStar: function(star){
+		db.any(`SELECT * FROM public."HERO_DATA WHERE star = $1"`, star)
+		.then(data => {
+			return data;
+		})
+		.catch(err => {
+			console.log(err);
+			return null;
+		})
+	}
+};
 
 pgp(connectionString).any(`SELECT * FROM public."HERO_DATA"`)
                         .then(data=>{
@@ -19,7 +30,3 @@ pgp(connectionString).any(`SELECT * FROM public."HERO_DATA"`)
                         .catch(err=>{
 
                         });
-
-// db.on('error', function(err){
-//     console.error("connection error;", err);
-// });	
