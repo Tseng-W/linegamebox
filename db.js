@@ -1,5 +1,5 @@
 const initOptions = {
-    //promiseLib: Promise
+    promiseLib: Promise
 };
 
 const pgPromise = require('pg-promise')(initOptions);
