@@ -9,7 +9,7 @@ const db = pgp(connectionString);
 
 // console.log('process.env.DATABASE_URL = '+process.env.DATABASE_URL);
 
-module.export = {
+module.exports = {
 	getHerosByStar: function(star){
 		db.any(`SELECT * FROM public."HERO_DATA WHERE star = $1"`, star)
 		.then(data => {
@@ -19,8 +19,5 @@ module.export = {
 			console.log(err);
 			return null;
 		})
-	},	
-	asd: function(){
-		return 'asd';
 	}
 };
