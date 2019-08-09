@@ -1,4 +1,4 @@
-console db = require('./pgp.js');
+const db = require('./pgp.js');
 const fgoDrawProperty = [0.7, 0.3, 4, 3, 12, 40, 40];
 const fgoDrawResultText = ["PU五星從者", "非PU五星從者", "五星禮裝", "四星從者", "四星禮裝", "三星禮裝", "三星從者"];
 
