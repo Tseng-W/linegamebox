@@ -47,6 +47,7 @@ module.exports = {
 	        } else isGuarantee = false;
 	        result = fgoDraw(result, isGuarantee);
 	    }
+	    console.log('fgoDraw10Times - result: '+result);
 	    return result;
 	},
 
