@@ -37,6 +37,7 @@ module.exports = {
     			drawResult = fgoDraw10Times(drawResult);
     			tenDrawTimes++;
     		}while(drawResult[0] == 0);
+    		times = tenDrawTimes*10;
     	}
     	if(tenDrawTimes == 0)
     		returnText = [userName +" 抽卡總次數: "+ times+"次。"];
