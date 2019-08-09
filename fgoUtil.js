@@ -32,7 +32,7 @@ module.exports = {
 	    }
 	    console.log("-----------------");
 	    return result;
-	}
+	},
 
 	fgoDraw10Times: function(result) {
 	    let drawTimes = 10;
@@ -48,7 +48,7 @@ module.exports = {
 	        result = fgoDraw(result, isGuarantee);
 	    }
 	    return result;
-	}
+	},
 
 	fgoDrawResultPicture: function(result, returnText){
 		let black = {type:'image',originalContentUrl: 'https://truth.bahamut.com.tw/s01/201901/7716563a47b4196cafaeff388e8637fa.JPG',previewImageUrl: 'https://truth.bahamut.com.tw/s01/201901/7716563a47b4196cafaeff388e8637fa.JPG'};
