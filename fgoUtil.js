@@ -22,14 +22,15 @@ module.exports = {
     },
     getDrawResult: function(userName, times){
     	initial();
-    	if(times > 0){
-	    	while(times>10){
+    	let lastTimes = times;
+    	if(lastTimes > 0){
+	    	while(lastTimes>10){
 	    		drawResult = fgoDraw10Times(drawResult);
-	    		times-=10;
+	    		lastTimes-=10;
 	    	}
-	    	while(times > 0){
+	    	while(lastTimes > 0){
 	    		drawResult = fgoDraw(drawResult,false);
-	    		times--;
+	    		lastTimes--;
 	    	}
     	}else{
     		do{
@@ -40,12 +41,14 @@ module.exports = {
     	if(tenDrawTimes == 0)
     		returnText = [userName +" 抽卡總次數: "+ times+"次。"];
     	else returnText = [userName +" 抽卡總次數: "+ times+"次。  課了 "+ Math.ceil(tenDrawTimes*30/155)+" 單！"];
-    	returnText.push("抽卡結果:");
-		for(let index = 0 ; index < drawResult.length-1; index++){
+    	let list;
+    	for(let index = 0 ; index < drawResult.length-1; index++){
 			if(drawResult[index]!=0){
-				returnText[2] += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
+				list += "\n" +fgoDrawResultText[index] + " : " + drawResult[index];
 			}
 		}
+    	returnText.push("抽卡結果:"+list);
+		
 		returnText = fgoDrawResultPicture(drawResult,returnText);
 		return returnText;
     },
