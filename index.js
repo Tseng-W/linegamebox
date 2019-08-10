@@ -21,50 +21,50 @@ app.post('/linewebhook', linebotParser);
 
 bot.on('message', function(event) {
     var tenDrawTimes = 1;
-	var userName;
-	let returnText;
-	let drawResult;
+    var userName;
+    let returnText;
+    let drawResult;
     switch (event.message.type) {
         case 'text':
             switch (event.message.text) {
                 case 'Me':
-                let result;
-                let id;
-                let name;
-					event.source.profile()
-						.then(function(profile) {
-							//嘗試取得用戶資料
-							id = profile.userId;
-							name = profile.displayName;
-							result = getUserDataFromDatabase(id);
-							console.log("Output result at event : " + result);
-						})
-						.then(function() {
-							console.log("******RESULT******* = "+result);
-							if(result === undefined){
-								console.log("<<<<result === undefined");
-								let str = getRandomInt(10);
-								let hp = getRandomInt(50);
-								let spd = getRandomInt(10);
-								insertUserDataToDatabase(id,name,hp,str,spd);
-								return event.reply([
-									"恭喜你成為新的冒險者~",
-									"初始化屬性...",
-									"生命："+hp+"  力量："+str+"  敏捷："+spd,
-									"註冊完畢！"
-									]);
-							}else{
-								console.log("<<<<ELSE");
-								return event.reply([
-									"冒險者 "+name+" 的屬性是：",
-									"生命："+result.hp+"  力量："+result.str+"  敏捷："+result.spd
-									]);
-							}
-						})
-						.catch(function(error) {
-							console.log(error);
-							return event.reply('error');
-						});
+                    let result;
+                    let id;
+                    let name;
+                    event.source.profile()
+                        .then(function(profile) {
+                            //嘗試取得用戶資料
+                            id = profile.userId;
+                            name = profile.displayName;
+                            result = getUserDataFromDatabase(id);
+                            console.log("Output result at event : " + result);
+                        })
+                        .then(function() {
+                            console.log("******RESULT******* = " + result);
+                            if (result === undefined) {
+                                console.log("<<<<result === undefined");
+                                let str = getRandomInt(10);
+                                let hp = getRandomInt(50);
+                                let spd = getRandomInt(10);
+                                insertUserDataToDatabase(id, name, hp, str, spd);
+                                return event.reply([
+                                    "恭喜你成為新的冒險者~",
+                                    "初始化屬性...",
+                                    "生命：" + hp + "  力量：" + str + "  敏捷：" + spd,
+                                    "註冊完畢！"
+                                ]);
+                            } else {
+                                console.log("<<<<ELSE");
+                                return event.reply([
+                                    "冒險者 " + name + " 的屬性是：",
+                                    "生命：" + result.hp + "  力量：" + result.str + "  敏捷：" + result.spd
+                                ]);
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                            return event.reply('error');
+                        });
                     break;
                 case 'inital':
                     event.source.profile()
@@ -72,20 +72,22 @@ bot.on('message', function(event) {
                             insertUserDataToDatabase(profile.userId, profile.displayName, getRandomInt(10));
                         });
                     break;
-                    case 'PGP':
-                        pgp.getHerosByStar(5)
+                case 'PGP':
+                    pgp.getHerosByStar(5)
                         .then(data => {
                             var herosList = data;
-                            console.log("index.js  ------ herosFromDB : ",herosList);
+                            console.log("index.js  ------ herosFromDB : ", herosList);
                             event.reply(herosList)
-                            .then(function(data){
-                                console.log('index.js - PGP err'); 
-                                console.log(data);
-                            });
+                                .then(function(data) {
+                                    console.log('index.js - PGP data : ', data);
+                                })
+                                .catch(function(err) {
+                                    console.log('index.js - PGP erroe : ', err);
+                                });
                         });
-                        
-                        // for(let index = 0;index<herosFromDB.length;index++)
-                        //     console.log(herosFromDB[index]);
+
+                    // for(let index = 0;index<herosFromDB.length;index++)
+                    //     console.log(herosFromDB[index]);
                     break;
                     // case 'Member':
                     //     event.source.member()
@@ -97,13 +99,13 @@ bot.on('message', function(event) {
                     //             return event.reply('error');
                     //         });;
                     //     break;
-					//case 'Picture':
-					//	event.reply(["123456",{
-					//		type: 'image',
-					//		originalContentUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png',
-					//		previewImageUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png'
-					//	}]);
-					//	break;
+                    //case 'Picture':
+                    //  event.reply(["123456",{
+                    //      type: 'image',
+                    //      originalContentUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png',
+                    //      previewImageUrl: 'https://d.line-scdn.net/stf/line-lp/family/en-US/190X190_line_me.png'
+                    //  }]);
+                    //  break;
                     // case 'Location':
                     //     event.reply({
                     //         type: 'location',
@@ -132,81 +134,81 @@ bot.on('message', function(event) {
                     //         }
                     //     });
                     //     break;
-				case '抽卡測試':
-					event.source.profile()
-					.then(function(profile){
-                        returnText = fgoUtil.getDrawResult(profile.displayName,100000);
-						event.reply(returnText)
-						.then(function(data){
-							console.log('拔草大成功',data);
-						});
-					});
+                case '抽卡測試':
+                    event.source.profile()
+                        .then(function(profile) {
+                            returnText = fgoUtil.getDrawResult(profile.displayName, 100000);
+                            event.reply(returnText)
+                                .then(function(data) {
+                                    console.log('拔草大成功', data);
+                                });
+                        });
                     break;
                 case '抽到有':
                 case '課到有':
                     event.source.profile()
-                    .then(function(profile){
-                        returnText = fgoUtil.getDrawResult(profile.displayName,-1);
-                        event.reply(returnText)
-                        .then(function(data){
-                            console.log('拔草大成功',data);
-                        })
-                        .catch(function(error){
-                            console.log('error',error);
+                        .then(function(profile) {
+                            returnText = fgoUtil.getDrawResult(profile.displayName, -1);
+                            event.reply(returnText)
+                                .then(function(data) {
+                                    console.log('拔草大成功', data);
+                                })
+                                .catch(function(error) {
+                                    console.log('error', error);
+                                });
                         });
-                    });
                     break;
-				case '1單':
-				case '一單':
-					event.source.profile()
-					.then(function(profile){
-                        returnText = fgoUtil.getDrawResult(profile.displayName,51);
+                case '1單':
+                case '一單':
+                    event.source.profile()
+                        .then(function(profile) {
+                            returnText = fgoUtil.getDrawResult(profile.displayName, 51);
 
-						event.reply(returnText)
-						.then(function(data){
-							console.log('拔草大成功',data);
-						})
-						.catch(function(error){
-							console.log('error',error);
-						});
-					});
-					break;
-				case '抽卡':
-				case '抖肉':
-				case '單抽':
-				case '呼符':
-				event.source.profile()
-					.then(function(profile){
-                        returnText = fgoUtil.getDrawResult(profile.displayName,1);
+                            event.reply(returnText)
+                                .then(function(data) {
+                                    console.log('拔草大成功', data);
+                                })
+                                .catch(function(error) {
+                                    console.log('error', error);
+                                });
+                        });
+                    break;
+                case '抽卡':
+                case '抖肉':
+                case '單抽':
+                case '呼符':
+                    event.source.profile()
+                        .then(function(profile) {
+                            returnText = fgoUtil.getDrawResult(profile.displayName, 1);
 
-						event.reply(returnText)
-						.catch(function(error){
-							console.log('error',error);
-						});
-					});
-					break;
-                //case '瘋狂拔草':
-                //   var crazyDraw = true;
-				case '10抽':
-				case '十抽':
-				case '10連':
-				case '十連':
-				case '拔草':
+                            event.reply(returnText)
+                                .catch(function(error) {
+                                    console.log('error', error);
+                                });
+                        });
+                    break;
+                    //case '瘋狂拔草':
+                    //   var crazyDraw = true;
+                case '10抽':
+                case '十抽':
+                case '10連':
+                case '十連':
+                case '拔草':
                 case '測風向':
-					event.source.profile()
-					.then(function(profile){
-						returnText = fgoUtil.getDrawResult(profile.displayName,10);
-						event.reply(returnText)
-						.then(function(data){
-							console.log('拔草大成功',data);
-						})
-						.catch(function(error){
-							console.log('error',error);
-						});
-					});
+                    event.source.profile()
+                        .then(function(profile) {
+                            returnText = fgoUtil.getDrawResult(profile.displayName, 10);
+                            event.reply(returnText)
+                                .then(function(data) {
+                                    console.log('拔草大成功', data);
+                                })
+                                .catch(function(error) {
+                                    console.log('error', error);
+                                });
+                        });
                     break;
                 default:
-					console.log(event.message.text);
+                    console.log(event.message.text);
                     var msg = event.message.text;
                     if (msg.indexOf('擲骰') != -1) {
                         console.log('收到擲骰請求');
@@ -218,10 +220,10 @@ bot.on('message', function(event) {
                             var diceParamater = diceRequest.split('d');
                             console.log("diceParamater[0] = " + diceParamater[0]);
                             console.log("diceParamater[1] = " + diceParamater[1]);
-							if(diceParamater[0] > 100)
-								event.reply('骰子太多拿不動啦！最多一次擲出100顆骰子');
-							if(diceParamater[1] > 100)
-								event.reply('小算盤表示：手指不夠用！最大可擲出100面骰');
+                            if (diceParamater[0] > 100)
+                                event.reply('骰子太多拿不動啦！最多一次擲出100顆骰子');
+                            if (diceParamater[1] > 100)
+                                event.reply('小算盤表示：手指不夠用！最大可擲出100面骰');
                             if (diceParamater[0] != "" && diceParamater[1] != "") {
                                 var diceResult = getRandomInts(diceParamater[0], diceParamater[1]);
                                 console.log("diceResult=" + diceResult);
@@ -245,11 +247,11 @@ bot.on('message', function(event) {
                                     console.log('Error', error);
                                 });;
                         }
-                    }else if(msg.indexOf('PU') != -1){
-						console.log('currentPU = '+currentPU);
-						currentPU = msg.slice(2,msg.length);
-						console.log('currentPU = '+currentPU);
-					}
+                    } else if (msg.indexOf('PU') != -1) {
+                        console.log('currentPU = ' + currentPU);
+                        currentPU = msg.slice(2, msg.length);
+                        console.log('currentPU = ' + currentPU);
+                    }
                     break;
             }
             break;
@@ -321,9 +323,9 @@ function getRandomInts(max, amount) {
         var value = getRandomInt(max);
         result.push(value);
     }
-	console.log('getRandomInts---------------');
-	console.log('max: ' + max);
-	console.log('result : ' + result);
-	console.log('----------------------------');
+    console.log('getRandomInts---------------');
+    console.log('max: ' + max);
+    console.log('result : ' + result);
+    console.log('----------------------------');
     return result;
 }
