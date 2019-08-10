@@ -32,9 +32,11 @@ module.exports = {
             console.log(err);
         }
     },
-    getDrawResult: function(userName, times) {
+    getDrawResult: function(userName, times, callback) {
+        //初始化參數
         initial();
         let lastTimes = times;
+        //依照抽卡次數計算抽卡結果
         if (lastTimes > 0) {
             while (lastTimes > 10) {
                 drawResult = fgoDraw10Times(drawResult);
@@ -54,25 +56,28 @@ module.exports = {
         if (tenDrawTimes == 0)
             returnText = [userName + " 抽卡總次數: " + times + "次。"];
         else returnText = [userName + " 抽卡總次數: " + times + "次。  課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
-        let list = "";
+
         //PU五星先行改名稱顯示
+        let list = "";
         if (drawResult[0] != 0) {
             db.getHerosByName(currentPU)
                 .then(data => {
-                	let image = { type: 'image', originalContentUrl: data[0].picture, previewImageUrl: data[0].picture };
-                    list+="PU五星："+data[0].heroName;
-                    returnText.push("抽卡結果:" + fgoOutputResultText(list,1,drawResult));
+                    let image = { type: 'image', originalContentUrl: data[0].picture, previewImageUrl: data[0].picture };
+                    list += "PU五星：" + data[0].heroName;
+                    returnText.push("抽卡結果:" + fgoOutputResultText(list, 1, drawResult));
                     returnText.push(image);
-                    return returnText;
+                    console.log('fgoUtil.js(with5) ---- resultText : ' + resultText);
+                    callback(returnText);
                 })
                 .catch(err => {
                     console.log(err);
                 });
         } else {
-            returnText.push("抽卡結果:" + fgoOutputResultText(list,0,drawResult));
+            returnText.push("抽卡結果:" + fgoOutputResultText(list, 0, drawResult));
 
             returnText = fgoDrawResultPicture(drawResult, returnText);
-            return returnText;
+            console.log('fgoUtil.js(none5) ---- resultText : ' + resultText);
+            callback(returnText);
         }
     },
 }
@@ -127,7 +132,7 @@ function fgoDraw10Times(result) {
     return result;
 }
 
-function fgoOutputResultText(list,startIndex, drawResult) {
+function fgoOutputResultText(list, startIndex, drawResult) {
     for (let index = startIndex; index < drawResult.length - 1; index++) {
         if (drawResult[index] != 0) {
             list += "\n" + fgoDrawResultText[index] + " : " + drawResult[index];
