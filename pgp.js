@@ -14,6 +14,10 @@ module.exports = {
 		db.any(`SELECT * FROM public."HERO_DATA" WHERE star = 5`)
 		.then(data => {
 			console.log('data = '+data);
+			console.log('data.heroName = '+data.heroName);
+			console.log('data.star = '+data.star);
+			console.log('data.nickName = '+data.nickName);
+
 			return data;
 		})
 		.catch(err => {
