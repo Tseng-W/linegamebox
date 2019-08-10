@@ -8,6 +8,18 @@ var drawResult = [0, 0, 0, 0, 0, 0, 0, 0];
 var currentPU = "阿比";
 
 module.exports = {
+	setPU(): function(name){
+		try{
+			let heroData = db.getHerosByName(name);
+			if(heroDat.length > 0)
+				currentPU = name;
+		}catch(err){
+			console.log(err);
+		}
+	},
+	getPU(): function(){
+		return currentPU;
+	},
     getHerosByStar: function(star) {
         try {
             let dbResult = db.getHerosByStar(star);
@@ -40,7 +52,10 @@ module.exports = {
             returnText = [userName + " 抽卡總次數: " + times + "次。"];
         else returnText = [userName + " 抽卡總次數: " + times + "次。  課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
         let list = "";
-        for (let index = 0; index < drawResult.length - 1; index++) {
+        //PU五星先行改名稱顯示
+
+
+        for (let index = 1; index < drawResult.length - 1; index++) {
             if (drawResult[index] != 0) {
                 list += "\n" + fgoDrawResultText[index] + " : " + drawResult[index];
             }
