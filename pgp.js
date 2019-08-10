@@ -25,7 +25,7 @@ module.exports = {
 			return null;
 		})
 
-		pgp(connectionString)
+		pgp(connectionString).query(`SELECT * FROM public."HERO_DATA"`)
 		.then(data => {
 			console.log('----pgp(connectionString)----');
 			console.log('data = '+data);
