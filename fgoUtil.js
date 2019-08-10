@@ -8,8 +8,8 @@ var drawResult = [0,0,0,0,0,0,0,0];
 var currentPU = "阿比";
 
 module.exports = {
-	getCurrentPU: function(){
-		let dbResult = db.getHerosByStar(5);
+	getHerosByStar: function(star){
+		let dbResult = db.getHerosByStar(star);
 		console.log(dbResult);
 	},
     getDrawResult: function(userName, times){

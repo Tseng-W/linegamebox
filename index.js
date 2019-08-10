@@ -72,7 +72,10 @@ bot.on('message', function(event) {
                         });
                     break;
                     case 'PGP':
-                        fgoUtil.getCurrentPU();
+                        var herosFromDB = fgoUtil.getHerosByStar(5);
+                        for(let index = 0;index<herosFromDB.length;index++)
+                            console.log(herosFromDB[index]);
+
                     break;
                     // case 'Member':
                     //     event.source.member()
