@@ -55,7 +55,7 @@ module.exports = {
         //PU五星先行改名稱顯示
 
 
-        for (let index = 1; index < drawResult.length - 1; index++) {
+        for (let index = 0; index < drawResult.length - 1; index++) {
             if (drawResult[index] != 0) {
                 list += "\n" + fgoDrawResultText[index] + " : " + drawResult[index];
             }
