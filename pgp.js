@@ -11,21 +11,18 @@ const db = pgp(connectionString);
 
 module.exports = {
     getHerosByStar: function(star) {
-        // db.query(`SELECT * FROM public."HERO_DATA"`)
-        // .then(data => {
-        // 	console.log('data = '+data);
-        // 	console.log('data.heroName = '+data.heroName);
-        // 	console.log('data.star = '+data.star);
-        // 	console.log('data.nickName = '+data.nickName);
+        db.any(`SELECT * FROM public."HERO_DATA"`)
+            .then(data => {
 
-        // 	return data;
-        // })
-        // .catch(err => {
-        // 	console.log(err);
-        // 	return null;
-        // });
-        var value;
-        console.log(value);
+                console.log('data = ', data);
+                console.log('data.heroName = ', data.heroName);
+                console.log('data.star = ', data.star);
+                console.log('data.nickName = ', data.nickName);
 
+                return data;
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 };
