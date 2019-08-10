@@ -63,7 +63,7 @@ module.exports = {
             db.getHerosByName(currentPU)
                 .then(data => {
                     let image = { type: 'image', originalContentUrl: data[0].picture, previewImageUrl: data[0].picture };
-                    list += "PU五星：" + data[0].heroName;
+                    list += "\n"+data[0].heroName+"："+drawResult[0];
                     returnText.push("抽卡結果:" + fgoOutputResultText(list, 1, drawResult));
                     returnText.push(image);
                     console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
