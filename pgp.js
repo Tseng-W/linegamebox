@@ -25,12 +25,11 @@ module.exports = {
 		// 	return null;
 		// });
 		try{
-			let value = await db.any(`SELECT * FROM public."HERO_DATA"`);
+			const value = await db.any(`SELECT * FROM public."HERO_DATA"`);
 			console.log(value);
 		}
 		catch(e){
 			console.log(e);
 		}
-
 	}
 };
