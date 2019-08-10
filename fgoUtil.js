@@ -11,8 +11,11 @@ module.exports = {
     setPU: function(name) {
         db.getHerosByName(name)
             .then(data => {
-                if (data.length > 0)
+                if (data.length > 0){
                     currentPU = name;
+                    return "當前PU從者為："+data[0].heroName;
+                }
+                return "無對應英靈："+name;
             })
             .catch(err => {
                 console.log(err);
