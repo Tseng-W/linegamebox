@@ -154,6 +154,7 @@ bot.on('message', function(event) {
                     event.source.profile()
                         .then(function(profile) {
                             fgoUtil.getDrawResult(profile.displayName, -1, result => {
+                                console.log('抽到有 Result = '+result);
                                 event.reply(result)
                                     .then(function(data) {
                                         console.log('拔草大成功', data);
