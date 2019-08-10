@@ -76,6 +76,13 @@ bot.on('message', function(event) {
                         .then(data => {
                             var herosList = data;
                             console.log("index.js  ------ herosFromDB : ",herosList);
+                            event.reply(herosList)
+                            .then(data =>{
+                                console.log(data);
+                            })
+                            .catch(err){
+                                console.log(err);
+                            };
                         });
                         
                         // for(let index = 0;index<herosFromDB.length;index++)
