@@ -25,7 +25,7 @@ module.exports = {
 		// 	return null;
 		// });
 		try{
-			var value = await db.any(`SELECT * FROM public."HERO_DATA"`);
+			let value = await db.any(`SELECT * FROM public."HERO_DATA"`);
 			console.log(value);
 		}
 		catch(e){
