@@ -77,7 +77,12 @@ bot.on('message', function(event) {
                         .then(data => {
                             var herosList = data;
                             console.log("index.js  ------ herosFromDB : ", herosList);
-                            event.reply(herosList)
+                            let replyMessage = [];
+                            for(let index = 0; index < herosList.length; index++){
+                                let hero = herosList[index];
+                                replyMessage.push(hero.heroName +" / "+hero.star);
+                            }
+                            event.reply(replyMessage)
                                 .then(function(data) {
                                     console.log('index.js - PGP data : ', data);
                                 })
