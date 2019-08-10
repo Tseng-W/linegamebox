@@ -11,7 +11,7 @@ const db = pgp(connectionString);
 
 module.exports = {
 	getHerosByStar: function(star){
-		db.any(`SELECT * FROM public."HERO_DATA" WHERE star = 5`)
+		db.query(`SELECT * FROM public."HERO_DATA" WHERE star = 5`)
 		.then(data => {
 			console.log('data = '+data);
 			console.log('data.heroName = '+data.heroName);
