@@ -79,10 +79,7 @@ bot.on('message', function(event) {
                             event.reply(herosList)
                             .then(function(data){
                                 console.log(data);
-                            })
-                            .catch(err){
-                                console.log(err);
-                            };
+                            });
                         });
                         
                         // for(let index = 0;index<herosFromDB.length;index++)
