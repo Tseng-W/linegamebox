@@ -257,14 +257,9 @@ bot.on('message', function(event) {
                         console.log('1. currentPU = ' + currentPU);
                         currentPU = msg.slice(3, msg.length);
                         console.log('2. currentPU = ' + currentPU);
-                        fgoUtil.setPU(currentPU)
-                            .then(data => {
-                                console.log('3. currentPU = ' + currentPU);
-
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            });
+                        fgoUtil.setPU(currentPU, data=>{
+                            console.log('3. currentPU = ' + currentPU);
+                        });
                     }
                     break;
             }
