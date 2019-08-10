@@ -24,7 +24,7 @@ module.exports = {
         // 	console.log(err);
         // 	return null;
         // });
-        const value;
+        var value;
         console.log(value);
 
     }
