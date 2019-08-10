@@ -8,7 +8,7 @@ var drawResult = [0, 0, 0, 0, 0, 0, 0, 0];
 var currentPU = "阿比";
 
 module.exports = {
-	setPU(): function(name){
+	setPU: function(name){
 		try{
 			let heroData = db.getHerosByName(name);
 			if(heroDat.length > 0)
@@ -17,7 +17,7 @@ module.exports = {
 			console.log(err);
 		}
 	},
-	getPU(): function(){
+	getPU: function(){
 		return currentPU;
 	},
     getHerosByStar: function(star) {
