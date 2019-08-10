@@ -29,9 +29,9 @@ module.exports = {
 		.then(data => {
 			console.log('----pgp(connectionString)----');
 			console.log('data = '+data);
-			console.log('data.heroName = '+data.heroName);
-			console.log('data.star = '+data.star);
-			console.log('data.nickName = '+data.nickName);
+			console.log('data[heroName] = '+data[heroName]);
+			console.log('data[star] = '+data[star]);
+			console.log('data[nickName] = '+data[nickName]);
 
 			return data;
 		})
@@ -41,8 +41,6 @@ module.exports = {
 		})
 	}
 };
-
-
 
 pgp(connectionString).query(`SELECT * FROM public."HERO_DATA"`)
 		.then(data => {
@@ -57,4 +55,4 @@ pgp(connectionString).query(`SELECT * FROM public."HERO_DATA"`)
 		.catch(err => {
 			console.log(err);
 			return null;
-		})
+		});
