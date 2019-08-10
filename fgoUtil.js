@@ -5,7 +5,8 @@ const fgoDrawResultText = ["PU五星從者", "非PU五星從者", "五星禮裝"
 var tenDrawTimes = 0;
 var returnText;
 var drawResult = [0, 0, 0, 0, 0, 0, 0, 0];
-var currentPU = "阿比";
+var currentPU = "貞德Alter";
+var currentPUData;
 
 module.exports = {
     setPU: function(name, callback) {
@@ -15,7 +16,8 @@ module.exports = {
                 callback("當前PU從者為：" + data[0].heroName);
             })
             .catch(err => {
-                console.log(err);
+                console.log("無對應從者名稱");
+                callback("無對應從者名稱");
             });
     },
     getPU: function() {
@@ -54,17 +56,24 @@ module.exports = {
         else returnText = [userName + " 抽卡總次數: " + times + "次。  課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
         let list = "";
         //PU五星先行改名稱顯示
+        if (drawResult[0] != 0) {
+            db.getHerosByName(currentPU)
+                .then(data => {
+                	let image = { type: 'image', originalContentUrl: data[0].picture, previewImageUrl: data[0].picture };
+                    list+="PU五星："+data[0].heroName;
+                    returnText.push("抽卡結果:" + fgoOutputResultText(list,1,drawResult));
+                    returnText.push(image);
+                    return returnText;
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        } else {
+            returnText.push("抽卡結果:" + fgoOutputResultText(list,0,drawResult));
 
-
-        for (let index = 0; index < drawResult.length - 1; index++) {
-            if (drawResult[index] != 0) {
-                list += "\n" + fgoDrawResultText[index] + " : " + drawResult[index];
-            }
+            returnText = fgoDrawResultPicture(drawResult, returnText);
+            return returnText;
         }
-        returnText.push("抽卡結果:" + list);
-
-        returnText = fgoDrawResultPicture(drawResult, returnText);
-        return returnText;
     },
 }
 
@@ -116,6 +125,15 @@ function fgoDraw10Times(result) {
         result = fgoDraw(result, isGuarantee);
     }
     return result;
+}
+
+function fgoOutputResultText(list,startIndex, drawResult) {
+    for (let index = startIndex; index < drawResult.length - 1; index++) {
+        if (drawResult[index] != 0) {
+            list += "\n" + fgoDrawResultText[index] + " : " + drawResult[index];
+        }
+    }
+    return list;
 }
 
 function fgoDrawResultPicture(result, returnText) {
