@@ -1,6 +1,7 @@
 const linebot = require('linebot');
 const express = require('express');
 const fgoUtil = require('./fgoUtil.js');
+const pgp = require('./pgp.js');
 
 const bot = linebot({
     channelId: process.env.CHANNEL_ID,
@@ -72,7 +73,7 @@ bot.on('message', function(event) {
                         });
                     break;
                     case 'PGP':
-                        fgoUtil.getHerosByStar(5)
+                        pgp.getHerosByStar(5)
                         .then(data => {
                             var herosList = data;
                             console.log("index.js  ------ herosFromDB : ",herosList);
