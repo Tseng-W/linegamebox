@@ -12,6 +12,7 @@ module.exports = {
         try {
             let dbResult = db.getHerosByStar(star);
             console.log('fgoUtil.js ----  getHerosByStar : ', dbResult);
+            return dbResult;
         } catch (err) {
             console.log(err);
         }
