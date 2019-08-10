@@ -10,14 +10,21 @@ const db = pgp(connectionString);
 // console.log('process.env.DATABASE_URL = '+process.env.DATABASE_URL);
 
 module.exports = {
-    getHerosByStar: function(star) {
-        db.any(`SELECT * FROM public."HERO_DATA" WHERE star = $1`, star)
-            .then(data => {
-                console.log('PGP.js -------  data = ', data);
-                return data;
-            })
-            .catch(err => {
-                console.log(err);
-            });
+    getHerosByStar: async function(star) {
+        try {
+            var result = db.any(`SELECT * FROM public."HERO_DATA" WHERE star = $1`, star);
+            console.log('PGP.js -------  data = ', data);
+        } catch (err) {
+            console.log(err);
+        }
+
+        // db.any(`SELECT * FROM public."HERO_DATA" WHERE star = $1`, star)
+        //     .then(data => {
+        //         console.log('PGP.js -------  data = ', data);
+        //         return data;
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     });
     }
 };
