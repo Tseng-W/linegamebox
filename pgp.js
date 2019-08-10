@@ -10,26 +10,22 @@ const db = pgp(connectionString);
 // console.log('process.env.DATABASE_URL = '+process.env.DATABASE_URL);
 
 module.exports = {
-	getHerosByStar: function(star){
-		// db.query(`SELECT * FROM public."HERO_DATA"`)
-		// .then(data => {
-		// 	console.log('data = '+data);
-		// 	console.log('data.heroName = '+data.heroName);
-		// 	console.log('data.star = '+data.star);
-		// 	console.log('data.nickName = '+data.nickName);
+    getHerosByStar: function(star) {
+        // db.query(`SELECT * FROM public."HERO_DATA"`)
+        // .then(data => {
+        // 	console.log('data = '+data);
+        // 	console.log('data.heroName = '+data.heroName);
+        // 	console.log('data.star = '+data.star);
+        // 	console.log('data.nickName = '+data.nickName);
 
-		// 	return data;
-		// })
-		// .catch(err => {
-		// 	console.log(err);
-		// 	return null;
-		// });
-		try{
-			const value = await db.any(`SELECT * FROM public."HERO_DATA"`);
-			console.log(value);
-		}
-		catch(e){
-			console.log(e);
-		}
-	}
+        // 	return data;
+        // })
+        // .catch(err => {
+        // 	console.log(err);
+        // 	return null;
+        // });
+        const value;
+        console.log(value);
+
+    }
 };
