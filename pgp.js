@@ -15,9 +15,9 @@ module.exports = {
             .then(data => {
 
                 console.log('data = ', data);
-                console.log('data.heroName = ', data.heroName);
-                console.log('data.star = ', data.star);
-                console.log('data.nickName = ', data.nickName);
+                console.log('data.heroName = ', data[0]);
+                console.log('data.star = ', data[1]);
+                console.log('data.nickName = ', data[2]);
 
                 return data;
             })
