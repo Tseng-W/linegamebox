@@ -10,7 +10,7 @@ var currentPU = "阿比";
 module.exports = {
 	getHerosByStar: async function(star){
 		let dbResult = await db.getHerosByStar(star);
-		console.log(dbResult);
+		console.log('fgoUtil.js ----  getHerosByStar : ' , dbResult);
 	},
     getDrawResult: function(userName, times){
     	initial();
