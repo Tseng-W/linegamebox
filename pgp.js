@@ -24,8 +24,13 @@ module.exports = {
 		// 	console.log(err);
 		// 	return null;
 		// });
-		var value = await db.query(`SELECT * FROM public."HERO_DATA"`);
-		console.log(value);
+		try{
+			var value = await db.any(`SELECT * FROM public."HERO_DATA"`);
+			console.log(value);
+		}
+		catch(e){
+			console.log(e);
+		}
 
 	}
 };
