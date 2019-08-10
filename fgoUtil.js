@@ -8,18 +8,19 @@ var drawResult = [0, 0, 0, 0, 0, 0, 0, 0];
 var currentPU = "阿比";
 
 module.exports = {
-	setPU: function(name){
-		try{
-			let heroData = db.getHerosByName(name);
-			if(heroData.length > 0)
-				currentPU = name;
-		}catch(err){
-			console.log(err);
-		}
-	},
-	getPU: function(){
-		return currentPU;
-	},
+    setPU: function(name) {
+        db.getHerosByName(name)
+            .then(data => {
+                if (data.length > 0)
+                    currentPU = name;
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    },
+    getPU: function() {
+        return currentPU;
+    },
     getHerosByStar: function(star) {
         try {
             let dbResult = db.getHerosByStar(star);
