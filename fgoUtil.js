@@ -11,11 +11,8 @@ module.exports = {
     setPU: function(name, callback) {
         db.getHerosByName(name)
             .then(data => {
-                if (data.length > 0){
-                    currentPU = name;
-                    callback("當前PU從者為："+data[0].heroName);
-                }
-                callback("無對應英靈："+name);
+                currentPU = name;
+                callback("當前PU從者為：" + data[0].heroName);
             })
             .catch(err => {
                 console.log(err);
