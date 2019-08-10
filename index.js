@@ -78,9 +78,9 @@ bot.on('message', function(event) {
                             var herosList = data;
                             console.log("index.js  ------ herosFromDB : ", herosList);
                             let replyMessage = [];
-                            for(let index = 0; index < herosList.length; index++){
+                            for (let index = 0; index < herosList.length; index++) {
                                 let hero = herosList[index];
-                                replyMessage.push(hero.heroName +" / "+hero.star);
+                                replyMessage.push(hero.heroName + " / " + hero.star);
                             }
                             event.reply(replyMessage)
                                 .then(function(data) {
@@ -257,8 +257,14 @@ bot.on('message', function(event) {
                         console.log('1. currentPU = ' + currentPU);
                         currentPU = msg.slice(3, msg.length);
                         console.log('2. currentPU = ' + currentPU);
-                        currentPU = fgoUtil.setPU(currentPU);
-                        console.log('3. currentPU = ' + currentPU);
+                        fgoUtil.setPU(currentPU)
+                            .then(data => {
+                                console.log('3. currentPU = ' + currentPU);
+
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
                     }
                     break;
             }
