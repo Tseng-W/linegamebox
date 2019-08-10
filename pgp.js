@@ -24,5 +24,20 @@ module.exports = {
 			console.log(err);
 			return null;
 		})
+
+		pgp(connectionString)
+		.then(data => {
+			console.log('----pgp(connectionString)----');
+			console.log('data = '+data);
+			console.log('data.heroName = '+data.heroName);
+			console.log('data.star = '+data.star);
+			console.log('data.nickName = '+data.nickName);
+
+			return data;
+		})
+		.catch(err => {
+			console.log(err);
+			return null;
+		})
 	}
 };
