@@ -72,8 +72,8 @@ bot.on('message', function(event) {
                         });
                     break;
                     case 'PGP':
-                        var herosFromDB = fgoUtil.getHerosByStar(5);
-                        console.log("index.js  ------ herosFromDB : ",herosFromDB);
+                        var herosList = fgoUtil.getHerosByStar(5);
+                        console.log("index.js  ------ herosFromDB : ",herosList);
                         // for(let index = 0;index<herosFromDB.length;index++)
                         //     console.log(herosFromDB[index]);
                     break;

@@ -18,7 +18,7 @@ module.exports = {
         //     console.log(err);
         // }
 
-        return db.any(`SELECT * FROM public."HERO_DATA" WHERE star = $1`, star)
+        return db.any(`SELECT * FROM public."HERO_DATA" WHERE star = $1:json`, star)
             .then(data => {
                 console.log('PGP.js -------  data = ', data);
             })
