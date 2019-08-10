@@ -11,7 +11,7 @@ module.exports = {
 	setPU: function(name){
 		try{
 			let heroData = db.getHerosByName(name);
-			if(heroDat.length > 0)
+			if(heroData.length > 0)
 				currentPU = name;
 		}catch(err){
 			console.log(err);
