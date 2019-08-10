@@ -12,7 +12,7 @@ const db = pgp(connectionString);
 module.exports = {
     getHerosByStar: async function(star) {
         try {
-            var result = db.any(`SELECT * FROM public."HERO_DATA" WHERE star = $1`, star);
+            var result = await db.any(`SELECT * FROM public."HERO_DATA" WHERE star = $1`, star);
             console.log('PGP.js -------  data = ', data);
         } catch (err) {
             console.log(err);
