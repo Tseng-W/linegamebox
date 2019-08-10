@@ -153,29 +153,31 @@ bot.on('message', function(event) {
                 case '課到有':
                     event.source.profile()
                         .then(function(profile) {
-                            returnText = fgoUtil.getDrawResult(profile.displayName, -1);
-                            event.reply(returnText)
-                                .then(function(data) {
-                                    console.log('拔草大成功', data);
-                                })
-                                .catch(function(error) {
-                                    console.log('error', error);
-                                });
+                            fgoUtil.getDrawResult(profile.displayName, -1, result => {
+                                event.reply(result)
+                                    .then(function(data) {
+                                        console.log('拔草大成功', data);
+                                    })
+                                    .catch(function(error) {
+                                        console.log('error', error);
+                                    });
+                            });
+
                         });
                     break;
                 case '1單':
                 case '一單':
                     event.source.profile()
                         .then(function(profile) {
-                            returnText = fgoUtil.getDrawResult(profile.displayName, 51);
-
-                            event.reply(returnText)
-                                .then(function(data) {
-                                    console.log('拔草大成功', data);
-                                })
-                                .catch(function(error) {
-                                    console.log('error', error);
-                                });
+                            returnText = fgoUtil.getDrawResult(profile.displayName, 51, result => {
+                                event.reply(result)
+                                    .then(function(data) {
+                                        console.log('拔草大成功', data);
+                                    })
+                                    .catch(function(error) {
+                                        console.log('error', error);
+                                    });
+                            });
                         });
                     break;
                 case '抽卡':
@@ -184,12 +186,12 @@ bot.on('message', function(event) {
                 case '呼符':
                     event.source.profile()
                         .then(function(profile) {
-                            returnText = fgoUtil.getDrawResult(profile.displayName, 1);
-
-                            event.reply(returnText)
+                            returnText = fgoUtil.getDrawResult(profile.displayName, 1,result=>{
+                               event.reply(returnText)
                                 .catch(function(error) {
                                     console.log('error', error);
-                                });
+                                }); 
+                            });
                         });
                     break;
                     //case '瘋狂拔草':
@@ -202,14 +204,15 @@ bot.on('message', function(event) {
                 case '測風向':
                     event.source.profile()
                         .then(function(profile) {
-                            returnText = fgoUtil.getDrawResult(profile.displayName, 10);
-                            event.reply(returnText)
+                            returnText = fgoUtil.getDrawResult(profile.displayName, 10,result=>{
+                               event.reply(returnText)
                                 .then(function(data) {
                                     console.log('拔草大成功', data);
                                 })
                                 .catch(function(error) {
                                     console.log('error', error);
-                                });
+                                }); 
+                            });
                         });
                     break;
                 default:
@@ -257,7 +260,7 @@ bot.on('message', function(event) {
                         console.log('1. currentPU = ' + currentPU);
                         currentPU = msg.slice(3, msg.length);
                         console.log('2. currentPU = ' + currentPU);
-                        fgoUtil.setPU(currentPU, data=>{
+                        fgoUtil.setPU(currentPU, data => {
                             console.log('3. currentPU = ' + currentPU);
                             event.reply(data);
                         });
