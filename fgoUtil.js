@@ -66,7 +66,7 @@ module.exports = {
                     list += "PU五星：" + data[0].heroName;
                     returnText.push("抽卡結果:" + fgoOutputResultText(list, 1, drawResult));
                     returnText.push(image);
-                    console.log('fgoUtil.js(with5) ---- resultText : ' + resultText);
+                    console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
                     callback(returnText);
                 })
                 .catch(err => {
@@ -76,7 +76,7 @@ module.exports = {
             returnText.push("抽卡結果:" + fgoOutputResultText(list, 0, drawResult));
 
             returnText = fgoDrawResultPicture(drawResult, returnText);
-            console.log('fgoUtil.js(none5) ---- resultText : ' + resultText);
+            console.log('fgoUtil.js(none5) ---- returnText : ' + returnText);
             callback(returnText);
         }
     },

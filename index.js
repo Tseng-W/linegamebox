@@ -142,20 +142,21 @@ bot.on('message', function(event) {
                 case '抽卡測試':
                     event.source.profile()
                         .then(function(profile) {
-                            returnText = fgoUtil.getDrawResult(profile.displayName, 100000);
-                            event.reply(returnText)
-                                .then(function(data) {
-                                    console.log('拔草大成功', data);
-                                });
+                            fgoUtil.getDrawResult(profile.displayName, 100000, drawResultText => {
+                                event.reply(returnText)
+                                    .then(function(data) {
+                                        console.log('拔草大成功', data);
+                                    });
+                            });
                         });
                     break;
                 case '抽到有':
                 case '課到有':
                     event.source.profile()
                         .then(function(profile) {
-                            fgoUtil.getDrawResult(profile.displayName, -1, result => {
-                                console.log('抽到有 Result = '+result);
-                                event.reply(result)
+                            fgoUtil.getDrawResult(profile.displayName, -1, drawResultText => {
+                                console.log('抽到有 Result = ' + drawResultText);
+                                event.reply(drawResultText)
                                     .then(function(data) {
                                         console.log('拔草大成功', data);
                                     })
@@ -170,8 +171,8 @@ bot.on('message', function(event) {
                 case '一單':
                     event.source.profile()
                         .then(function(profile) {
-                            returnText = fgoUtil.getDrawResult(profile.displayName, 51, result => {
-                                event.reply(result)
+                            fgoUtil.getDrawResult(profile.displayName, 51, drawResultText => {
+                                event.reply(drawResultText)
                                     .then(function(data) {
                                         console.log('拔草大成功', data);
                                     })
@@ -187,11 +188,11 @@ bot.on('message', function(event) {
                 case '呼符':
                     event.source.profile()
                         .then(function(profile) {
-                            returnText = fgoUtil.getDrawResult(profile.displayName, 1,result=>{
-                               event.reply(returnText)
-                                .catch(function(error) {
-                                    console.log('error', error);
-                                }); 
+                            fgoUtil.getDrawResult(profile.displayName, 1, drawResultText => {
+                                event.reply(drawResultText)
+                                    .catch(function(error) {
+                                        console.log('error', error);
+                                    });
                             });
                         });
                     break;
@@ -205,14 +206,14 @@ bot.on('message', function(event) {
                 case '測風向':
                     event.source.profile()
                         .then(function(profile) {
-                            returnText = fgoUtil.getDrawResult(profile.displayName, 10,result=>{
-                               event.reply(returnText)
-                                .then(function(data) {
-                                    console.log('拔草大成功', data);
-                                })
-                                .catch(function(error) {
-                                    console.log('error', error);
-                                }); 
+                            fgoUtil.getDrawResult(profile.displayName, 10, drawResultText => {
+                                event.reply(drawResultText)
+                                    .then(function(data) {
+                                        console.log('拔草大成功', data);
+                                    })
+                                    .catch(function(error) {
+                                        console.log('error', error);
+                                    });
                             });
                         });
                     break;
