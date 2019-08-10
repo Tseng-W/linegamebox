@@ -21,7 +21,7 @@ module.exports = {
             });
     },
     getHerosByName: async function(name){
-    	return db.one(`SELECT * FROM public."HERO_DATA" WHERE nickName like '%$1%'`, name)
+    	return db.one(`SELECT * FROM public."HERO_DATA" WHERE "nickName" LIKE '%$1%'`, name)
     		.then(data =>{
                 console.log('PGP.js -------  get data : ', data);
                 return(data);
