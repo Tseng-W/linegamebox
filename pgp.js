@@ -13,7 +13,7 @@ module.exports = {
     getHerosByStar: function(star) {
         db.any(`SELECT * FROM public."HERO_DATA" WHERE star = $1`, star)
             .then(data => {
-                // console.log('data = ', data);
+                console.log('PGP.js -------  data = ', data);
                 return data;
             })
             .catch(err => {

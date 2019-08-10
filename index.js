@@ -76,7 +76,6 @@ bot.on('message', function(event) {
                         console.log(herosFromDB);
                         for(let index = 0;index<herosFromDB.length;index++)
                             console.log(herosFromDB[index]);
-
                     break;
                     // case 'Member':
                     //     event.source.member()
