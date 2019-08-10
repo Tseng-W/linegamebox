@@ -11,20 +11,19 @@ const db = pgp(connectionString);
 
 module.exports = {
     getHerosByStar: async function(star) {
-        try {
-            var result = await db.any(`SELECT * FROM public."HERO_DATA" WHERE star = $1`, star);
-            console.log('PGP.js -------  data = ', data);
-        } catch (err) {
-            console.log(err);
-        }
+        // try {
+        //     var result = await db.any(`SELECT * FROM public."HERO_DATA" WHERE star = $1`, star);
+        //     console.log('PGP.js -------  data = ', data);
+        // } catch (err) {
+        //     console.log(err);
+        // }
 
-        // db.any(`SELECT * FROM public."HERO_DATA" WHERE star = $1`, star)
-        //     .then(data => {
-        //         console.log('PGP.js -------  data = ', data);
-        //         return data;
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     });
+        return db.any(`SELECT * FROM public."HERO_DATA" WHERE star = $1`, star)
+            .then(data => {
+                console.log('PGP.js -------  data = ', data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 };
