@@ -79,6 +79,7 @@ bot.on('message', function(event) {
                             console.log("index.js  ------ herosFromDB : ",herosList);
                             event.reply(herosList)
                             .then(function(data){
+                                console.log('index.js - PGP err'); 
                                 console.log(data);
                             });
                         });
