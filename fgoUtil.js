@@ -138,7 +138,7 @@ function fgoOutputResultText(star, data, isHero, num) {
     if (data != null) {
         let target = [];
         for (let index = 0; index < num; index++)
-            let target.push(data[Math.floor(Math.random() * data.length)].heroName);
+            target.push(data[Math.floor(Math.random() * data.length)].heroName);
         const result = Object.create(null);
         target.forEach(element => {
             result[element] = result[element] ? result[element] += 1 : 1;
