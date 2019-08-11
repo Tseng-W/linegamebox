@@ -146,7 +146,7 @@ function fgoOutputResultText(star, data, isHero, num) {
         const entries = Object.entries(result);
         entries.sort((a, b) => b[1] - a[1]);
 
-        entries.foreach(obj => {
+        entries.forEach(obj => {
             returnText += "\n" + obj[0] + "：" + obj[1];
         });
         console.log('fgoOutputResultText returnText = ' + returnText);
