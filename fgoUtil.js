@@ -132,7 +132,7 @@ function fgoDraw10Times(result) {
 
 
 function fgoOutputResultText(star, data, isHero, num) {
-    let returnText = isHero ? star + "星從者：\n" : star + "星禮裝：";
+    let returnText = isHero ? star + "星從者：\n" : star + "星禮裝：\n";
     if (num <= 0)
         return "";
     if (data != null) {
@@ -144,10 +144,10 @@ function fgoOutputResultText(star, data, isHero, num) {
             result[element] = result[element] ? result[element] += 1 : 1;
         });
         const entries = Object.entries(result);
-        entries.sort((a, b) => b[1] - a[1]);
+        entries.sort	((a, b) => b[1] - a[1]);
 
         entries.forEach(obj => {
-            returnText += "\n" + obj[0] + "：" + obj[1];
+            returnText += "" + obj[0] + "：" + obj[1]+"\n";
         });
         console.log('fgoOutputResultText returnText = ' + returnText);
         return returnText;
