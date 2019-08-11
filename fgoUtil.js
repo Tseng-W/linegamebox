@@ -53,12 +53,12 @@ module.exports = {
 
         db.getHerosByName(currentPU)
             .then(limtedData => {
-                let image = { type: 'image', originalContentUrl: data[0].picture, previewImageUrl: data[0].picture };
+                let image = { type: 'image', originalContentUrl: limtedData[0].picture, previewImageUrl: limtedData[0].picture };
                 console.log('image url:', image);
                 db.getHerosByStar(5)
                     .then(unlimitedData => {
                         returnText.push("抽卡結果：");
-                        returnText[returnText.length - 1] += fgoOutputResultText(5, data, true, drawResult[0]);
+                        returnText[returnText.length - 1] += fgoOutputResultText(5, limtedData, true, drawResult[0]);
                         returnText[returnText.length - 1] += fgoOutputResultText(5, unlimitedData, false, drawResult[1]);
                         returnText[returnText.length - 1] += fgoOutputResultText(5, null, false, drawResult[2]);
                         returnText[returnText.length - 1] += fgoOutputResultText(4, null, false, drawResult[3]);
@@ -136,7 +136,7 @@ function fgoOutputResultText(star, data, isHero, num) {
     if (num <= 0)
         return "";
     if (data != null) {
-        let target = [];
+        let 	 = [];
         for (let index = 0; index < num; index++)
             target.push(data[Math.floor(Math.random() * data.length)].heroName);
         const result = Object.create(null);
