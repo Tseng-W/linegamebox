@@ -12,8 +12,10 @@ module.exports = {
     setPU: function(name, callback) {
         db.getHerosByName(name)
             .then(data => {
-                currentPU = name;
-                console.log('已變更PU從者為：'+currentPU);
+                if (data.length > 0) {
+                    currentPU = name;
+                    console.log('已變更PU從者為：' + currentPU);
+                }
                 callback("當前PU從者為：" + data[0].heroName);
             })
             .catch(err => {
@@ -64,7 +66,7 @@ module.exports = {
             db.getHerosByName(currentPU)
                 .then(data => {
                     let image = { type: 'image', originalContentUrl: data[0].picture, previewImageUrl: data[0].picture };
-                    list += "\n"+data[0].heroName+":"+drawResult[0];
+                    list += "\n" + data[0].heroName + ":" + drawResult[0];
                     returnText.push("抽卡結果:" + fgoOutputResultText(list, 1, drawResult));
                     returnText.push(image);
                     console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
