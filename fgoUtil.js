@@ -136,7 +136,7 @@ function fgoOutputResultText(star, data, isHero, num) {
     if (num <= 0)
         return "";
     if (data != null) {
-        let 	 = [];
+        let target = [];
         for (let index = 0; index < num; index++)
             target.push(data[Math.floor(Math.random() * data.length)].heroName);
         const result = Object.create(null);
