@@ -13,6 +13,7 @@ module.exports = {
         db.getHerosByName(name)
             .then(data => {
                 currentPU = name;
+                console.log('已變更PU從者為：'+currentPU);
                 callback("當前PU從者為：" + data[0].heroName);
             })
             .catch(err => {
