@@ -65,8 +65,8 @@ module.exports = {
                         returnText[returnText.length - 1] += fgoOutputResultText(4, null, false, drawResult[4]);
                         returnText[returnText.length - 1] += fgoOutputResultText(3, null, false, drawResult[5]);
                         returnText[returnText.length - 1] += fgoOutputResultText(3, null, false, drawResult[6]);
-                        if(drawResult[0]>0)
-                        	returnText.push(image);
+                        if (drawResult[0] > 0)
+                            returnText.push(image);
                         console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
                         callback(returnText);
                     })
@@ -132,7 +132,7 @@ function fgoDraw10Times(result) {
 
 
 function fgoOutputResultText(star, data, isHero, num) {
-	let returnText = isHero ? star + "星從者：\n" : star + "星禮裝：";
+    let returnText = isHero ? star + "星從者：\n" : star + "星禮裝：";
     if (num <= 0)
         return "";
     if (data != null) {
@@ -144,14 +144,16 @@ function fgoOutputResultText(star, data, isHero, num) {
             result[element] = result[element] ? result[element] += 1 : 1;
         });
         const entries = Object.entries(result);
+        entries.sort((a, b) => b[1] - a[1]);
+
         entries.foreach(obj => {
             returnText += "\n" + obj[0] + "：" + obj[1];
         });
         console.log('fgoOutputResultText returnText = ' + returnText);
         return returnText;
-    }else{
-    	returnText += num;
-    	console.log('fgoOutputResultText returnText = ' + returnText);
+    } else {
+        returnText += num;
+        console.log('fgoOutputResultText returnText = ' + returnText);
         return returnText;
     }
 }
