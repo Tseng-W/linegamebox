@@ -59,11 +59,11 @@ module.exports = {
                     .then(unlimitedData => {
                         returnText.push("抽卡結果：");
                         returnText[returnText.length - 1] += fgoOutputResultText(5, limtedData, true, drawResult[0]);
-                        returnText[returnText.length - 1] += fgoOutputResultText(5, unlimitedData, false, drawResult[1]);
+                        returnText[returnText.length - 1] += fgoOutputResultText(5, unlimitedData, true, drawResult[1]);
                         returnText[returnText.length - 1] += fgoOutputResultText(5, null, false, drawResult[2]);
-                        returnText[returnText.length - 1] += fgoOutputResultText(4, null, false, drawResult[3]);
+                        returnText[returnText.length - 1] += fgoOutputResultText(4, null, true, drawResult[3]);
                         returnText[returnText.length - 1] += fgoOutputResultText(4, null, false, drawResult[4]);
-                        returnText[returnText.length - 1] += fgoOutputResultText(3, null, false, drawResult[5]);
+                        returnText[returnText.length - 1] += fgoOutputResultText(3, null, true, drawResult[5]);
                         returnText[returnText.length - 1] += fgoOutputResultText(3, null, false, drawResult[6]);
                         if (drawResult[0] > 0)
                             returnText.push(image);
@@ -132,7 +132,7 @@ function fgoDraw10Times(result) {
 
 
 function fgoOutputResultText(star, data, isHero, num) {
-    let returnText = isHero ? star + "星從者：\n" : star + "星禮裝：\n";
+    let returnText = isHero ? star + "星從者：\n" : star + "星禮裝：";
     if (num <= 0)
         return "";
     if (data != null) {
@@ -143,16 +143,17 @@ function fgoOutputResultText(star, data, isHero, num) {
         target.forEach(element => {
             result[element] = result[element] ? result[element] += 1 : 1;
         });
+
+        returnText+="\n";
         const entries = Object.entries(result);
         entries.sort	((a, b) => b[1] - a[1]);
-
         entries.forEach(obj => {
             returnText += "" + obj[0] + "：" + obj[1]+"\n";
         });
         console.log('fgoOutputResultText returnText = ' + returnText);
         return returnText;
     } else {
-        returnText += num;
+        returnText += num+"\n";
         console.log('fgoOutputResultText returnText = ' + returnText);
         return returnText;
     }
