@@ -257,7 +257,7 @@ bot.on('message', function(event) {
                                     console.log('Error', error);
                                 });;
                         }
-                    } else if (msg.indexOf('PU') != -1) {
+                    } else if (msg.indexOf('PU') == 0) {
                         let currentPU = fgoUtil.getPU();
                         console.log('1. currentPU = ' + currentPU);
                         currentPU = msg.slice(3, msg.length);

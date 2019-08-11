@@ -55,7 +55,7 @@ module.exports = {
         }
         if (tenDrawTimes == 0)
             returnText = [userName + " 抽卡總次數: " + times + "次。"];
-        else returnText = [userName + " 抽卡總次數: " + times + "次。  課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
+        else returnText = [userName + " 抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
 
         //PU五星先行改名稱顯示
         let list = "";
@@ -63,7 +63,7 @@ module.exports = {
             db.getHerosByName(currentPU)
                 .then(data => {
                     let image = { type: 'image', originalContentUrl: data[0].picture, previewImageUrl: data[0].picture };
-                    list += "\n"+data[0].heroName+"："+drawResult[0];
+                    list += "\n"+data[0].heroName+":"+drawResult[0];
                     returnText.push("抽卡結果:" + fgoOutputResultText(list, 1, drawResult));
                     returnText.push(image);
                     console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
