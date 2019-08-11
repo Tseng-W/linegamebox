@@ -132,7 +132,7 @@ function fgoDraw10Times(result) {
 
 
 function fgoOutputResultText(star, data, isHero, num) {
-    let returnText = isHero ? star + "星從者：\n" : star + "星禮裝：";
+    let returnText = isHero ? star + "星從者：" : star + "星禮裝：";
     if (num <= 0)
         return "";
     if (data != null) {
