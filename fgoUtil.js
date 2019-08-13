@@ -43,7 +43,7 @@ module.exports = {
                 tenDrawTimes++;
             } while (drawResult[0] < 5);
             times = tenDrawTimes * 10;
-            console.log('寶五抽了共：'+times+"抽！");
+            console.log('寶五抽了共：' + times + "抽！");
         } else if (lastTimes > 0) {
             while (lastTimes > 10) {
                 drawResult = fgoDraw10Times(drawResult);
@@ -88,6 +88,9 @@ module.exports = {
                         returnText[returnText.length - 1] += fgoOutputResultText(3, null, false, drawResult[6]);
                         if (drawResult[0] > 0) {
                             let image;
+                            getLimitedHero = getLimitedHero.filter(function(elem, pos) {
+                                return myArray.indexOf(elem) == pos;
+                            })
                             getLimitedHero.forEach(index => {
                                 image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
                                 console.log('image url:', image);
