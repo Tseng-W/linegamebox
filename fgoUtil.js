@@ -16,7 +16,7 @@ module.exports = {
 				console.log("fgoutil ");
 				let returnT = "(test)當前PU從者為：";
 				data.forEach(heroName=>{
-					returnT += heroName+"\n";
+					returnT += heroName.heroName+"\n";
 				});
 				callback(returnT);
 			})
