@@ -38,6 +38,7 @@ module.exports = {
 				heros.foreach(hero=>{
 					setPUSql += `"nickName" = '%`+hero+`%'`;
 				});
+				console.log("setPUSql = "+setPUSql);
 				return db.any(setPUSql)
 					.then(data2=>{
 						return db.any(`SELECT "heroName" FROM public."HERO_DATA" WHERE "isPickUp" = true`)
@@ -45,15 +46,15 @@ module.exports = {
 								return data3;
 							})
 							.catch(err3=>{
-								console.log(err);
+								console.log(err3);
 							});
 					})
 					.catch(err2=>{
-						console.log(err);
+						console.log(err2);
 					});
 			})
 			.catch(err1=>{
-				console.log(err);
+				console.log(err1);
 			});
 	},
 };

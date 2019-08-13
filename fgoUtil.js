@@ -12,7 +12,7 @@ module.exports = {
 	testSetPU: function(heros, callback){
 		db.setPickUpHeros(heros)
 			.then(data=>{
-				let returnT = "當前PU從者為：";
+				let returnT = "(test)當前PU從者為：";
 				data.foreach(heroName=>{
 					returnT += heroName+"\n";
 				});
