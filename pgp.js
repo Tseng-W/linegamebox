@@ -36,7 +36,7 @@ module.exports = {
 			.then(data1 =>{
 				let setPUSql = `update public."HERO_DATA" SET "isPickUp" = 'true' WHERE `;
 				heros.forEach(hero=>{
-					setPUSql += `"nickName" = '%`+hero+`%' or`;
+					setPUSql += `"nickName" like '%`+hero+`%' or`;
 				});
 				setPUSql = setPUSql.slice(0,setPUSql.length-2);
 				console.log("setPUSql = "+setPUSql);
