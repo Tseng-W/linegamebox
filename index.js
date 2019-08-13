@@ -220,7 +220,9 @@ bot.on('message', function(event) {
                 case '寶5抽':
                     event.source.profile()
                         .then(function(profile) {
+                            console.log("!!!!!");
                             fgoUtil.getPU(puHeros => {
+                                console.log("?????");
                                 if (puHeros.length > 1)
                                     event.reply('PU從者不只1位，為了御主的荷包還是請回吧')
                                     .then(data => {
