@@ -29,7 +29,7 @@ module.exports = {
     getPU: function(callback) {
         db.getCurrentPU()
             .then(data => {
-                return data;
+                callback(data);
             });
     },
     getDrawResult: function(userName, times, callback) {
