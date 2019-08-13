@@ -21,8 +21,8 @@ module.exports = {
                 return(err);
             });
     },
-    getHerosByName: async function(name){
-    	return db.any(`SELECT * FROM public."HERO_DATA" WHERE "nickName" LIKE '%`+name+`%'`)
+    getCurrentPU: async function(name){
+    	return db.any(`SELECT * FROM public."HERO_DATA" WHERE "isPickUp" = true`)
     		.then(data =>{
                 console.log('PGP.js -------  get data : ', data);
                 return(data);
