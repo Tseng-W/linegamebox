@@ -10,60 +10,61 @@ const db = pgp(connectionString);
 // console.log('process.env.DATABASE_URL = '+process.env.DATABASE_URL);
 
 module.exports = {
-	getHerosByNickName: async function(names){
-		let sql = `SELECT "heroName" FROM public."HERO_DATA" WHERE "nickName" LIKE `;
-		names.forEach(name=>{
+    getHerosByNickName: async function(names) {
+        let sql = `SELECT "heroName" FROM public."HERO_DATA" WHERE "nickName" LIKE `;
+        names.forEach(name => {
 
-		});
-		return db.many(`SELECT "heroName" FROM public."HERO_DATA" WHERE "nickName" LIKE `);
-	},
+        });
+        return db.many(`SELECT "heroName" FROM public."HERO_DATA" WHERE "nickName" LIKE `)
+    },
     getHerosByStar: async function(star) {
         return db.any(`SELECT * FROM public."HERO_DATA" WHERE star = $1 AND "islimited" IS NOT true`, star)
             .then(data => {
                 console.log('PGP.js -------  get data : ', data);
-                return(data);
+                return (data);
             })
             .catch(err => {
                 console.log(err);
-                return(err);
+                return (err);
             });
     },
-    getCurrentPU: async function(name){
-    	return db.any(`SELECT * FROM public."HERO_DATA" WHERE "isPickUp" = true`)
-    		.then(data =>{
+    getCurrentPU: async function(name) {
+        return db.any(`SELECT * FROM public."HERO_DATA" WHERE "isPickUp" = true`)
+            .then(data => {
                 console.log('PGP.js -------  get data : ', data);
-                return(data);
-    		})
-    		.catch(err=>{
-    			console.log(err);
-    		});
+                return (data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
     },
-	setPickUpHeros: async function(heros){
-		return db.any(`UPDATE public."HERO_DATA" SET "isPickUp" = false`)
-			.then(data1 =>{
-				let setPUSql = `update public."HERO_DATA" SET "isPickUp" = 'true' WHERE `;
-				heros.forEach(hero=>{
-					setPUSql += `"nickName" like '%`+hero+`%' or`;
-				});
-				setPUSql = setPUSql.slice(0,setPUSql.length-2);
-				console.log("setPUSql = "+setPUSql);
-				return db.any(setPUSql)
-					.then(data2=>{
-						return db.many(`SELECT "heroName" FROM public."HERO_DATA" WHERE "isPickUp" = true`)
-							.then(data3 =>{
-								console.log('data3 : '+data3);
-								return data3;
-							})
-							.catch(err3=>{
-								console.log(err3);
-							});
-					})
-					.catch(err2=>{
-						console.log(err2);
-					});
-			})
-			.catch(err1=>{
-				console.log(err1);
-			});
-	},
+    setPickUpHeros: async function(heros) {
+        return db.any(`UPDATE public."HERO_DATA" SET "isPickUp" = false`)
+            .then(data1 => {
+                let setPUSql = `update public."HERO_DATA" SET "isPickUp" = 'true' WHERE `;
+                heros.forEach(hero => {
+                    if (hero != "")
+                        setPUSql += `"nickName" like '%` + hero + `%' or`;
+                });
+                setPUSql = setPUSql.slice(0, setPUSql.length - 2);
+                console.log("setPUSql = " + setPUSql);
+                return db.any(setPUSql)
+                    .then(data2 => {
+                        return db.many(`SELECT "heroName" FROM public."HERO_DATA" WHERE "isPickUp" = true`)
+                            .then(data3 => {
+                                console.log('data3 : ' + data3);
+                                return data3;
+                            })
+                            .catch(err3 => {
+                                console.log(err3);
+                            });
+                    })
+                    .catch(err2 => {
+                        console.log(err2);
+                    });
+            })
+            .catch(err1 => {
+                console.log(err1);
+            });
+    },
 };
