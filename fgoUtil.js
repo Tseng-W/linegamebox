@@ -56,6 +56,7 @@ module.exports = {
         db.getCurrentPU(currentPU)
             .then(limtedData => {
                 let random = Math.floor(Math.random() + limtedData.length);
+                console.log('limtedData.length = '+limtedData.length +". random = "+random);
                 let image = { type: 'image', originalContentUrl: limtedData[random].picture, previewImageUrl: limtedData[random].picture };
                 console.log('image url:', image);
                 db.getHerosByStar(5)
