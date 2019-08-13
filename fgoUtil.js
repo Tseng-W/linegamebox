@@ -9,23 +9,23 @@ var currentPU = "貞德Alter";
 var currentPUData;
 
 module.exports = {
-	setPU: function(heros, callback){
-		console.log("fgo.js ---- heros:"+heros);
-		db.setPickUpHeros(heros)
-			.then(data=>{
-				console.log("fgoutil ");
-				let returnT = "當前PU從者為：\n";
-				data.forEach(heroName=>{
-					returnT += heroName.heroName+"\n";
-				});
-				callback(returnT);
-			})
-			.catch(err=>{
+    setPU: function(heros, callback) {
+        console.log("fgo.js ---- heros:" + heros);
+        db.setPickUpHeros(heros)
+            .then(data => {
+                console.log("fgoutil ");
+                let returnT = "當前PU從者為：\n";
+                data.forEach(heroName => {
+                    returnT += heroName.heroName + "\n";
+                });
+                callback(returnT);
+            })
+            .catch(err => {
                 callback("無對應從者");
-				console.log(err);
-			});
+                console.log(err);
+            });
 
-	},
+    },
     getPU: function() {
         return currentPU;
     },
@@ -56,22 +56,35 @@ module.exports = {
 
         db.getCurrentPU(currentPU)
             .then(limtedData => {
-                let random = Math.floor(Math.random() * limtedData.length);
-                console.log('limtedData.length = '+limtedData.length +". random = "+random);
-                let image = { type: 'image', originalContentUrl: limtedData[random].picture, previewImageUrl: limtedData[random].picture };
-                console.log('image url:', image);
                 db.getHerosByStar(5)
                     .then(unlimitedData => {
                         returnText.push("抽卡結果：\n");
                         returnText[returnText.length - 1] += fgoOutputResultText(5, limtedData[random], true, drawResult[0]);
+
+                        let getLimitedHero = [];
+                        let getLimitedHeroData = [];
+                        for (let index = 0; index < drawResult[0]; index++)
+                            let getLimitedHero.push(Math.floor(Math.random() * limtedData.length));
+
+
+                        getLimitedHero.forEach(index => {
+                            getLimitedHeroData.push(limtedData[index]);
+                        })
+                        returnText[returnText.length - 1] += fgoOutputResultText_All(5, getLimitedHeroData, true);
                         returnText[returnText.length - 1] += fgoOutputResultText(5, unlimitedData, true, drawResult[1]);
                         returnText[returnText.length - 1] += fgoOutputResultText(5, null, false, drawResult[2]);
                         returnText[returnText.length - 1] += fgoOutputResultText(4, null, true, drawResult[3]);
                         returnText[returnText.length - 1] += fgoOutputResultText(4, null, false, drawResult[4]);
                         returnText[returnText.length - 1] += fgoOutputResultText(3, null, true, drawResult[5]);
                         returnText[returnText.length - 1] += fgoOutputResultText(3, null, false, drawResult[6]);
-                        if (drawResult[0] > 0)
-                            returnText.push(image);
+                        if (drawResult[0] > 0) {
+                            let image;
+                            getLimitedHero.forEach(index) {
+                                image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
+                                console.log('image url:', image);
+                                returnText.push(image);
+                            }
+                        }
                         console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
                         callback(returnText);
                     })
@@ -149,16 +162,45 @@ function fgoOutputResultText(star, data, isHero, num) {
             result[element] = result[element] ? result[element] += 1 : 1;
         });
 
-        returnText+="\n";
+        returnText += "\n";
         const entries = Object.entries(result);
-        entries.sort	((a, b) => b[1] - a[1]);
+        entries.sort((a, b) => b[1] - a[1]);
         entries.forEach(obj => {
-            returnText += "" + obj[0] + "：" + obj[1]+"\n";
+            returnText += "" + obj[0] + "：" + obj[1] + "\n";
         });
         console.log('fgoOutputResultText returnText = ' + returnText);
         return returnText;
     } else {
-        returnText += num+"\n";
+        returnText += num + "\n";
+        console.log('fgoOutputResultText returnText = ' + returnText);
+        return returnText;
+    }
+}
+
+function fgoOutputResultText_All(star, data, isHero) {
+    let returnText = isHero ? star + "星從者：" : star + "星禮裝：";
+    if (num <= 0)
+        return "";
+    if (data != null) {
+        let target = [];
+        data.forEach(content => {
+            target.push(content.heroName);
+        });
+        const result = Object.create(null);
+        target.forEach(element => {
+            result[element] = result[element] ? result[element] += 1 : 1;
+        });
+
+        returnText += "\n";
+        const entries = Object.entries(result);
+        entries.sort((a, b) => b[1] - a[1]);
+        entries.forEach(obj => {
+            returnText += "" + obj[0] + "：" + obj[1] + "\n";
+        });
+        console.log('fgoOutputResultText returnText = ' + returnText);
+        return returnText;
+    } else {
+        returnText += num + "\n";
         console.log('fgoOutputResultText returnText = ' + returnText);
         return returnText;
     }
