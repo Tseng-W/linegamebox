@@ -13,6 +13,7 @@ module.exports = {
 		console.log("fgo.js ---- heros:"+heros);
 		db.setPickUpHeros(heros)
 			.then(data=>{
+				console.log("fgoutil ");
 				let returnT = "(test)當前PU從者為：";
 				data.forEach(heroName=>{
 					returnT += heroName+"\n";
