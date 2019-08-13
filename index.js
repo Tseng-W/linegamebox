@@ -263,12 +263,12 @@ bot.on('message', function(event) {
                             console.log('test. targetPU = ' + targetPU);
 							console.log('test. data = ' + data);
                         });
-                        let currentPU = msg.slice(3, msg.length);
-                        console.log('2. currentPU = ' + currentPU);
-                        fgoUtil.setPU(currentPU, data => {
-                            console.log('3. currentPU = ' + currentPU);
-                            event.reply(data);
-                        });
+                        //let currentPU = msg.slice(3, msg.length);
+                        //console.log('2. currentPU = ' + currentPU);
+                        //fgoUtil.setPU(currentPU, data => {
+                        //    console.log('3. currentPU = ' + currentPU);
+                        //    event.reply(data);
+                        //});
                     }
                     break;
             }
