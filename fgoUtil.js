@@ -59,8 +59,7 @@ module.exports = {
                 db.getHerosByStar(5)
                     .then(unlimitedData => {
                         returnText.push("抽卡結果：\n");
-                        returnText[returnText.length - 1] += fgoOutputResultText(5, limtedData[random], true, drawResult[0]);
-
+                        
                         let getLimitedHero = [];
                         let getLimitedHeroData = [];
                         for (let index = 0; index < drawResult[0]; index++)
