@@ -258,17 +258,17 @@ bot.on('message', function(event) {
                                 });;
                         }
                     } else if (msg.indexOf('PU ') == 0) {
-                        //let targetPU = msg.slice(3, msg.length).split(" ");
-						//fgoUtil.testSetPU(targetPU, data => {
-                        //    console.log('test. targetPU = ' + targetPU);
-						//	console.log('test. data = ' + data);
-                        //});
-                        let currentPU = msg.slice(3, msg.length);
-                        console.log('2. currentPU = ' + currentPU);
-                        fgoUtil.setPU(currentPU, data => {
-                            console.log('3. currentPU = ' + currentPU);
-                            event.reply(data);
+                        let targetPU = msg.slice(3, msg.length).split(" ");
+						fgoUtil.testSetPU(targetPU, data => {
+                           console.log('test. targetPU = ' + targetPU);
+							console.log('test. data = ' + data);
                         });
+                        // let currentPU = msg.slice(3, msg.length);
+                        // console.log('2. currentPU = ' + currentPU);
+                        // fgoUtil.setPU(currentPU, data => {
+                        //     console.log('3. currentPU = ' + currentPU);
+                        //     event.reply(data);
+                        // });
                     }
                     break;
             }
