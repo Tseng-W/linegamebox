@@ -14,7 +14,7 @@ module.exports = {
 		db.setPickUpHeros(heros)
 			.then(data=>{
 				let returnT = "(test)當前PU從者為：";
-				data.foreach(heroName=>{
+				data.forEach(heroName=>{
 					returnT += heroName+"\n";
 				});
 				callback(returnT);
