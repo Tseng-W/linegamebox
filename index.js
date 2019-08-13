@@ -219,19 +219,25 @@ bot.on('message', function(event) {
                     break;
                 case '寶5抽':
                     event.source.profile()
-                        .then(function(profile){
-                            fgoUtil.getPU(puHeros=>{
-                                if(puHeros.length > 1)
-                                    event.reply('PU從者不只1位，為了御主的荷包還是請回吧');
-                                fgoUtil.getDrawResult(profile.displayName, 55555, drawResultText => {
-                                event.reply(drawResultText)
-                                    .then(function(data) {
-                                        console.log('拔草大成功', data);
+                        .then(function(profile) {
+                            fgoUtil.getPU(puHeros => {
+                                if (puHeros.length > 1)
+                                    event.reply('PU從者不只1位，為了御主的荷包還是請回吧')
+                                    .then(data => {
+                                        console.log(data);
                                     })
-                                    .catch(function(error) {
-                                        console.log('error', error);
+                                    .catch(err => {
+                                        console.log(err);
                                     });
-                            });
+                                fgoUtil.getDrawResult(profile.displayName, 55555, drawResultText => {
+                                    event.reply(drawResultText)
+                                        .then(function(data) {
+                                            console.log('拔草大成功', data);
+                                        })
+                                        .catch(function(error) {
+                                            console.log('error', error);
+                                        });
+                                });
                             })
                         });
                 default:
@@ -276,9 +282,9 @@ bot.on('message', function(event) {
                         }
                     } else if (msg.indexOf('PU ') == 0) {
                         let targetPU = msg.slice(3, msg.length).split(" ");
-						fgoUtil.setPU(targetPU, data => {
+                        fgoUtil.setPU(targetPU, data => {
                             event.reply(data)
-                                .catch(err =>{
+                                .catch(err => {
                                     console.log(err);
                                 });
                         });
