@@ -14,7 +14,7 @@ module.exports = {
 		db.setPickUpHeros(heros)
 			.then(data=>{
 				console.log("fgoutil ");
-				let returnT = "(test)當前PU從者為：";
+				let returnT = "當前PU從者為：\n";
 				data.forEach(heroName=>{
 					returnT += heroName.heroName+"\n";
 				});
@@ -69,7 +69,8 @@ module.exports = {
 
         db.getHerosByName(currentPU)
             .then(limtedData => {
-                let image = { type: 'image', originalContentUrl: limtedData[0].picture, previewImageUrl: limtedData[0].picture };
+                let random = Math.floor(Math.random() + limtedData.length);
+                let image = { type: 'image', originalContentUrl: limtedData[random].picture, previewImageUrl: limtedData[random].picture };
                 console.log('image url:', image);
                 db.getHerosByStar(5)
                     .then(unlimitedData => {
