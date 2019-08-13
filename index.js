@@ -259,7 +259,7 @@ bot.on('message', function(event) {
                         }
                     } else if (msg.indexOf('PU ') == 0) {
                         let targetPU = msg.slice(3, msg.length).split(" ");
-						fgoUtil.testSetPU(targetPU, data => {
+						fgoUtil.setPU(targetPU, data => {
                             event.reply(data)
                                 .catch(err =>{
                                     console.log(err);
