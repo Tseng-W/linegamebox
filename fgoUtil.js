@@ -89,7 +89,7 @@ module.exports = {
                         if (drawResult[0] > 0) {
                             let image;
                             getLimitedHero = getLimitedHero.filter(function(elem, pos) {
-                                return myArray.indexOf(elem) == pos;
+                                return getLimitedHero.indexOf(elem) == pos;
                             })
                             getLimitedHero.forEach(index => {
                                 image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
