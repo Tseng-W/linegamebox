@@ -43,6 +43,7 @@ module.exports = {
                 tenDrawTimes++;
             } while (drawResult[0] < 5);
             times = tenDrawTimes * 10;
+            console.log('寶五抽了共：'+times+"抽！");
         } else if (lastTimes > 0) {
             while (lastTimes > 10) {
                 drawResult = fgoDraw10Times(drawResult);
