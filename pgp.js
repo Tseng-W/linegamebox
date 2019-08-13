@@ -35,7 +35,7 @@ module.exports = {
 		return db.any(`UPDATE public."HERO_DATA" SET "isPickUp" = false`)
 			.then(data1 =>{
 				let setPUSql = `update public."HERO_DATA" SET "isPickUp" = 'true' WHERE `;
-				heros.foreach(hero=>{
+				heros.forEach(hero=>{
 					setPUSql += `"nickName" = '%`+hero+`%'`;
 				});
 				console.log("setPUSql = "+setPUSql);
