@@ -7,6 +7,8 @@ var returnText;
 var drawResult = [0, 0, 0, 0, 0, 0, 0, 0];
 var currentPU = "貞德Alter";
 var currentPUData;
+let defaultImage = { type: 'image', originalContentUrl: 'https://i.imgur.com/yfnub7D.jpg', previewImageUrl: 'https://i.imgur.com/yfnub7D.jpg' };
+
 
 module.exports = {
     setPU: function(heros, callback) {
@@ -92,9 +94,12 @@ module.exports = {
                                 return getLimitedHero.indexOf(elem) == pos;
                             })
                             getLimitedHero.forEach(index => {
-                                image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
-                                console.log('image url:', image);
-                                returnText.push(image);
+                                if (!limitedData[index].picture) {
+                                    image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
+                                    console.log('image url:', image);
+                                    returnText.push(image);
+                                } else if (returnText.indexOf(defaultImage) != -1)
+                                    returnText.push(defaultImage);
                             });
                         }
                         console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
