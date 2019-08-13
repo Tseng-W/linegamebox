@@ -94,12 +94,14 @@ module.exports = {
                                 return getLimitedHero.indexOf(elem) == pos;
                             })
                             getLimitedHero.forEach(index => {
+                                console.log('console.log(returnText.indexOf(defaultImage)); 1: '+returnText.indexOf(defaultImage));
                                 if (limtedData[index].picture) {
                                     image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
                                     console.log('image url:', image);
                                     returnText.push(image);
                                 } else if (returnText.indexOf(defaultImage) != -1)
                                     returnText.push(defaultImage);
+                                console.log('console.log(returnText.indexOf(defaultImage)); 2: '+returnText.indexOf(defaultImage));
                             });
                         }
                         console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
