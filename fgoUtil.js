@@ -94,7 +94,7 @@ module.exports = {
                                 return getLimitedHero.indexOf(elem) == pos;
                             })
                             getLimitedHero.forEach(index => {
-                                if (!limtedData[index].picture) {
+                                if (limtedData[index].picture) {
                                     image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
                                     console.log('image url:', image);
                                     returnText.push(image);
