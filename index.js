@@ -217,6 +217,23 @@ bot.on('message', function(event) {
                             });
                         });
                     break;
+                case '寶5抽':
+                    event.source.profile()
+                        .then(function(profile){
+                            fgoUtil.getPU(puHeros=>{
+                                if(puHeros.length > 1)
+                                    event.reply('PU從者不只1位，為了御主的荷包還是請回吧');
+                                fgoUtil.getDrawResult(profile.displayName, 55555, drawResultText => {
+                                event.reply(drawResultText)
+                                    .then(function(data) {
+                                        console.log('拔草大成功', data);
+                                    })
+                                    .catch(function(error) {
+                                        console.log('error', error);
+                                    });
+                            });
+                            })
+                        });
                 default:
                     console.log(event.message.text);
                     var msg = event.message.text;

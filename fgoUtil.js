@@ -26,15 +26,24 @@ module.exports = {
             });
 
     },
-    getPU: function() {
-        return currentPU;
+    getPU: function(callback) {
+        db.getCurrentPU()
+            .then(data => {
+                return data;
+            });
     },
     getDrawResult: function(userName, times, callback) {
         //初始化參數
         initial();
         let lastTimes = times;
         //依照抽卡次數計算抽卡結果
-        if (lastTimes > 0) {
+        if (lastTimes == 55555) {
+            do {
+                drawResult = fgoDraw10Times(drawResult);
+                tenDrawTimes++;
+            } while (drawResult[0] < 5);
+            times = tenDrawTimes * 10;
+        } else if (lastTimes > 0) {
             while (lastTimes > 10) {
                 drawResult = fgoDraw10Times(drawResult);
                 lastTimes -= 10;
@@ -78,7 +87,7 @@ module.exports = {
                         returnText[returnText.length - 1] += fgoOutputResultText(3, null, false, drawResult[6]);
                         if (drawResult[0] > 0) {
                             let image;
-                            getLimitedHero.forEach(index=>{
+                            getLimitedHero.forEach(index => {
                                 image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
                                 console.log('image url:', image);
                                 returnText.push(image);
@@ -178,7 +187,7 @@ function fgoOutputResultText(star, data, isHero, num) {
 
 function fgoOutputResultText_All(star, data, isHero) {
     let returnText = isHero ? star + "星從者：" : star + "星禮裝：";
-    
+
     if (data != null) {
         let target = [];
         data.forEach(content => {
