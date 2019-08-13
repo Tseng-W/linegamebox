@@ -41,7 +41,7 @@ module.exports = {
 				return db.any(setPUSql)
 					.then(data2=>{
 						return db.any(`SELECT "heroName" FROM public."HERO_DATA" WHERE "isPickUp" = true`)
-							.then(data3 ={
+							.then(data3 =>{
 								return data3;
 							})
 							.catch(err3=>{
