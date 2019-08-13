@@ -217,7 +217,12 @@ bot.on('message', function(event) {
                             });
                         });
                     break;
+                case '抽到寶五':
+                case '抽到寶5':
                 case '寶5抽':
+                case '寶五抽':
+                case '抽寶五':
+                case '抽寶5':
                     event.source.profile()
                         .then(function(profile) {
                             fgoUtil.getPU(puHeros => {
