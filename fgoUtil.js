@@ -10,6 +10,7 @@ var currentPUData;
 
 module.exports = {
 	testSetPU: function(heros, callback){
+		console.log("fgo.js ---- heros:"+heros);
 		db.setPickUpHeros(heros)
 			.then(data=>{
 				let returnT = "(test)當前PU從者為：";
