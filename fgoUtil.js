@@ -59,7 +59,7 @@ module.exports = {
                 db.getHerosByStar(5)
                     .then(unlimitedData => {
                         returnText.push("抽卡結果：\n");
-                        
+
                         let getLimitedHero = [];
                         let getLimitedHeroData = [];
                         for (let index = 0; index < drawResult[0]; index++)
@@ -178,8 +178,7 @@ function fgoOutputResultText(star, data, isHero, num) {
 
 function fgoOutputResultText_All(star, data, isHero) {
     let returnText = isHero ? star + "星從者：" : star + "星禮裝：";
-    if (num <= 0)
-        return "";
+    
     if (data != null) {
         let target = [];
         data.forEach(content => {
