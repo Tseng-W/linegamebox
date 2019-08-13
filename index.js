@@ -260,8 +260,10 @@ bot.on('message', function(event) {
                     } else if (msg.indexOf('PU ') == 0) {
                         let targetPU = msg.slice(3, msg.length).split(" ");
 						fgoUtil.testSetPU(targetPU, data => {
-                           console.log('test. targetPU = ' + targetPU);
-							console.log('test. data = ' + data);
+                            event.reply(data)
+                                .catch(err =>{
+                                    console.log(err);
+                                });
                         });
                         // let currentPU = msg.slice(3, msg.length);
                         // console.log('2. currentPU = ' + currentPU);
