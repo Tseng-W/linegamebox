@@ -64,7 +64,7 @@ module.exports = {
                         let getLimitedHero = [];
                         let getLimitedHeroData = [];
                         for (let index = 0; index < drawResult[0]; index++)
-                            let getLimitedHero.push(Math.floor(Math.random() * limtedData.length));
+                            getLimitedHero.push(Math.floor(Math.random() * limtedData.length));
 
 
                         getLimitedHero.forEach(index => {
