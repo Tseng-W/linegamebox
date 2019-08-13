@@ -10,6 +10,13 @@ const db = pgp(connectionString);
 // console.log('process.env.DATABASE_URL = '+process.env.DATABASE_URL);
 
 module.exports = {
+	getHerosByNickName: async function(names){
+		let sql = `SELECT "heroName" FROM public."HERO_DATA" WHERE "nickName" LIKE `;
+		names.forEach(name=>{
+
+		});
+		return db.many(`SELECT "heroName" FROM public."HERO_DATA" WHERE "nickName" LIKE `);
+	},
     getHerosByStar: async function(star) {
         return db.any(`SELECT * FROM public."HERO_DATA" WHERE star = $1 AND "islimited" IS NOT true`, star)
             .then(data => {
