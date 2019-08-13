@@ -9,7 +9,7 @@ var currentPU = "貞德Alter";
 var currentPUData;
 
 module.exports = {
-	testSetPU: function(heros, callback){
+	setPU: function(heros, callback){
 		console.log("fgo.js ---- heros:"+heros);
 		db.setPickUpHeros(heros)
 			.then(data=>{
@@ -25,20 +25,6 @@ module.exports = {
 			});
 
 	},
-    setPU: function(name, callback) {
-        db.getHerosByName(name)
-            .then(data => {
-                if (data.length > 0) {
-                    currentPU = name;
-                    console.log('已變更PU從者為：' + currentPU);
-                }
-                callback("當前PU從者為：" + data[0].heroName);
-            })
-            .catch(err => {
-                console.log("無對應從者名稱");
-                callback("無對應從者名稱");
-            });
-    },
     getPU: function() {
         return currentPU;
     },
@@ -67,7 +53,7 @@ module.exports = {
             returnText = [userName + " 抽卡總次數: " + times + "次。"];
         else returnText = [userName + " 抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
 
-        db.getHerosByName(currentPU)
+        db.getCurrentPU(currentPU)
             .then(limtedData => {
                 let random = Math.floor(Math.random() + limtedData.length);
                 let image = { type: 'image', originalContentUrl: limtedData[random].picture, previewImageUrl: limtedData[random].picture };
