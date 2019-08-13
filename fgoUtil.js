@@ -79,11 +79,11 @@ module.exports = {
                         returnText[returnText.length - 1] += fgoOutputResultText(3, null, false, drawResult[6]);
                         if (drawResult[0] > 0) {
                             let image;
-                            getLimitedHero.forEach(index) {
+                            getLimitedHero.forEach(index=>{
                                 image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
                                 console.log('image url:', image);
                                 returnText.push(image);
-                            }
+                            });
                         }
                         console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
                         callback(returnText);
