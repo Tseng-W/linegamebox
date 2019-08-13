@@ -21,6 +21,7 @@ module.exports = {
 				callback(returnT);
 			})
 			.catch(err=>{
+                callback("無對應從者");
 				console.log(err);
 			});
 

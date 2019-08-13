@@ -42,7 +42,7 @@ module.exports = {
 				console.log("setPUSql = "+setPUSql);
 				return db.any(setPUSql)
 					.then(data2=>{
-						return db.any(`SELECT "heroName" FROM public."HERO_DATA" WHERE "isPickUp" = true`)
+						return db.many(`SELECT "heroName" FROM public."HERO_DATA" WHERE "isPickUp" = true`)
 							.then(data3 =>{
 								console.log('data3 : '+data3);
 								return data3;
