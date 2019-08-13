@@ -258,9 +258,13 @@ bot.on('message', function(event) {
                                 });;
                         }
                     } else if (msg.indexOf('PU ') == 0) {
-                        let currentPU = fgoUtil.getPU();
+                        let targetPU = msg.slice(3, msg.length).split(" ");
+						fgoUtil.testSetPU(targetPU, data => {
+                            console.log('test. targetPU = ' + targetPU);
+							console.log('test. data = ' + data);
+                        });
                         console.log('1. currentPU = ' + currentPU);
-                        currentPU = msg.slice(3, msg.length);
+                        let currentPU = msg.slice(3, msg.length);
                         console.log('2. currentPU = ' + currentPU);
                         fgoUtil.setPU(currentPU, data => {
                             console.log('3. currentPU = ' + currentPU);

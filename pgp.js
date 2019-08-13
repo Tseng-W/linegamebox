@@ -30,5 +30,30 @@ module.exports = {
     		.catch(err=>{
     			console.log(err);
     		});
-    }
+    },
+	setPickUpHeros: async function(heros){
+		return db.any(`UPDATE public."HERO_DATA" SET "isPickUp" = false`)
+			.then(data1 =>{
+				let setPUSql = `update public."HERO_DATA" SET "isPickUp" = 'true' WHERE `;
+				heros.foreach(hero=>{
+					setPUSql += `"nickName" = '%`+hero+`%'`;
+				});
+				return db.any(setPUSql)
+					.then(data2={
+						return db.any(`SELECT "heroName" FROM public."HERO_DATA" WHERE "isPickUp" = true`)
+							.then(data3 ={
+								return data3;
+							})
+							.catch(err3=>{
+								console.log(err);
+							});
+					})
+					.catch(err2=>{
+						console.log(err);
+					});
+			})
+			.catch(err1=>{
+				console.log(err);
+			});
+	},
 };

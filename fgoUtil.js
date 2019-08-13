@@ -9,6 +9,20 @@ var currentPU = "貞德Alter";
 var currentPUData;
 
 module.exports = {
+	testSetPU: function(heros, callback){
+		db.setPickUpHeros(heros)
+			.then(data=>{
+				let returnT = "當前PU從者為：";
+				data.foreach(heroName=>{
+					returnT += heroName+"\n";
+				});
+				callback(returnT);
+			})
+			.catch(err=>{
+				console.log(err);
+			});
+
+	},
     setPU: function(name, callback) {
         db.getHerosByName(name)
             .then(data => {
