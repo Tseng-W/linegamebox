@@ -215,11 +215,7 @@ function fgoOutputResultText_All(star, data, isHero) {
         });
         console.log('fgoOutputResultText returnText = ' + returnText);
         return returnText;
-    } else {
-        returnText += num + "\n";
-        console.log('fgoOutputResultText returnText = ' + returnText);
-        return returnText;
-    }
+    }return null;
 }
 
 function fgoDrawResultPicture(result, returnText) {
