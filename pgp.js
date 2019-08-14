@@ -11,11 +11,11 @@ const db = pgp(connectionString);
 
 module.exports = {
     getHerosByNickName: async function(names) {
-        let sql = `SELECT "heroName" FROM public."servant_data" WHERE "nickName" LIKE `;
+        let sql = `SELECT "servantName" FROM public."servant_data" WHERE "nickName" LIKE `;
         names.forEach(name => {
 
         });
-        return db.many(`SELECT "heroName" FROM public."servant_data" WHERE "nickName" LIKE `)
+        return db.many(`SELECT "servantName" FROM public."servant_data" WHERE "nickName" LIKE `)
     },
     getHerosByStar: async function(star) {
         return db.any(`SELECT * FROM public."servant_data" WHERE star = $1 AND "islimited" IS NOT true`, star)
@@ -50,7 +50,7 @@ module.exports = {
                 console.log("setPUSql = " + setPUSql);
                 return db.any(setPUSql)
                     .then(data2 => {
-                        return db.many(`SELECT "heroName" FROM public."servant_data" WHERE "isPickUp" = true`)
+                        return db.many(`SELECT "servantName" FROM public."servant_data" WHERE "isPickUp" = true`)
                             .then(data3 => {
                                 console.log('data3 : ' + data3);
                                 return data3;
