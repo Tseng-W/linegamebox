@@ -102,8 +102,10 @@ module.exports = {
                                     returnText.push(image);
                                 } else if (returnText.indexOf(defaultImage) == -1)
                                     returnText.push(defaultImage);
-								if(limtedData[index].summonDialog)
+								if(limtedData[index].summonDialog){
 									returnText.push(limtedData[index].summonDialog);
+								}
+								console.log(limtedData[index].summonDialog);
                             });
                         }
 						
