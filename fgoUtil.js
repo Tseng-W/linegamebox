@@ -17,8 +17,8 @@ module.exports = {
             .then(data => {
                 console.log("fgoutil ");
                 let returnT = "當前PU從者為：\n";
-                data.forEach(heroName => {
-                    returnT += heroName.heroName + "\n";
+                data.forEach(servantName => {
+                    returnT += servantName.servantName + "\n";
                 });
                 callback(returnT);
             })
@@ -173,7 +173,7 @@ function fgoOutputResultText(star, data, isHero, num) {
     if (data != null) {
         let target = [];
         for (let index = 0; index < num; index++)
-            target.push(data[Math.floor(Math.random() * data.length)].heroName);
+            target.push(data[Math.floor(Math.random() * data.length)].servantName);
         const result = Object.create(null);
         target.forEach(element => {
             result[element] = result[element] ? result[element] += 1 : 1;
@@ -200,7 +200,7 @@ function fgoOutputResultText_All(star, data, isHero) {
     if (data.length>0) {
         let target = [];
         data.forEach(content => {
-            target.push(content.heroName);
+            target.push(content.servantName);
         });
         const result = Object.create(null);
         target.forEach(element => {
