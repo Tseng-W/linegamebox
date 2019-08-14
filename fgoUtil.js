@@ -197,7 +197,7 @@ function fgoOutputResultText(star, data, isHero, num) {
 function fgoOutputResultText_All(star, data, isHero) {
     let returnText = isHero ? star + "星從者：" : star + "星禮裝：";
 
-    if (data != null) {
+    if (data.length>0) {
         let target = [];
         data.forEach(content => {
             target.push(content.heroName);
