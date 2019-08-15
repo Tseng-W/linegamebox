@@ -285,7 +285,7 @@ bot.on('message', function(event) {
                                     console.log('Error', error);
                                 });;
                         }
-                    } else if (msg.indexOf('PU ') == 0 || (msg.indexOf('pu ')) {
+                    } else if (msg.indexOf('PU ') == 0 || msg.indexOf('pu ')) {
                         let targetPU = msg.slice(3, msg.length).split(" ");
                         fgoUtil.setPU(targetPU, data => {
                             event.reply(data)
