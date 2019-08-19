@@ -13,7 +13,7 @@ let defaultImage = { type: 'image', originalContentUrl: 'https://i.imgur.com/yfn
 module.exports = {
     setPU: function(heros, callback) {
         console.log("fgo.js ---- heros:" + heros);
-        db.setPickUpHeros(heros)
+        db.setPickUpServants(heros)
             .then(data => {
                 console.log("fgoutil ");
                 let returnT = "當前PU從者為：\n";
@@ -89,7 +89,7 @@ module.exports = {
 
         db.getCurrentPU(currentPU)
             .then(limtedData => {
-                db.getHerosByStar(5)
+                db.getServantsByStar(5)
                     .then(unlimitedData => {
                         returnText.push("抽卡結果：\n");
 

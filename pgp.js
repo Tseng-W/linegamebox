@@ -10,14 +10,7 @@ const db = pgp(connectionString);
 // console.log('process.env.DATABASE_URL = '+process.env.DATABASE_URL);
 
 module.exports = {
-    getHerosByNickName: async function(names) {
-        let sql = `SELECT "servantName" FROM public."servant_data" WHERE "nickName" LIKE `;
-        names.forEach(name => {
-
-        });
-        return db.many(`SELECT "servantName" FROM public."servant_data" WHERE "nickName" LIKE `)
-    },
-    getHerosByStar: async function(star) {
+    getServantsByStar: async function(star) {
         return db.any(`SELECT * FROM public."servant_data" WHERE star = $1 AND "islimited" IS NOT true`, star)
             .then(data => {
                 console.log('PGP.js -------  get data : ', data);
@@ -38,13 +31,13 @@ module.exports = {
                 console.log(err);
             });
     },
-    setPickUpHeros: async function(heros) {
+    setPickUpServants: async function(servants) {
         return db.any(`UPDATE public."servant_data" SET "isPickUp" = false`)
             .then(data1 => {
                 let setPUSql = `update public."servant_data" SET "isPickUp" = 'true' WHERE `;
-                heros.forEach(hero => {
-                    if (hero != "")
-                        setPUSql += `"nickName" like '%` + hero + `%' or`;
+                servants.forEach(servant => {
+                    if (servant != "")
+                        setPUSql += `"nickName" like '%` + servant + `%' or`;
                 });
                 setPUSql = setPUSql.slice(0, setPUSql.length - 2);
                 console.log("setPUSql = " + setPUSql);
