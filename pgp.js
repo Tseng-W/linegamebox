@@ -16,8 +16,14 @@ module.exports = {
             return null;
         }
         let sql = `SELECT * FROM public."servant_data" WHERE "star" = ` + star;
-        sql += islimited ? ` AND "islimited" IS true ` : ` AND "islimited" IS false `;
-        sql += isPickUp ? ` AND "isPickUp" IS true ` : ` AND "isPickUp" IS false`;
+        if (islimited == true)
+            sql += ` AND "islimited" IS true`;
+        else if (islimited == false)
+            sql += ` AND "islimited" IS false`;
+        if (isPickUp == true)
+            sql += ` AND "isPickUp" IS true`;
+        else if (isPickUp == false)
+            sql += ` AND "isPickUp" IS false`;
 
         return db.any(sql)
             .then(data => {

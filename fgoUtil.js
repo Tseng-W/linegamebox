@@ -87,7 +87,7 @@ module.exports = {
             returnText = [userName + " 抽卡總次數: " + times + "次。"];
         else returnText = [userName + " 抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
 
-        db.getCurrentPU(currentPU)
+        db.getServants(5,true,null)
             .then(limtedData => {
                 db.getServants(5,false,false)
                     .then(unlimitedData => {
@@ -97,7 +97,6 @@ module.exports = {
                         let getLimitedHeroData = [];
                         for (let index = 0; index < drawResult[0]; index++)
                             getLimitedHero.push(Math.floor(Math.random() * limtedData.length));
-
 
                         getLimitedHero.forEach(index => {
                             getLimitedHeroData.push(limtedData[index]);
