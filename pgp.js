@@ -10,15 +10,8 @@ const db = pgp(connectionString);
 // console.log('process.env.DATABASE_URL = '+process.env.DATABASE_URL);
 
 module.exports = {
-    getHerosByNickName: async function(names) {
-        let sql = `SELECT "heroName" FROM public."HERO_DATA" WHERE "nickName" LIKE `;
-        names.forEach(name => {
-
-        });
-        return db.many(`SELECT "heroName" FROM public."HERO_DATA" WHERE "nickName" LIKE `)
-    },
-    getHerosByStar: async function(star) {
-        return db.any(`SELECT * FROM public."HERO_DATA" WHERE star = $1 AND "islimited" IS NOT true`, star)
+    getServantsByStar: async function(star) {
+        return db.any(`SELECT * FROM public."servant_data" WHERE star = $1 AND "islimited" IS NOT true`, star)
             .then(data => {
                 console.log('PGP.js -------  get data : ', data);
                 return (data);
@@ -29,7 +22,7 @@ module.exports = {
             });
     },
     getCurrentPU: async function(name) {
-        return db.any(`SELECT * FROM public."HERO_DATA" WHERE "isPickUp" = true`)
+        return db.any(`SELECT * FROM public."servant_data" WHERE "isPickUp" = true`)
             .then(data => {
                 console.log('PGP.js -------  get data : ', data);
                 return (data);
@@ -38,19 +31,19 @@ module.exports = {
                 console.log(err);
             });
     },
-    setPickUpHeros: async function(heros) {
-        return db.any(`UPDATE public."HERO_DATA" SET "isPickUp" = false`)
+    setPickUpServants: async function(servants) {
+        return db.any(`UPDATE public."servant_data" SET "isPickUp" = false`)
             .then(data1 => {
-                let setPUSql = `update public."HERO_DATA" SET "isPickUp" = 'true' WHERE `;
-                heros.forEach(hero => {
-                    if (hero != "")
-                        setPUSql += `"nickName" like '%` + hero + `%' or`;
+                let setPUSql = `update public."servant_data" SET "isPickUp" = 'true' WHERE `;
+                servants.forEach(servant => {
+                    if (servant != "")
+                        setPUSql += `"nickName" like '%` + servant + `%' or`;
                 });
                 setPUSql = setPUSql.slice(0, setPUSql.length - 2);
                 console.log("setPUSql = " + setPUSql);
                 return db.any(setPUSql)
                     .then(data2 => {
-                        return db.many(`SELECT "heroName" FROM public."HERO_DATA" WHERE "isPickUp" = true`)
+                        return db.many(`SELECT "servantName" FROM public."servant_data" WHERE "isPickUp" = true`)
                             .then(data3 => {
                                 console.log('data3 : ' + data3);
                                 return data3;

@@ -245,6 +245,94 @@ bot.on('message', function(event) {
                                 });
                             })
                         });
+					break;
+				case '抽到寶四':
+                case '抽到寶4':
+                case '寶4抽':
+                case '寶四抽':
+                case '抽寶四':
+                case '抽寶4':
+                    event.source.profile()
+                        .then(function(profile) {
+                            fgoUtil.getPU(puHeros => {
+                                if (puHeros.length > 1)
+                                    event.reply('PU從者不只1位，為了御主的荷包還是請回吧')
+                                    .then(data => {
+                                        console.log(data);
+                                    })
+                                    .catch(err => {
+                                        console.log(err);
+                                    });
+                                fgoUtil.getDrawResult(profile.displayName, 44444, drawResultText => {
+                                    event.reply(drawResultText)
+                                        .then(function(data) {
+                                            console.log('拔草大成功', data);
+                                        })
+                                        .catch(function(error) {
+                                            console.log('error', error);
+                                        });
+                                });
+                            })
+                        });
+					break;
+				case '抽到寶三':
+                case '抽到寶3':
+                case '寶3抽':
+                case '寶三抽':
+                case '抽寶三':
+                case '抽寶3':
+                    event.source.profile()
+                        .then(function(profile) {
+                            fgoUtil.getPU(puHeros => {
+                                if (puHeros.length > 1)
+                                    event.reply('PU從者不只1位，為了御主的荷包還是請回吧')
+                                    .then(data => {
+                                        console.log(data);
+                                    })
+                                    .catch(err => {
+                                        console.log(err);
+                                    });
+                                fgoUtil.getDrawResult(profile.displayName, 33333, drawResultText => {
+                                    event.reply(drawResultText)
+                                        .then(function(data) {
+                                            console.log('拔草大成功', data);
+                                        })
+                                        .catch(function(error) {
+                                            console.log('error', error);
+                                        });
+                                });
+                            })
+                        });
+					break;
+				case '抽到寶二':
+                case '抽到寶2':
+                case '寶2抽':
+                case '寶二抽':
+                case '抽寶二':
+                case '抽寶2':
+                    event.source.profile()
+                        .then(function(profile) {
+                            fgoUtil.getPU(puHeros => {
+                                if (puHeros.length > 1)
+                                    event.reply('PU從者不只1位，為了御主的荷包還是請回吧')
+                                    .then(data => {
+                                        console.log(data);
+                                    })
+                                    .catch(err => {
+                                        console.log(err);
+                                    });
+                                fgoUtil.getDrawResult(profile.displayName, 22222, drawResultText => {
+                                    event.reply(drawResultText)
+                                        .then(function(data) {
+                                            console.log('拔草大成功', data);
+                                        })
+                                        .catch(function(error) {
+                                            console.log('error', error);
+                                        });
+                                });
+                            })
+                        });
+					break;
                 default:
                     console.log(event.message.text);
                     var msg = event.message.text;
@@ -285,7 +373,7 @@ bot.on('message', function(event) {
                                     console.log('Error', error);
                                 });;
                         }
-                    } else if (msg.indexOf('PU ') == 0) {
+                    } else if (msg.indexOf('PU ') == 0 || msg.indexOf('pu ') == 0) {
                         let targetPU = msg.slice(3, msg.length).split(" ");
                         fgoUtil.setPU(targetPU, data => {
                             event.reply(data)
