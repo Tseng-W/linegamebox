@@ -26,7 +26,6 @@ module.exports = {
                 callback("無對應從者");
                 console.log(err);
             });
-
     },
     getPU: function(callback) {
         db.getCurrentPU()
