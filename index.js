@@ -66,34 +66,6 @@ bot.on('message', function(event) {
                             return event.reply('error');
                         });
                     break;
-                case 'inital':
-                    event.source.profile()
-                        .then(function(profile) {
-                            insertUserDataToDatabase(profile.userId, profile.displayName, getRandomInt(10));
-                        });
-                    break;
-                case 'PGP':
-                    pgp.getHerosByStar(5)
-                        .then(data => {
-                            var herosList = data;
-                            console.log("index.js  ------ herosFromDB : ", herosList);
-                            let replyMessage = [];
-                            for (let index = 0; index < herosList.length; index++) {
-                                let hero = herosList[index];
-                                replyMessage.push(hero.heroName + " / " + hero.star);
-                            }
-                            event.reply(replyMessage)
-                                .then(function(data) {
-                                    console.log('index.js - PGP data : ', data);
-                                })
-                                .catch(function(err) {
-                                    console.log('index.js - PGP erroe : ', err);
-                                });
-                        });
-
-                    // for(let index = 0;index<herosFromDB.length;index++)
-                    //     console.log(herosFromDB[index]);
-                    break;
                     // case 'Member':
                     //     event.source.member()
                     //         .then(function(member) {
@@ -225,8 +197,8 @@ bot.on('message', function(event) {
                 case '抽寶5':
                     event.source.profile()
                         .then(function(profile) {
-                            fgoUtil.getPU(puHeros => {
-                                if (puHeros.length > 1)
+                            fgoUtil.getPU(puServants => {
+                                if (puServants.length > 1)
                                     event.reply('PU從者不只1位，為了御主的荷包還是請回吧')
                                     .then(data => {
                                         console.log(data);
@@ -254,8 +226,8 @@ bot.on('message', function(event) {
                 case '抽寶4':
                     event.source.profile()
                         .then(function(profile) {
-                            fgoUtil.getPU(puHeros => {
-                                if (puHeros.length > 1)
+                            fgoUtil.getPU(puServants => {
+                                if (puServants.length > 1)
                                     event.reply('PU從者不只1位，為了御主的荷包還是請回吧')
                                     .then(data => {
                                         console.log(data);
@@ -283,8 +255,8 @@ bot.on('message', function(event) {
                 case '抽寶3':
                     event.source.profile()
                         .then(function(profile) {
-                            fgoUtil.getPU(puHeros => {
-                                if (puHeros.length > 1)
+                            fgoUtil.getPU(puServants => {
+                                if (puServants.length > 1)
                                     event.reply('PU從者不只1位，為了御主的荷包還是請回吧')
                                     .then(data => {
                                         console.log(data);
@@ -312,8 +284,8 @@ bot.on('message', function(event) {
                 case '抽寶2':
                     event.source.profile()
                         .then(function(profile) {
-                            fgoUtil.getPU(puHeros => {
-                                if (puHeros.length > 1)
+                            fgoUtil.getPU(puServants => {
+                                if (puServants.length > 1)
                                     event.reply('PU從者不只1位，為了御主的荷包還是請回吧')
                                     .then(data => {
                                         console.log(data);

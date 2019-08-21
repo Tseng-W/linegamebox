@@ -11,11 +11,11 @@ const db = pgp(connectionString);
 
 module.exports = {
     getServants: async function(star, islimited, isPickUp) {
-        if (!star) {
-            console.log("Error: Null STAR!");
-            return null;
-        }
-        let sql = `SELECT * FROM public."servant_data" WHERE "star" = ` + star;
+        let sql;
+        if(star)
+            sql = `SELECT * FROM public."servant_data" WHERE "star" = ` + star;
+        else
+            sql = `SELECT * FROM public."servant_data" WHERE "star" > 2 `;
         if (islimited == true)
             sql += ` AND "islimited" IS true`;
         else if (islimited == false)

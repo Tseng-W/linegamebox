@@ -29,7 +29,7 @@ module.exports = {
 
     },
     getPU: function(callback) {
-        db.getCurrentPU()
+        db.getServants(null, null, true)
             .then(data => {
                 callback(data);
             });
