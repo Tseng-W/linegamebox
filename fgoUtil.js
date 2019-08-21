@@ -89,7 +89,7 @@ module.exports = {
 
         db.getCurrentPU(currentPU)
             .then(limtedData => {
-                db.getServantsByStar(5)
+                db.getServants(5,false,false)
                     .then(unlimitedData => {
                         returnText.push("抽卡結果：\n");
 

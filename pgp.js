@@ -10,8 +10,16 @@ const db = pgp(connectionString);
 // console.log('process.env.DATABASE_URL = '+process.env.DATABASE_URL);
 
 module.exports = {
-    getServantsByStar: async function(star) {
-        return db.any(`SELECT * FROM public."servant_data" WHERE star = $1 AND "islimited" IS NOT true`, star)
+    getServants: async function(star, islimited, isPickUp) {
+        if (!star) {
+            console.log("Error: Null STAR!");
+            return null;
+        }
+        let sql = `SELECT * FROM public."servant_data" WHERE "star" = ` + star;
+        sql += islimited ? ` AND "islimited" IS true ` : ` AND "islimited" IS false `;
+        sql += isPickUp ? ` AND "isPickUp" IS true ` : ` AND "isPickUp" IS false`;
+
+        return db.any(sql)
             .then(data => {
                 console.log('PGP.js -------  get data : ', data);
                 return (data);
@@ -21,7 +29,7 @@ module.exports = {
                 return (err);
             });
     },
-    getCurrentPU: async function(name) {
+    getCurrentPU: async function() {
         return db.any(`SELECT * FROM public."servant_data" WHERE "isPickUp" = true`)
             .then(data => {
                 console.log('PGP.js -------  get data : ', data);
