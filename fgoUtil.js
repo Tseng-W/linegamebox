@@ -87,7 +87,8 @@ module.exports = {
             returnText = [userName + " 抽卡總次數: " + times + "次。"];
         else returnText = [userName + " 抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
 
-        db.getServants(5,true,null)
+        //取得PU角色 與 常駐非PU角色 列表
+        db.getServants(5,null,true)
             .then(limtedData => {
                 db.getServants(5,false,false)
                     .then(unlimitedData => {
