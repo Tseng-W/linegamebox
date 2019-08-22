@@ -83,13 +83,13 @@ module.exports = {
         }
         if (tenDrawTimes == 0)
             returnText = [userName + " 抽卡總次數: " + times + "次。"];
-        else returnText = [userName + " 抽卡總次數: " + times + "次。\n\u{100072}課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
+        else returnText = [userName + " 抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
 
         db.getCurrentPU(currentPU)
             .then(limtedData => {
                 db.getServantsByStar(5)
                     .then(unlimitedData => {
-                        returnText[returnText.length - 1] += "\n😕抽卡結果：\n";
+                        returnText[returnText.length - 1] += "\n抽卡結果：\n";
 
                         let getLimitedHero = [];
                         let getLimitedHeroData = [];
