@@ -143,7 +143,7 @@ bot.on('message', function(event) {
                     event.source.profile()
                         .then(function(profile) {
                             fgoUtil.getDrawResult(profile.displayName, 10000, drawResultText => {
-                                event.reply(returnText)
+                                event.reply(drawResultText)
                                     .then(function(data) {
                                         console.log('拔草大成功', data);
                                     });
