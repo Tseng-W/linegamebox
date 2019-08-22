@@ -119,11 +119,20 @@ module.exports = {
                                 if (limtedData[index].picture) {
                                     image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
                                     console.log('image url:', image);
-                                    returnText.push(image);
+									if(returnText.length <5)
+										returnText.push(image);
+									else
+										returnText[returnText.length-1] += "\n...etc";
                                 } else if (returnText.indexOf(defaultImage) == -1)
-                                    returnText.push(defaultImage);
+									if(returnText.length <5)
+										returnText.push(defaultImage);
+									else
+										returnText[returnText.length-1] += "\n...etc";
 								if(limtedData[index].summonDialog){
-									returnText.push(limtedData[index].summonDialog);
+									if(returnText.length <5)
+										returnText.push(limtedData[index].summonDialog);
+									else
+										returnText[returnText.length-1] += "\n...etc";
 								}
 								console.log(limtedData[index].summonDialog);
                             });

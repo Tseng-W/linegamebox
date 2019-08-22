@@ -31,26 +31,15 @@ module.exports = {
                 console.log(err);
             });
     },
-	getServantsByNickName: async function(servantNames){
-		let sql = `SELECT * FROM public."servant_data" WHERE `;
-		servantNames.forEach(name =>{
-			nameSQL += `"servantName" = '`+name+`' or`;
-		});
-		return db.any(nameSQL)
-			.then(data =>{
-				return data;
-			});
-	},
-    setPickUpServants: async function(servants, star) {
-        return db.any(`UPDATE public."servant_data" SET "isPickUp" = false WHERE "star" = $1`,star)
+    setPickUpServants: async function(servants) {
+        return db.any(`UPDATE public."servant_data" SET "isPickUp" = false`)
             .then(data1 => {
-                let setPUSql = `UPDATE public."servant_data" SET "isPickUp" = 'true' WHERE "star" = `+star + ' AND (';
+                let setPUSql = `update public."servant_data" SET "isPickUp" = 'true' WHERE `;
                 servants.forEach(servant => {
                     if (servant != "")
                         setPUSql += `"nickName" like '%` + servant + `%' or`;
                 });
                 setPUSql = setPUSql.slice(0, setPUSql.length - 2);
-				setPUSql += `)`
                 console.log("setPUSql = " + setPUSql);
                 return db.any(setPUSql)
                     .then(data2 => {

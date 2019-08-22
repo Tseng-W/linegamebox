@@ -142,7 +142,7 @@ bot.on('message', function(event) {
                 case '抽卡測試':
                     event.source.profile()
                         .then(function(profile) {
-                            fgoUtil.getDrawResult(profile.displayName, 100000, drawResultText => {
+                            fgoUtil.getDrawResult(profile.displayName, 10000, drawResultText => {
                                 event.reply(returnText)
                                     .then(function(data) {
                                         console.log('拔草大成功', data);
@@ -164,7 +164,6 @@ bot.on('message', function(event) {
                                         console.log('error', error);
                                     });
                             });
-
                         });
                     break;
                 case '1單':
@@ -381,12 +380,6 @@ bot.on('message', function(event) {
                                     console.log(err);
                                 });
                         });
-                        // let currentPU = msg.slice(3, msg.length);
-                        // console.log('2. currentPU = ' + currentPU);
-                        // fgoUtil.setPU(currentPU, data => {
-                        //     console.log('3. currentPU = ' + currentPU);
-                        //     event.reply(data);
-                        // });
                     }
                     break;
             }
