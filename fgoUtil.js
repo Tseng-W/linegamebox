@@ -123,20 +123,20 @@ module.exports = {
 										returnText.push(image);
 									console.log(defaultImage);
 									}
-									else
-										//returnText[returnText.length-1] += "\n...etc";
+									//else
+									//	returnText[returnText.length-1] += "\n...etc";
                                 } else if (returnText.indexOf(defaultImage) == -1)
 									if(returnText.length <5){
 									returnText.push(defaultImage);
 									console.log(defaultImage);
 									}
-									else
-										//returnText[returnText.length-1] += "\n...etc";
+									//else
+									//	returnText[returnText.length-1] += "\n...etc";
 								if(limtedData[index].summonDialog){
 									if(returnText.length <5)
 										returnText.push(limtedData[index].summonDialog);
-									else
-										//returnText[returnText.length-1] += "\n...etc";
+									//else
+									//	returnText[returnText.length-1] += "\n...etc";
 								}
 								console.log(limtedData[index].summonDialog);
                             });
