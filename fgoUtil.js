@@ -119,13 +119,17 @@ module.exports = {
                                 if (limtedData[index].picture) {
                                     image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
                                     console.log('image url:', image);
-									if(returnText.length <5)
+									if(returnText.length <5){
 										returnText.push(image);
+									console.log(defaultImage);
+									}
 									else
 										returnText[returnText.length-1] += "\n...etc";
                                 } else if (returnText.indexOf(defaultImage) == -1)
-									if(returnText.length <5)
-										returnText.push(defaultImage);
+									if(returnText.length <5){
+									returnText.push(defaultImage);
+									console.log(defaultImage);
+									}
 									else
 										returnText[returnText.length-1] += "\n...etc";
 								if(limtedData[index].summonDialog){
@@ -170,10 +174,6 @@ function fgoDraw(result, isGuarantee) {
         if (propertyLevel > 100)
             console.log("錯誤：機率大於100");
         if (randomNumber < propertyLevel) {
-            if (isGuarantee) {
-                console.log("(isisGuarantee)randomNumber = " + randomNumber);
-                console.log("(isisGuarantee)propertyLevel = " + propertyLevel);
-            }
             if (isGuarantee && i > 4)
                 result[4]++;
             else
@@ -181,7 +181,6 @@ function fgoDraw(result, isGuarantee) {
             break;
         }
     }
-    console.log("-----------------");
     return result;
 }
 
