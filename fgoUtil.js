@@ -1,12 +1,15 @@
 const db = require('./pgp.js');
 const fgoDrawProperty = [0.7, 0.3, 4, 3, 12, 40, 40];
 const fgoDrawResultText = ["PU五星從者", "非PU五星從者", "五星禮裝", "四星從者", "四星禮裝", "三星從者", "三星禮裝"];
+//5英靈 5禮裝 4英靈 4禮裝 3英靈 3禮裝
+const fgoPickUpProperty = [[0.7,0.8],[2.8],[1.5,2.4],[4],[4],[8]];
+//5英靈 5禮裝 4英靈 4禮裝 3英靈 3禮裝
+const fgoBaseProperty = [1,4,3,12,40,40];
+const fgoPropertyText = ['五星從者','五星禮裝','四星從者','四星禮裝','三星從者','三星禮裝'];
 
 var tenDrawTimes = 0;
 var returnText;
 var drawResult = [0, 0, 0, 0, 0, 0, 0, 0];
-var currentPU = "貞德Alter";
-var currentPUData;
 let defaultImage = { type: 'image', originalContentUrl: 'https://i.imgur.com/yfnub7D.jpg', previewImageUrl: 'https://i.imgur.com/yfnub7D.jpg' };
 
 
@@ -149,6 +152,16 @@ function initial() {
     tenDrawTimes = 0;
 }
 
+function fgoDrawNew(result, isGuarantee){
+    db.getServants(null,null,true)
+        .then(pu =>{
+
+        })
+        .catch(err=>{
+            console.log(err);
+        });
+}
+
 function fgoDraw(result, isGuarantee) {
     let randomNumber = Math.random() * 100;
     //console.log("randomNumber = "+randomNumber);
@@ -162,10 +175,6 @@ function fgoDraw(result, isGuarantee) {
         if (propertyLevel > 100)
             console.log("錯誤：機率大於100");
         if (randomNumber < propertyLevel) {
-            if (isGuarantee) {
-                console.log("(isisGuarantee)randomNumber = " + randomNumber);
-                console.log("(isisGuarantee)propertyLevel = " + propertyLevel);
-            }
             if (isGuarantee && i > 4)
                 result[4]++;
             else
