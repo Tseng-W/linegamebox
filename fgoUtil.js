@@ -9,7 +9,6 @@ var currentPU = "貞德Alter";
 var currentPUData;
 let defaultImage = { type: 'image', originalContentUrl: 'https://i.imgur.com/yfnub7D.jpg', previewImageUrl: 'https://i.imgur.com/yfnub7D.jpg' };
 
-
 module.exports = {
     setPU: function(heros, callback) {
         console.log("fgo.js ---- heros:" + heros);
@@ -84,7 +83,7 @@ module.exports = {
         }
         if (tenDrawTimes == 0)
             returnText = [userName + " 抽卡總次數: " + times + "次。"];
-        else returnText = [userName + " 抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
+        else returnText = [userName + " 抽卡總次數: " + times + "次。\n\u{100072}課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
 
         db.getCurrentPU(currentPU)
             .then(limtedData => {
@@ -96,7 +95,6 @@ module.exports = {
                         let getLimitedHeroData = [];
                         for (let index = 0; index < drawResult[0]; index++)
                             getLimitedHero.push(Math.floor(Math.random() * limtedData.length));
-
 
                         getLimitedHero.forEach(index => {
                             getLimitedHeroData.push(limtedData[index]);
@@ -242,21 +240,4 @@ function fgoOutputResultText_All(star, data, isHero) {
         console.log('fgoOutputResultText returnText = ' + returnText);
         return returnText;
     }return "";
-}
-
-function fgoDrawResultPicture(result, returnText) {
-    let black = { type: 'image', originalContentUrl: 'https://truth.bahamut.com.tw/s01/201901/7716563a47b4196cafaeff388e8637fa.JPG', previewImageUrl: 'https://truth.bahamut.com.tw/s01/201901/7716563a47b4196cafaeff388e8637fa.JPG' };
-    let veryBlack = { type: 'image', originalContentUrl: 'https://truth.bahamut.com.tw/s01/201902/a25b18fedf67c3fcbac442fea775c341.JPG', previewImageUrl: 'https://truth.bahamut.com.tw/s01/201902/a25b18fedf67c3fcbac442fea775c341.JPG' };
-    let veryVeryBlack = { type: 'image', originalContentUrl: 'https://truth.bahamut.com.tw/s01/201902/0f595554af88c42c095243128ca912c5.JPG', previewImageUrl: 'https://truth.bahamut.com.tw/s01/201902/0f595554af88c42c095243128ca912c5.JPG' };
-    let returnBlack = { type: 'image', originalContentUrl: 'https://truth.bahamut.com.tw/s01/201902/d5b4ee85bb697e896aeef32c1454161e.JPG', previewImageUrl: 'https://truth.bahamut.com.tw/s01/201902/d5b4ee85bb697e896aeef32c1454161e.JPG' };
-    let white = { type: 'image', originalContentUrl: 'https://i.imgur.com/bZY2D65.jpg', previewImageUrl: 'https://i.imgur.com/bZY2D65.jpg' };
-    if (result[0] != 0)
-        returnText.push(white);
-    else if (result[0] == 0 && result[1] == 0 && result[2] == 0 && result[3] == 0)
-        returnText.push(black);
-    else if (result[result.length - 1] != 0)
-        returnText.push(veryBlack);
-    else if (result[0] == 0 && result[1] == 1 && result[2] == 0)
-        returnText.push(returnBlack);
-    return returnText;
 }
