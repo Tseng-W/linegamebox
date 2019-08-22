@@ -89,7 +89,7 @@ module.exports = {
             .then(limtedData => {
                 db.getServantsByStar(5)
                     .then(unlimitedData => {
-                        returnText[returnText.length - 1] += "\n抽卡結果：\n";
+                        returnText[returnText.length - 1] += "\n😕抽卡結果：\n";
 
                         let getLimitedHero = [];
                         let getLimitedHeroData = [];
