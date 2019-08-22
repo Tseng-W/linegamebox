@@ -142,7 +142,7 @@ bot.on('message', function(event) {
                 case '抽卡測試':
                     event.source.profile()
                         .then(function(profile) {
-                            fgoUtil.getDrawResult(profile.displayName, 10000, drawResultText => {
+                            fgoUtil.getDrawResult(profile.displayName, 100000, drawResultText => {
                                 event.reply(drawResultText)
                                     .then(function(data) {
                                         console.log('拔草大成功', data);
