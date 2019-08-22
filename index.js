@@ -115,7 +115,7 @@ bot.on('message', function(event) {
                     event.source.profile()
                         .then(function(profile) {
                             fgoUtil.getDrawResult(profile.displayName, 100000, drawResultText => {
-                                event.reply(returnText)
+                                event.reply(drawResultText)
                                     .then(function(data) {
                                         console.log('拔草大成功', data);
                                     });
@@ -136,7 +136,6 @@ bot.on('message', function(event) {
                                         console.log('error', error);
                                     });
                             });
-
                         });
                     break;
                 case '1單':
@@ -353,8 +352,6 @@ bot.on('message', function(event) {
                                     console.log(err);
                                 });
                         });
-                    } else if (msg.indexOf('test1 ') == 0){
-                        
                     }
                     break;
             }
@@ -427,9 +424,9 @@ function getRandomInts(max, amount) {
         var value = getRandomInt(max);
         result.push(value);
     }
-    console.log('getRandomInts---------------');
-    console.log('max: ' + max);
-    console.log('result : ' + result);
-    console.log('----------------------------');
+    //console.log('getRandomInts---------------');
+    //console.log('max: ' + max);
+    //console.log('result : ' + result);
+    //console.log('----------------------------');
     return result;
 }

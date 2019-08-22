@@ -12,7 +12,6 @@ var returnText;
 var drawResult = [0, 0, 0, 0, 0, 0, 0, 0];
 let defaultImage = { type: 'image', originalContentUrl: 'https://i.imgur.com/yfnub7D.jpg', previewImageUrl: 'https://i.imgur.com/yfnub7D.jpg' };
 
-
 module.exports = {
     setPU: function(heros, callback) {
         console.log("fgo.js ---- heros:" + heros);
@@ -29,7 +28,6 @@ module.exports = {
                 callback("無對應從者");
                 console.log(err);
             });
-
     },
     getPU: function(callback) {
         db.getServants(null, null, true)
@@ -95,7 +93,7 @@ module.exports = {
             .then(limtedData => {
                 db.getServants(5,false,false)
                     .then(unlimitedData => {
-                        returnText.push("抽卡結果：\n");
+                        returnText[returnText.length - 1] += "\n抽卡結果：\n";
 
                         let getLimitedHero = [];
                         let getLimitedHeroData = [];
@@ -123,11 +121,14 @@ module.exports = {
                                 if (limtedData[index].picture) {
                                     image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
                                     console.log('image url:', image);
-                                    returnText.push(image);
+									if(returnText.length <5)
+										returnText.push(image);
                                 } else if (returnText.indexOf(defaultImage) == -1)
-                                    returnText.push(defaultImage);
+									if(returnText.length <5)
+										returnText.push(defaultImage);
 								if(limtedData[index].summonDialog){
-									returnText.push(limtedData[index].summonDialog);
+									if(returnText.length <5)
+										returnText.push(limtedData[index].summonDialog);
 								}
 								console.log(limtedData[index].summonDialog);
                             });
@@ -253,21 +254,4 @@ function fgoOutputResultText_All(star, data, isHero) {
         console.log('fgoOutputResultText returnText = ' + returnText);
         return returnText;
     }return "";
-}
-
-function fgoDrawResultPicture(result, returnText) {
-    let black = { type: 'image', originalContentUrl: 'https://truth.bahamut.com.tw/s01/201901/7716563a47b4196cafaeff388e8637fa.JPG', previewImageUrl: 'https://truth.bahamut.com.tw/s01/201901/7716563a47b4196cafaeff388e8637fa.JPG' };
-    let veryBlack = { type: 'image', originalContentUrl: 'https://truth.bahamut.com.tw/s01/201902/a25b18fedf67c3fcbac442fea775c341.JPG', previewImageUrl: 'https://truth.bahamut.com.tw/s01/201902/a25b18fedf67c3fcbac442fea775c341.JPG' };
-    let veryVeryBlack = { type: 'image', originalContentUrl: 'https://truth.bahamut.com.tw/s01/201902/0f595554af88c42c095243128ca912c5.JPG', previewImageUrl: 'https://truth.bahamut.com.tw/s01/201902/0f595554af88c42c095243128ca912c5.JPG' };
-    let returnBlack = { type: 'image', originalContentUrl: 'https://truth.bahamut.com.tw/s01/201902/d5b4ee85bb697e896aeef32c1454161e.JPG', previewImageUrl: 'https://truth.bahamut.com.tw/s01/201902/d5b4ee85bb697e896aeef32c1454161e.JPG' };
-    let white = { type: 'image', originalContentUrl: 'https://i.imgur.com/bZY2D65.jpg', previewImageUrl: 'https://i.imgur.com/bZY2D65.jpg' };
-    if (result[0] != 0)
-        returnText.push(white);
-    else if (result[0] == 0 && result[1] == 0 && result[2] == 0 && result[3] == 0)
-        returnText.push(black);
-    else if (result[result.length - 1] != 0)
-        returnText.push(veryBlack);
-    else if (result[0] == 0 && result[1] == 1 && result[2] == 0)
-        returnText.push(returnBlack);
-    return returnText;
 }
