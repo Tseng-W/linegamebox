@@ -119,24 +119,14 @@ module.exports = {
                                 if (limtedData[index].picture) {
                                     image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
                                     console.log('image url:', image);
-									if(returnText.length <5){
+									if(returnText.length <5)
 										returnText.push(image);
-									console.log(defaultImage);
-									}
-									//else
-									//	returnText[returnText.length-1] += "\n...etc";
                                 } else if (returnText.indexOf(defaultImage) == -1)
-									if(returnText.length <5){
-									returnText.push(defaultImage);
-									console.log(defaultImage);
-									}
-									//else
-									//	returnText[returnText.length-1] += "\n...etc";
+									if(returnText.length <5)
+										returnText.push(defaultImage);
 								if(limtedData[index].summonDialog){
 									if(returnText.length <5)
 										returnText.push(limtedData[index].summonDialog);
-									//else
-									//	returnText[returnText.length-1] += "\n...etc";
 								}
 								console.log(limtedData[index].summonDialog);
                             });
@@ -181,6 +171,7 @@ function fgoDraw(result, isGuarantee) {
             break;
         }
     }
+    console.log("-----------------");
     return result;
 }
 
@@ -190,7 +181,7 @@ function fgoDraw10Times(result) {
     for (let draw = 1; draw < drawTimes + 1; draw++) {
         if (draw == 10) {
             let nonThree = result.slice(0, 4);
-            //console.log(nonThree);
+            console.log(nonThree);
             isGuarantee = true;
             for (let index = 0; index < nonThree.length; index++)
                 if (nonThree[index] != 0) isGuarantee = false;
