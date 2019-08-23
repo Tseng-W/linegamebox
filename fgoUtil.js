@@ -120,9 +120,9 @@ module.exports = {
         }
         let handEmoji;
         let drawPerPU = drawResult[0] / tenDrawTimes / 10;
-        if (drawPerPU <= 0.01)
+        if (drawPerPU <= 0.001)
             handEmoji = "🌚";
-        else if (drawPerPU <= 0.035)
+        else if (drawPerPU <= 0.0035)
             handEmoji = "👉🏿";
         else if (drawPerPU <= 0.007)
             handEmoji = "👉🏾";
