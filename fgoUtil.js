@@ -81,19 +81,23 @@ module.exports = {
             } while (drawResult[0] == 0);
             times = tenDrawTimes * 10;
         }
-        if (tenDrawTimes == 0)
-            returnText = [userName + " 抽卡總次數: " + times + "次。"];
 		let handEmoji;
 		let drawPerPU = drawResult[0] / tenDrawTimes / 10;
 		if(drawPerPU == 0)
-			handEmoji = 👉🏿;
+			handEmoji = "👉🏿";
 		else if(drawPerPU <= 0.007)
-			handEmoji = 👉🏾;
+			handEmoji = "👉🏾";
 		else if(drawPerPU <= 0.014)
-			handEmoji = 👉🏽;
+			handEmoji = "👉🏽";
 		else if(drawPerPU <= 0.02)
-			handEmoji = 👉🏻;
-        else returnText = [userName + " 抽卡總次數: " + times + "次。\n"+handEmoji+"課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
+			handEmoji = "👉🏻";
+		
+        if (tenDrawTimes == 0)
+            returnText = [userName + " 抽卡總次數: " + times + "次。"];
+		else returnText = [userName + " 抽卡總次數: " + times + "次。\n"+handEmoji+"課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
+		
+		
+        
 
         db.getCurrentPU(currentPU)
             .then(limtedData => {
