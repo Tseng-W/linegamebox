@@ -65,8 +65,9 @@ bot.on('message', function(event) {
                 case 'inital':
                     event.source.profile()
                         .then(function(profile) {
-							let result = fgoUtil.testInital(profile.id);
-							event.reply(result);
+							fgoUtil.testInital(profile.id,result=>{
+								event.reply(result);
+							});
                         });
                     break;
                     // case 'Member':
