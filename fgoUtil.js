@@ -29,23 +29,24 @@ var drawResult = [0, 0, 0, 0, 0, 0, 0, 0];
 let defaultImage = { type: 'image', originalContentUrl: 'https://i.imgur.com/yfnub7D.jpg', previewImageUrl: 'https://i.imgur.com/yfnub7D.jpg' };
 
 module.exports = {
-	testInital: function(id,callback){
-		db.getUserDataById(id)
-			.then(userData=>{
-				console.log("userData = "+userData);
-				if(userData)
-					callback(userData);
-				db.initalUserData(id)
-					.then(resultData=>{
-						console.log("resultData = "+resultData);
-						return callback(data);
-					})
-					.catch(err =>{
-						console.log("err = "+err);
-						return callback(err);
-					});
-			});
-	},
+    testInital: function(id, callback) {
+        db.getUserDataById(id)
+            .then(userData => {
+                console.log("userData = " + userData);
+                if (!userData)
+                    db.initalUserData(id)
+                    .then(resultData => {
+                        console.log("resultData = " + resultData);
+                        callback(data);
+                    })
+                    .catch(err => {
+                        console.log("err = " + err);
+                        callback(err);
+                    });
+                else
+                    callback(userData);
+            });
+    },
     setPU: function(heros, callback) {
         console.log("fgo.js ---- heros:" + heros);
         db.setPickUpServants(heros)
@@ -103,7 +104,7 @@ module.exports = {
         } else if (lastTimes > 0) {
             while (lastTimes >= 10) {
                 drawResult = fgoDraw10Times(drawResult);
-				tenDrawTimes++;
+                tenDrawTimes++;
                 lastTimes -= 10;
             }
             while (lastTimes > 0) {
@@ -117,23 +118,23 @@ module.exports = {
             } while (drawResult[0] == 0);
             times = tenDrawTimes * 10;
         }
-		let handEmoji;
-		let drawPerPU = drawResult[0] / tenDrawTimes / 10;
-        if(drawPerPU <= 0.01)
+        let handEmoji;
+        let drawPerPU = drawResult[0] / tenDrawTimes / 10;
+        if (drawPerPU <= 0.01)
             handEmoji = "🌚";
-		else if(drawPerPU <= 0.035)
-			handEmoji = "👉🏿";
-		else if(drawPerPU <= 0.007)
-			handEmoji = "👉🏾";
-		else if(drawPerPU <= 0.014)
-			handEmoji = "👉🏽";
-		else
-			handEmoji = "👉🏻";
-		
+        else if (drawPerPU <= 0.035)
+            handEmoji = "👉🏿";
+        else if (drawPerPU <= 0.007)
+            handEmoji = "👉🏾";
+        else if (drawPerPU <= 0.014)
+            handEmoji = "👉🏽";
+        else
+            handEmoji = "👉🏻";
+
         if (tenDrawTimes == 0)
             returnText = [userName.displayName + " 抽卡總次數: " + times + "次。"];
-		else returnText = [userName.displayName + " "+handEmoji+"抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
-	
+        else returnText = [userName.displayName + " " + handEmoji + "抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
+
         db.getServants(5, null, true)
             .then(limtedData => {
                 db.getServants(5, false, false)
@@ -241,9 +242,9 @@ function fgoDraw10Times(result) {
             let nonThree = result.slice(0, 4);
             console.log(nonThree);
             isGuarantee = true;
-			nonThree.forEach(data =>{
-				if(data > 0) isGuarantee = false;
-			});
+            nonThree.forEach(data => {
+                if (data > 0) isGuarantee = false;
+            });
         }
         result = fgoDraw(result, isGuarantee);
     }
@@ -268,7 +269,7 @@ function fgoOutputResultText(star, data, isHero, num) {
             return returnText;
         }
         return "";
-    //num>0，代表為常駐
+        //num>0，代表為常駐
     } else {
         if (data != null) {
             let target = [];
