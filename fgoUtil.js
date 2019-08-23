@@ -291,7 +291,8 @@ function fgoOutputResultText(star, data, isHero, num) {
     }
 }
 
-function sortData(text) {
+function sortData(target) {
+    let text = "";
     let result = Object.create(null);
     target.forEach(element => {
         result[element] = result[element] ? result[element] += 1 : 1;
