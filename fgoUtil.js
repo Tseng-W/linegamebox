@@ -34,7 +34,7 @@ module.exports = {
 			.then(userData=>{
 				console.log("userData = "+userData);
 				if(userData)
-					return userData;
+					callback(userData);
 				db.initalUserData(id)
 					.then(resultData=>{
 						console.log("resultData = "+resultData);
