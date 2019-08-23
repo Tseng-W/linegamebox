@@ -68,7 +68,13 @@ bot.on('message', function(event) {
 							console.log(event.message);
 							console.log("Sent profile.userId = "+profile.userId);
 							fgoUtil.testInital(profile.userId,result=>{
-								event.reply(result);
+								event.reply(result)
+                                    .then(data=>{
+                                        console.log(data);
+                                    })
+                                    .catch(err=>{
+                                        console.log(err);
+                                    });
 							});
                         });
                     break;
