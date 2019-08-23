@@ -29,6 +29,23 @@ var drawResult = [0, 0, 0, 0, 0, 0, 0, 0];
 let defaultImage = { type: 'image', originalContentUrl: 'https://i.imgur.com/yfnub7D.jpg', previewImageUrl: 'https://i.imgur.com/yfnub7D.jpg' };
 
 module.exports = {
+	testInital: function(id,callback){
+		db.getUserDataById(id)
+			.then(userData=>{
+				console.log("userData = "+userData);
+				if(userData.length > 0)
+					return userData;
+				db.initalUserData(id)
+					.then(resultData=>{
+						console.log("resultData = "+resultData);
+						return callback(data);
+					})
+					.catch(err =>{
+						console.log("err = "+err);
+						return callback(err);
+					});
+			});
+	},
     setPU: function(heros, callback) {
         console.log("fgo.js ---- heros:" + heros);
         db.setPickUpServants(heros)
@@ -83,10 +100,10 @@ module.exports = {
                 tenDrawTimes++;
             } while (drawResult[0] < 2);
             times = tenDrawTimes * 10;
-            console.log('寶2抽了共：' + times + "抽！");
         } else if (lastTimes > 0) {
-            while (lastTimes > 10) {
+            while (lastTimes >= 10) {
                 drawResult = fgoDraw10Times(drawResult);
+				tenDrawTimes++;
                 lastTimes -= 10;
             }
             while (lastTimes > 0) {
@@ -100,11 +117,21 @@ module.exports = {
             } while (drawResult[0] == 0);
             times = tenDrawTimes * 10;
         }
+		let handEmoji;
+		let drawPerPU = drawResult[0] / tenDrawTimes / 10;
+		if(drawPerPU == 0)
+			handEmoji = "👉🏿";
+		else if(drawPerPU <= 0.007)
+			handEmoji = "👉🏾";
+		else if(drawPerPU <= 0.014)
+			handEmoji = "👉🏽";
+		else
+			handEmoji = "👉🏻";
+		
         if (tenDrawTimes == 0)
-            returnText = [userName + " 抽卡總次數: " + times + "次。"];
-        else returnText = [userName + " 抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
-
-        //取得PU角色 與 常駐非PU角色 列表
+            returnText = [userName.displayName + " 抽卡總次數: " + times + "次。"];
+		else returnText = [userName.displayName + " "+handEmoji+"抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
+	
         db.getServants(5, null, true)
             .then(limtedData => {
                 db.getServants(5, false, false)
@@ -206,16 +233,16 @@ function fgoDraw(result, isGuarantee) {
 }
 
 function fgoDraw10Times(result) {
-    let drawTimes = 10;
     let isGuarantee = false;
-    for (let draw = 1; draw < drawTimes + 1; draw++) {
+    for (let draw = 1; draw < 11; draw++) {
         if (draw == 10) {
             let nonThree = result.slice(0, 4);
             console.log(nonThree);
             isGuarantee = true;
-            for (let index = 0; index < nonThree.length; index++)
-                if (nonThree[index] != 0) isGuarantee = false;
-        } else isGuarantee = false;
+			nonThree.forEach(data =>{
+				if(data > 0) isGuarantee = false;
+			});
+        }
         result = fgoDraw(result, isGuarantee);
     }
     return result;

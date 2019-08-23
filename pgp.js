@@ -10,6 +10,28 @@ const db = pgp(connectionString);
 // console.log('process.env.DATABASE_URL = '+process.env.DATABASE_URL);
 
 module.exports = {
+	initalUserData: async function(id){
+		return db.any(`INSERT INTO PUBLIC."user_data" VALUES ('`+id+`',0,0,0,0)`)
+			.then(data => {
+				console.log(data);
+				return "初始化成功~";
+			})
+			.catch(err=>{
+				console.log(err);
+				return "好像有東西出錯啦！！";
+			});
+	},
+	getUserDataById: async function(id){
+		return db.oneOrNone(`SELECT * FROM PUBLIC."user_data" WHERE "id" = '`+id+`';`)
+			.then(data =>{
+				console.log(data);
+				return data;
+			})
+			.catch(err =>{return(err);});
+	},
+	updateUserDataById: async function(id,drawTimes,s5Pu,s5){
+		return db.any(`UPDATE PUBLIC."user_data" SET `);
+	},
     getServants: async function(star, islimited, isPickUp) {
         let sql;
         if(star)

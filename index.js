@@ -20,10 +20,6 @@ app.get('/', function(req, res) {
 app.post('/linewebhook', linebotParser);
 
 bot.on('message', function(event) {
-    var tenDrawTimes = 1;
-    var userName;
-    let returnText;
-    let drawResult;
     switch (event.message.type) {
         case 'text':
             switch (event.message.text) {
@@ -64,6 +60,16 @@ bot.on('message', function(event) {
                         .catch(function(error) {
                             console.log(error);
                             return event.reply('error');
+                        });
+                    break;
+                case 'initalUserData':
+                    event.source.profile()
+                        .then(function(profile) {
+							console.log(event.message);
+							console.log("Sent profile.userId = "+profile.userId);
+							fgoUtil.testInital(profile.userId,result=>{
+								event.reply(result);
+							});
                         });
                     break;
                     // case 'Member':
@@ -114,7 +120,7 @@ bot.on('message', function(event) {
                 case '抽卡測試':
                     event.source.profile()
                         .then(function(profile) {
-                            fgoUtil.getDrawResult(profile.displayName, 100000, drawResultText => {
+                            fgoUtil.getDrawResult(profile, 100000, drawResultText => {
                                 event.reply(drawResultText)
                                     .then(function(data) {
                                         console.log('拔草大成功', data);
@@ -126,7 +132,7 @@ bot.on('message', function(event) {
                 case '課到有':
                     event.source.profile()
                         .then(function(profile) {
-                            fgoUtil.getDrawResult(profile.displayName, -1, drawResultText => {
+                            fgoUtil.getDrawResult(profile, -1, drawResultText => {
                                 console.log('抽到有 Result = ' + drawResultText);
                                 event.reply(drawResultText)
                                     .then(function(data) {
@@ -142,7 +148,7 @@ bot.on('message', function(event) {
                 case '一單':
                     event.source.profile()
                         .then(function(profile) {
-                            fgoUtil.getDrawResult(profile.displayName, 51, drawResultText => {
+                            fgoUtil.getDrawResult(profile, 51, drawResultText => {
                                 event.reply(drawResultText)
                                     .then(function(data) {
                                         console.log('拔草大成功', data);
@@ -159,7 +165,7 @@ bot.on('message', function(event) {
                 case '呼符':
                     event.source.profile()
                         .then(function(profile) {
-                            fgoUtil.getDrawResult(profile.displayName, 1, drawResultText => {
+                            fgoUtil.getDrawResult(profile, 1, drawResultText => {
                                 event.reply(drawResultText)
                                     .catch(function(error) {
                                         console.log('error', error);
@@ -177,7 +183,7 @@ bot.on('message', function(event) {
                 case '測風向':
                     event.source.profile()
                         .then(function(profile) {
-                            fgoUtil.getDrawResult(profile.displayName, 10, drawResultText => {
+                            fgoUtil.getDrawResult(profile, 10, drawResultText => {
                                 event.reply(drawResultText)
                                     .then(function(data) {
                                         console.log('拔草大成功', data);
@@ -205,7 +211,7 @@ bot.on('message', function(event) {
                                     .catch(err => {
                                         console.log(err);
                                     });
-                                fgoUtil.getDrawResult(profile.displayName, 55555, drawResultText => {
+                                fgoUtil.getDrawResult(profile, 55555, drawResultText => {
                                     event.reply(drawResultText)
                                         .then(function(data) {
                                             console.log('拔草大成功', data);
@@ -234,7 +240,7 @@ bot.on('message', function(event) {
                                     .catch(err => {
                                         console.log(err);
                                     });
-                                fgoUtil.getDrawResult(profile.displayName, 44444, drawResultText => {
+                                fgoUtil.getDrawResult(profile, 44444, drawResultText => {
                                     event.reply(drawResultText)
                                         .then(function(data) {
                                             console.log('拔草大成功', data);
@@ -263,7 +269,7 @@ bot.on('message', function(event) {
                                     .catch(err => {
                                         console.log(err);
                                     });
-                                fgoUtil.getDrawResult(profile.displayName, 33333, drawResultText => {
+                                fgoUtil.getDrawResult(profile, 33333, drawResultText => {
                                     event.reply(drawResultText)
                                         .then(function(data) {
                                             console.log('拔草大成功', data);
@@ -292,7 +298,7 @@ bot.on('message', function(event) {
                                     .catch(err => {
                                         console.log(err);
                                     });
-                                fgoUtil.getDrawResult(profile.displayName, 22222, drawResultText => {
+                                fgoUtil.getDrawResult(profile, 22222, drawResultText => {
                                     event.reply(drawResultText)
                                         .then(function(data) {
                                             console.log('拔草大成功', data);
@@ -303,6 +309,12 @@ bot.on('message', function(event) {
                                 });
                             })
                         });
+					break;
+				case 'UMU':
+				case 'umu':
+					let umuImage = { type: 'image', originalContentUrl: 'https://i.imgur.com/Ii652N9.jpg', previewImageUrl: 'https://i.imgur.com/Ii652N9.jpg' };
+				
+					event.reply(umuImage);
 					break;
                 default:
                     console.log(event.message.text);
