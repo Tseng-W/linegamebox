@@ -43,28 +43,24 @@ module.exports = {
                 tenDrawTimes++;
             } while (drawResult[0] < 5);
             times = tenDrawTimes * 10;
-            console.log('寶5抽了共：' + times + "抽！");
         }else if (lastTimes == 44444) {
             do {
                 drawResult = fgoDraw10Times(drawResult);
                 tenDrawTimes++;
             } while (drawResult[0] < 4);
             times = tenDrawTimes * 10;
-            console.log('寶4抽了共：' + times + "抽！");
         }else if (lastTimes == 33333) {
             do {
                 drawResult = fgoDraw10Times(drawResult);
                 tenDrawTimes++;
             } while (drawResult[0] < 3);
             times = tenDrawTimes * 10;
-            console.log('寶3抽了共：' + times + "抽！");
         }else if (lastTimes == 22222) {
             do {
                 drawResult = fgoDraw10Times(drawResult);
                 tenDrawTimes++;
             } while (drawResult[0] < 2);
             times = tenDrawTimes * 10;
-            console.log('寶2抽了共：' + times + "抽！");
         } else if (lastTimes > 0) {
             while (lastTimes >= 10) {
                 drawResult = fgoDraw10Times(drawResult);
@@ -97,7 +93,7 @@ module.exports = {
             returnText = [userName + " 抽卡總次數: " + times + "次。"];
 		else returnText = [userName + " "+handEmoji+"抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
 	
-        db.getCurrentPU(currentPU)
+        db.getCurrentPU()
             .then(limtedData => {
                 db.getServantsByStar(5)
                     .then(unlimitedData => {

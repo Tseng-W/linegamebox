@@ -20,10 +20,6 @@ app.get('/', function(req, res) {
 app.post('/linewebhook', linebotParser);
 
 bot.on('message', function(event) {
-    var tenDrawTimes = 1;
-    var userName;
-    let returnText;
-    let drawResult;
     switch (event.message.type) {
         case 'text':
             switch (event.message.text) {

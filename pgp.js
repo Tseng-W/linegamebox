@@ -21,7 +21,7 @@ module.exports = {
                 return (err);
             });
     },
-    getCurrentPU: async function(name) {
+    getCurrentPU: async function() {
         return db.any(`SELECT * FROM public."servant_data" WHERE "isPickUp" = true`)
             .then(data => {
                 console.log('PGP.js -------  get data : ', data);
