@@ -2,34 +2,13 @@ const db = require('./pgp.js');
 const fgoDrawProperty = [0.7, 0.3, 4, 3, 12, 40, 40];
 const fgoDrawResultText = ["PU五星從者", "非PU五星從者", "五星禮裝", "四星從者", "四星禮裝", "三星從者", "三星禮裝"];
 
-//5英靈 5禮裝 4英靈 4禮裝 3英靈 3禮裝
-const fgoPickUpProperty = [
-    [0.7, 0.8],
-    [2.8],
-    [1.5, 2.4],
-    [4],
-    [4],
-    [8]
-];
-//5英靈 5禮裝 4英靈 4禮裝 3英靈 3禮裝
-const fgoBaseProperty = [1, 4, 3, 12, 40, 40];
-const fgoPropertyText = ['五星從者', '五星禮裝', '四星從者', '四星禮裝', '三星從者', '三星禮裝'];
-const drawResultNew = [
-    [0, 0],
-    [0, 0],
-    [0, 0],
-    [0, 0],
-    [0, 0],
-    [0, 0]
-];
-
 var tenDrawTimes = 0;
 var returnText;
 var drawResult = [0, 0, 0, 0, 0, 0, 0, 0];
 let defaultImage = { type: 'image', originalContentUrl: 'https://i.imgur.com/yfnub7D.jpg', previewImageUrl: 'https://i.imgur.com/yfnub7D.jpg' };
 
 module.exports = {
-    testInital: function(id, callback) {
+    initalUserData: function(id, callback) {
         db.getUserDataById(id)
             .then(userData => {
                 console.log("userData = " + userData);
@@ -69,7 +48,7 @@ module.exports = {
                 callback(data);
             });
     },
-    getDrawResult: function(userName, times, callback) {
+    getDrawResult: function(user, times, callback) {
         //初始化參數
         initial();
         let lastTimes = times;
@@ -80,26 +59,29 @@ module.exports = {
                 tenDrawTimes++;
             } while (drawResult[0] < 5);
             times = tenDrawTimes * 10;
-            console.log('寶5抽了共：' + times + "抽！");
         } else if (lastTimes == 44444) {
             do {
                 drawResult = fgoDraw10Times(drawResult);
                 tenDrawTimes++;
             } while (drawResult[0] < 4);
             times = tenDrawTimes * 10;
-            console.log('寶4抽了共：' + times + "抽！");
         } else if (lastTimes == 33333) {
             do {
                 drawResult = fgoDraw10Times(drawResult);
                 tenDrawTimes++;
             } while (drawResult[0] < 3);
             times = tenDrawTimes * 10;
-            console.log('寶3抽了共：' + times + "抽！");
         } else if (lastTimes == 22222) {
             do {
                 drawResult = fgoDraw10Times(drawResult);
                 tenDrawTimes++;
             } while (drawResult[0] < 2);
+            times = tenDrawTimes * 10;
+        } else if (lastTimes == 11111) {
+            do {
+                drawResult = fgoDraw10Times(drawResult);
+                tenDrawTimes++;
+            } while (drawResult[0] < 1);
             times = tenDrawTimes * 10;
         } else if (lastTimes > 0) {
             while (lastTimes >= 10) {
@@ -111,30 +93,18 @@ module.exports = {
                 drawResult = fgoDraw(drawResult, false);
                 lastTimes--;
             }
-        } else {
-            do {
-                drawResult = fgoDraw10Times(drawResult);
-                tenDrawTimes++;
-            } while (drawResult[0] == 0);
-            times = tenDrawTimes * 10;
         }
-        let handEmoji;
+
+        //取得並更新userData，並取得整理後的文案
+        let userDataResult = setUserData(user.userId, drawResult);
+
         let drawPerPU = drawResult[0] / tenDrawTimes / 10;
-        if (drawPerPU <= 0.001)
-            handEmoji = "🌚";
-        else if (drawPerPU <= 0.0035)
-            handEmoji = "👉🏿";
-        else if (drawPerPU <= 0.007)
-            handEmoji = "👉🏾";
-        else if (drawPerPU <= 0.014)
-            handEmoji = "👉🏽";
-        else
-            handEmoji = "👉🏻";
 
         if (tenDrawTimes == 0)
-            returnText = [userName.displayName + " 抽卡總次數: " + times + "次。"];
-        else returnText = [userName.displayName + " " + handEmoji + "抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
+            returnText = [user.displayName + " 抽卡總次數: " + times + "次。"];
+        else returnText = [user.displayName + " " + getEmoji("hand", drawPerPU) + "抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
 
+        //將英雄資訊依照抽卡結果組成輸出文案
         db.getServants(5, null, true)
             .then(limtedData => {
                 db.getServants(5, false, false)
@@ -199,16 +169,6 @@ function initial() {
     drawResult = [0, 0, 0, 0, 0, 0, 0, 0];
     returnText = "";
     tenDrawTimes = 0;
-}
-
-function fgoDrawNew(result, isGuarantee) {
-    db.getServants(null, null, true)
-        .then(pu => {
-
-        })
-        .catch(err => {
-            console.log(err);
-        });
 }
 
 function fgoDraw(result, isGuarantee) {
@@ -289,6 +249,49 @@ function fgoOutputResultText(star, data, isHero, num) {
             return returnText;
         }
     }
+}
+
+function getEmoji(type, param) {
+    let emoji = "";
+    switch (type) {
+        case "hand":
+            if (param <= 0.001)
+                emoji = "🌚";
+            else if (param <= 0.0035)
+                emoji = "👉🏿";
+            else if (param <= 0.007)
+                emoji = "👉🏾";
+            else if (param <= 0.014)
+                emoji = "👉🏽";
+            else
+                emoji = "👉🏻";
+            break;
+    }
+    return emoji;
+}
+
+function setUserData(id, drawResult) {
+    db.getUserDataById(id)
+        .then(userData =>{
+            if(!userData){
+                db.initalUserData(id)
+                    .then(initalResult =>{
+                        return "";
+                    });
+            }
+        })
+        .catch(err=>{
+            console.log(err);
+            return "[系統] 打翻了泡麵！資料庫口水直流短路中。";
+        })
+}
+
+function getLucky(drawTimes, sPu5Num, s5Num) {
+    let expectedPu5 = drawTimes * fgoDrawProperty[0] / 100;
+    let expected5 = drawTimes * fgoDrawProperty[1] / 100;
+    let luckyPu = sPu5Num / expectedPu5;
+    let lucky = sPu5Num / expected5;
+    return lucky;
 }
 
 function sortData(target) {

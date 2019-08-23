@@ -67,7 +67,7 @@ bot.on('message', function(event) {
                         .then(function(profile) {
 							console.log(event.message);
 							console.log("Sent profile.userId = "+profile.userId);
-							fgoUtil.testInital(profile.userId,result=>{
+							fgoUtil.initalUserData(profile.userId,result=>{
 								event.reply(JSON.stringify(result))
                                     .then(data=>{
                                         console.log(data);
@@ -138,7 +138,7 @@ bot.on('message', function(event) {
                 case '課到有':
                     event.source.profile()
                         .then(function(profile) {
-                            fgoUtil.getDrawResult(profile, -1, drawResultText => {
+                            fgoUtil.getDrawResult(profile, 11111, drawResultText => {
                                 console.log('抽到有 Result = ' + drawResultText);
                                 event.reply(drawResultText)
                                     .then(function(data) {
