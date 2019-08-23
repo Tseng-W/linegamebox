@@ -65,7 +65,7 @@ bot.on('message', function(event) {
                 case 'inital':
                     event.source.profile()
                         .then(function(profile) {
-                            insertUserDataToDatabase(profile.userId, profile.displayName, getRandomInt(10));
+							event.reply(profile.userId+"  "+profile.displayName);
                         });
                     break;
                 case 'PGP':
