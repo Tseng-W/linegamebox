@@ -94,11 +94,8 @@ module.exports = {
 		
         if (tenDrawTimes == 0)
             returnText = [userName + " 抽卡總次數: " + times + "次。"];
-		else returnText = [userName + " 抽卡總次數: " + times + "次。\n"+handEmoji+"課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
-		
-		
-        
-
+		else returnText = [userName + " "+handEmoji+"抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
+	
         db.getCurrentPU(currentPU)
             .then(limtedData => {
                 db.getServantsByStar(5)
