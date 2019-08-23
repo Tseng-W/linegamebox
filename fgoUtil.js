@@ -10,6 +10,16 @@ var currentPUData;
 let defaultImage = { type: 'image', originalContentUrl: 'https://i.imgur.com/yfnub7D.jpg', previewImageUrl: 'https://i.imgur.com/yfnub7D.jpg' };
 
 module.exports = {
+	testInital: function(id,callback){
+		db.initalUserData(id)
+			.then(data=>{
+				return callback(data);
+			})
+			.catch(err =>{
+				return callback(err);
+			});
+			
+	},
     setPU: function(heros, callback) {
         console.log("fgo.js ---- heros:" + heros);
         db.setPickUpServants(heros)
@@ -90,8 +100,8 @@ module.exports = {
 			handEmoji = "👉🏻";
 		
         if (tenDrawTimes == 0)
-            returnText = [userName + " 抽卡總次數: " + times + "次。"];
-		else returnText = [userName + " "+handEmoji+"抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
+            returnText = [userName.displayName + " 抽卡總次數: " + times + "次。"];
+		else returnText = [userName.displayName + " "+handEmoji+"抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
 	
         db.getCurrentPU()
             .then(limtedData => {
