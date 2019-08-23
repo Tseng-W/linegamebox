@@ -22,7 +22,7 @@ module.exports = {
 			});
 	},
 	getUserDataById: async function(id){
-		return db.oneOrNone(`SELECT * FROM PUBLIC."user_data" WHERE "id" = $1;`,id)
+		return db.oneOrNone(`SELECT * FROM PUBLIC."user_data" WHERE "id" = "$1";`,id)
 			.then(data =>{
 				console.log(data);
 				return data;
