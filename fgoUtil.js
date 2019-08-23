@@ -11,14 +11,18 @@ let defaultImage = { type: 'image', originalContentUrl: 'https://i.imgur.com/yfn
 
 module.exports = {
 	testInital: function(id,callback){
-		db.initalUserData(id)
-			.then(data=>{
-				return callback(data);
-			})
-			.catch(err =>{
-				return callback(err);
+		db.getUserDataById(id)
+			.then(userData=>{
+				if(userData.length > 0)
+					return userData;
+				db.initalUserData(id)
+					.then(data=>{
+						return callback(data);
+					})
+					.catch(err =>{
+						return callback(err);
+					});
 			});
-			
 	},
     setPU: function(heros, callback) {
         console.log("fgo.js ---- heros:" + heros);
