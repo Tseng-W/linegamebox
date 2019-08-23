@@ -89,7 +89,7 @@ module.exports = {
 			handEmoji = "👉🏾";
 		else if(drawPerPU <= 0.014)
 			handEmoji = "👉🏽";
-		else if(drawPerPU <= 0.02)
+		else
 			handEmoji = "👉🏻";
 		
         if (tenDrawTimes == 0)
