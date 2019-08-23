@@ -68,6 +68,7 @@ module.exports = {
         } else if (lastTimes > 0) {
             while (lastTimes > 10) {
                 drawResult = fgoDraw10Times(drawResult);
+				tenDrawTimes++;
                 lastTimes -= 10;
             }
             while (lastTimes > 0) {
@@ -185,16 +186,16 @@ function fgoDraw(result, isGuarantee) {
 }
 
 function fgoDraw10Times(result) {
-    let drawTimes = 10;
     let isGuarantee = false;
-    for (let draw = 1; draw < drawTimes + 1; draw++) {
+    for (let draw = 1; draw < 11; draw++) {
         if (draw == 10) {
             let nonThree = result.slice(0, 4);
             console.log(nonThree);
             isGuarantee = true;
-            for (let index = 0; index < nonThree.length; index++)
-                if (nonThree[index] != 0) isGuarantee = false;
-        } else isGuarantee = false;
+			nonThree.forEach(data =>{
+				if(data > 0) isGuarantee = false;
+			});
+        }
         result = fgoDraw(result, isGuarantee);
     }
     return result;
