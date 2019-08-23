@@ -11,7 +11,7 @@ const db = pgp(connectionString);
 
 module.exports = {
 	initalUserData: async function(id){
-		return db.any(`INSERT INTO PUBLIC."user_data" VALUES ("`+id+`",0,0,0,0)`)
+		return db.any(`INSERT INTO PUBLIC."user_data" VALUES ('`+id+`',0,0,0,0)`)
 			.then(data => {
 				console.log(data);
 				return "初始化成功~";
@@ -22,7 +22,7 @@ module.exports = {
 			});
 	},
 	getUserDataById: async function(id){
-		return db.oneOrNone(`SELECT * FROM PUBLIC."user_data" WHERE "id" = "`+id+`";`)
+		return db.oneOrNone(`SELECT * FROM PUBLIC."user_data" WHERE "id" = '`+id+`';`)
 			.then(data =>{
 				console.log(data);
 				return data;
