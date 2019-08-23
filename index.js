@@ -62,9 +62,10 @@ bot.on('message', function(event) {
                             return event.reply('error');
                         });
                     break;
-                case 'inital':
+                case 'initalUserData':
                     event.source.profile()
                         .then(function(profile) {
+							console.log(event.message);
 							fgoUtil.testInital(profile.id,result=>{
 								event.reply(result);
 							});
