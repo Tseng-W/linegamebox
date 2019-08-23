@@ -13,13 +13,16 @@ module.exports = {
 	testInital: function(id,callback){
 		db.getUserDataById(id)
 			.then(userData=>{
+				console.log("userData = "+userData);
 				if(userData.length > 0)
 					return userData;
 				db.initalUserData(id)
-					.then(data=>{
+					.then(resultData=>{
+						console.log("resultData = "+resultData);
 						return callback(data);
 					})
 					.catch(err =>{
+						console.log("err = "+err);
 						return callback(err);
 					});
 			});
