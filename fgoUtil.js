@@ -33,7 +33,7 @@ module.exports = {
 		db.getUserDataById(id)
 			.then(userData=>{
 				console.log("userData = "+userData);
-				if(userData.length > 0)
+				if(userData)
 					return userData;
 				db.initalUserData(id)
 					.then(resultData=>{
@@ -119,7 +119,9 @@ module.exports = {
         }
 		let handEmoji;
 		let drawPerPU = drawResult[0] / tenDrawTimes / 10;
-		if(drawPerPU == 0)
+        if(drawPerPU <= 0.01)
+            handEmoji = "🌚";
+		else if(drawPerPU <= 0.035)
 			handEmoji = "👉🏿";
 		else if(drawPerPU <= 0.007)
 			handEmoji = "👉🏾";
