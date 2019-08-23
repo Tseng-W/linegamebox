@@ -309,6 +309,12 @@ bot.on('message', function(event) {
                             })
                         });
 					break;
+				case 'UMU':
+				case 'umu':
+					let umuImage = { type: 'image', originalContentUrl: 'https://i.imgur.com/Ii652N9.jpg', previewImageUrl: 'https://i.imgur.com/Ii652N9.jpg' };
+				
+					event.reply(umuImage);
+					break;
                 default:
                     console.log(event.message.text);
                     var msg = event.message.text;
