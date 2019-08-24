@@ -48,42 +48,42 @@ module.exports = {
                 callback(data);
             });
     },
-    getDrawResult: function(user, times, callback) {
+    getDrawResult: function(user, drawTimes, callback) {
         //初始化參數
         initial();
-        let lastTimes = times;
-        //依照抽卡次數計算抽卡結果
+        let lastTimes = drawTimes;
+        //前面為抽到有系列，最後為指定抽卡次數
         if (lastTimes == 55555) {
             do {
                 drawResult = fgoDraw10Times(drawResult);
                 tenDrawTimes++;
             } while (drawResult[0] < 5);
-            times = tenDrawTimes * 10;
+            drawTimes = tenDrawTimes * 10;
         } else if (lastTimes == 44444) {
             do {
                 drawResult = fgoDraw10Times(drawResult);
                 tenDrawTimes++;
             } while (drawResult[0] < 4);
-            times = tenDrawTimes * 10;
+            drawTimes = tenDrawTimes * 10;
         } else if (lastTimes == 33333) {
             do {
                 drawResult = fgoDraw10Times(drawResult);
                 tenDrawTimes++;
             } while (drawResult[0] < 3);
-            times = tenDrawTimes * 10;
+            drawTimes = tenDrawTimes * 10;
         } else if (lastTimes == 22222) {
             do {
                 drawResult = fgoDraw10Times(drawResult);
                 tenDrawTimes++;
             } while (drawResult[0] < 2);
-            times = tenDrawTimes * 10;
+            drawTimes = tenDrawTimes * 10;
         } else if (lastTimes == 11111) {
             do {
                 drawResult = fgoDraw10Times(drawResult);
                 tenDrawTimes++;
             } while (drawResult[0] < 1);
-            times = tenDrawTimes * 10;
-        } else if (lastTimes > 0) {
+            drawTimes = tenDrawTimes * 10;
+        } else if (lastTimes > 0) { //指定抽卡次數
             while (lastTimes >= 10) {
                 drawResult = fgoDraw10Times(drawResult);
                 tenDrawTimes++;
@@ -96,13 +96,16 @@ module.exports = {
         }
 
         //取得並更新userData，並取得整理後的文案
-        let userDataResult = setUserData(user.userId, drawResult);
+
 
         let drawPerPU = drawResult[0] / tenDrawTimes / 10;
 
         if (tenDrawTimes == 0)
-            returnText = [user.displayName + " 抽卡總次數: " + times + "次。"];
-        else returnText = [user.displayName + " " + getEmoji("hand", drawPerPU) + "抽卡總次數: " + times + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
+            returnText = [user.displayName + " 抽卡總次數: " + drawTimes + "次。"];
+        else returnText = [user.displayName + " " + getEmoji("hand", drawPerPU) + "抽卡總次數: " + drawTimes + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
+        setUserData(user.userId, drawTimes, drawResult, result => {
+            returnText += result;
+        });
 
         //將英雄資訊依照抽卡結果組成輸出文案
         db.getServants(5, null, true)
@@ -270,28 +273,47 @@ function getEmoji(type, param) {
     return emoji;
 }
 
-function setUserData(id, drawResult) {
+function setUserData(id, drawTimes, drawResult, callback) {
     db.getUserDataById(id)
-        .then(userData =>{
-            if(!userData){
-                db.initalUserData(id)
-                    .then(initalResult =>{
-                        return "";
+        .then(userData => {
+            if (!userData) {
+                db.initalUserData(id, drawTimes, drawResult[0], drawResult[1])
+                    .then(initalResult => {
+                        callback("\n首次抽卡！歐度為：" + getLucky(drawTimes, drawResult[0], drawResult[1]) + "\n");
+                    });
+            } else {
+                let originalLuk = getLucky(userData.drawTimes, userData.servantPu5, userData.servant5);
+                userData.drawTimes += drawTimes;
+                userData.servantPu5 += drawResult[0];
+                userData.servant5 += drawResult[1];
+                let currentLuk = getLucky(userData.drawTimes, userData.servantPu5, userData.servant5);
+                let resultText = "\n累積抽卡" + userData.drawTimes "次並歐出PU5星" + userData.servantPu5 + "位、歪出常駐5星" + userData.servant5 + "位！\n";
+                if (originalLuk - currentLuk > 0)
+                    resultText += "\n歐度從" + originalLuk + "增加到" + currentLuk + "！\n";
+                else resultText += "\n歐度從" + originalLuk + "下降到" + currentLuk + "！\n";
+                db.updateUserDataById(userData.id, userData.drawTimes, userData.servantPu5, userData.servant5)
+                    .then(result => {
+                        console.log("usderData update result = " + result);
+                        callback(resultText);
+                    })
+                    .catch(err => {
+                        console.log("usderData update err = " + err);
                     });
             }
         })
-        .catch(err=>{
+        .catch(err => {
             console.log(err);
-            return "[系統] 打翻了泡麵！資料庫口水直流短路中。";
+            callback("[系統] 打翻了泡麵！資料庫口水直流短路中。");
         })
 }
 
 function getLucky(drawTimes, sPu5Num, s5Num) {
+    let bounes = drawTimes / 1000;
     let expectedPu5 = drawTimes * fgoDrawProperty[0] / 100;
     let expected5 = drawTimes * fgoDrawProperty[1] / 100;
-    let luckyPu = sPu5Num / expectedPu5;
-    let lucky = sPu5Num / expected5;
-    return lucky;
+    let luckyPu = sPu5Num / expectedPu5 * (1 + bounes);
+    let lucky = s5Num / expected5 * (1 + bounes);
+    return luckyPu;
 }
 
 function sortData(target) {

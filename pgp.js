@@ -10,8 +10,8 @@ const db = pgp(connectionString);
 // console.log('process.env.DATABASE_URL = '+process.env.DATABASE_URL);
 
 module.exports = {
-    initalUserData: async function(id) {
-        return db.any(`INSERT INTO PUBLIC."user_data" VALUES ('$1',0,0,0,0)`,[id])
+    initalUserData: async function(id, drawTimes, sPu5, s5) {
+        return db.any(`INSERT INTO PUBLIC."user_data" VALUES ('$1',$2,$3,$4)`,[id,drawTimes,sPu5,s5])
             .then(data => {
                 console.log(data);
                 return "初始化成功~";
@@ -30,7 +30,7 @@ module.exports = {
             .catch(err => { return (err); });
     },
     updateUserDataById: async function(id, drawTimes, s5Pu, s5) {
-        return db.any(`UPDATE PUBLIC."user_data" SET `);
+        return db.any(`UPDATE PUBLIC."user_data" SET "drawTimes" = $2 AND "servantPu5" = $3 AND "servant5" = $4 WHERE "id" = '$1'`,[id,drawTimes,sPu5,s5]);
     },
     getServants: async function(star, islimited, isPickUp) {
         let sql;

@@ -67,7 +67,7 @@ bot.on('message', function(event) {
                         .then(function(profile) {
 							console.log(event.message);
 							console.log("Sent profile.userId = "+profile.userId);
-							fgoUtil.initalUserData(profile.userId,result=>{
+							fgoUtil.initalUserData(profile.userId,0,0,0,result=>{
 								event.reply(JSON.stringify(result))
                                     .then(data=>{
                                         console.log(data);
