@@ -291,7 +291,7 @@ function setUserData(id, drawTimes, drawResult, callback) {
                 if (originalLuk - currentLuk > 0)
                     resultText += "\n歐度從" + originalLuk + "增加到" + currentLuk + "！\n";
                 else resultText += "\n歐度從" + originalLuk + "下降到" + currentLuk + "！\n";
-                db.updateUserDataById(id, userData.drawTimes, userData.servantPu5, userData.servant5)
+                db.updateUserDataById(id, drawTimes, drawResult[0], drawResult[1])
                     .then(result => {
                         console.log("userData update result = " + result);
                         callback(resultText);

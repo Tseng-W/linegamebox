@@ -34,7 +34,7 @@ module.exports = {
             });
     },
     updateUserDataById: async function(id, drawTimes, sPu5, s5) {
-        let sql = `UPDATE PUBLIC."user_data" SET "drawTimes" = ` + drawTimes + ` AND "servantPu5" = ` + sPu5 + ` AND "servant5" = ` + s5 + ` WHERE "id" = '` + id + `'`;
+        let sql = `UPDATE PUBLIC."user_data" SET "drawTimes" = ` + drawTimes + ` , "servantPu5" = ` + sPu5 + ` , "servant5" = ` + s5 + ` WHERE "id" = '` + id + `'`;
         console.log("updateUserDataById sql = " + sql);
         return db.any(sql);
     },
