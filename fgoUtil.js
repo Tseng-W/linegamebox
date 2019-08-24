@@ -3,7 +3,6 @@ const fgoDrawProperty = [0.7, 0.3, 4, 3, 12, 40, 40];
 const fgoDrawResultText = ["PU五星從者", "非PU五星從者", "五星禮裝", "四星從者", "四星禮裝", "三星從者", "三星禮裝"];
 
 var tenDrawTimes = 0;
-var returnText;
 var drawResult = [0, 0, 0, 0, 0, 0, 0, 0];
 let defaultImage = { type: 'image', originalContentUrl: 'https://i.imgur.com/yfnub7D.jpg', previewImageUrl: 'https://i.imgur.com/yfnub7D.jpg' };
 
@@ -49,6 +48,7 @@ module.exports = {
             });
     },
     getDrawResult: function(user, drawTimes, callback) {
+        let returnText;
         //初始化參數
         initial();
         let lastTimes = drawTimes;
@@ -186,7 +186,6 @@ module.exports = {
 
 function initial() {
     drawResult = [0, 0, 0, 0, 0, 0, 0, 0];
-    returnText = "";
     tenDrawTimes = 0;
 }
 
@@ -230,7 +229,7 @@ function fgoDraw10Times(result) {
 
 function fgoOutputResultText(star, data, isHero, num) {
     console.log(">>>>>Enter fgoOutputResultText,  param = " + star + ", d " + data + ", " + isHero + ", " + num);
-    let returnText = isHero ? star + "星從者：" : star + "星禮裝：";
+    let tempResultText = isHero ? star + "星從者：" : star + "星禮裝：";
     //不輸出
     if (num == 0)
         return "";
@@ -241,12 +240,12 @@ function fgoOutputResultText(star, data, isHero, num) {
             data.forEach(content => {
                 target.push(content.servantName);
             });
-            returnText += sortData(target);
+            tempResultText += sortData(target);
             console.log("<<<<<Exit fgoOutputResultText return = " + returnText);
 
-            return returnText;
+            return tempResultText;
         }
-        console.log("<<<<<Exit fgoOutputResultText return = " + returnText);
+        console.log("<<<<<Exit fgoOutputResultText return = " + tempResultText);
 
         return "";
         //num>0，代表為常駐
@@ -260,15 +259,15 @@ function fgoOutputResultText(star, data, isHero, num) {
                 result[element] = result[element] ? result[element] += 1 : 1;
             });
 
-            returnText += sortData(target);
-            console.log("<<<<<Exit fgoOutputResultText return = " + returnText);
-            return returnText;
+            tempResultText += sortData(target);
+            console.log("<<<<<Exit fgoOutputResultText return = " + tempResultText);
+            return tempResultText;
 
         } else {
-            returnText += num + "\n";
-            console.log("<<<<<Exit fgoOutputResultText return = " + returnText);
+            tempResultText += num + "\n";
+            console.log("<<<<<Exit fgoOutputResultText return = " + tempResultText);
 
-            return returnText;
+            return tempResultText;
         }
     }
 }
