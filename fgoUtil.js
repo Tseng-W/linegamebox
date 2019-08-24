@@ -122,19 +122,29 @@ module.exports = {
 
                             getLimitedHero.forEach(index => {
                                 getLimitedHeroData.push(limtedData[index]);
-                            })
+                            });
 
                             //將抽獎結果、從者名進行統計與排列
                             returnText[returnText.length - 1] += fgoOutputResultText(5, getLimitedHeroData, true, -1);
-                            returnText[returnText.length - 1] += fgoOutputResultText(5, unlimitedData, true, drawResult[1]);
-                            returnText[returnText.length - 1] += fgoOutputResultText(5, null, false, drawResult[2]);
-                            returnText[returnText.length - 1] += fgoOutputResultText(4, null, true, drawResult[3]);
-                            returnText[returnText.length - 1] += fgoOutputResultText(4, null, false, drawResult[4]);
-                            returnText[returnText.length - 1] += fgoOutputResultText(3, null, true, drawResult[5]);
-                            returnText[returnText.length - 1] += fgoOutputResultText(3, null, false, drawResult[6]);
-
                             console.log("-----After add text, returnText = " + returnText);
 
+                            returnText[returnText.length - 1] += fgoOutputResultText(5, unlimitedData, true, drawResult[1]);
+                            console.log("-----After add text, returnText = " + returnText);
+
+                            returnText[returnText.length - 1] += fgoOutputResultText(5, null, false, drawResult[2]);
+                            console.log("-----After add text, returnText = " + returnText);
+
+                            returnText[returnText.length - 1] += fgoOutputResultText(4, null, true, drawResult[3]);
+                            console.log("-----After add text, returnText = " + returnText);
+
+                            returnText[returnText.length - 1] += fgoOutputResultText(4, null, false, drawResult[4]);
+                            console.log("-----After add text, returnText = " + returnText);
+
+                            returnText[returnText.length - 1] += fgoOutputResultText(3, null, true, drawResult[5]);
+                            console.log("-----After add text, returnText = " + returnText);
+
+                            returnText[returnText.length - 1] += fgoOutputResultText(3, null, false, drawResult[6]);
+                            console.log("-----After add text, returnText = " + returnText);
 
                             //若抽到PU五星，從所有PU五星中抽取並加入英雄名、立繪和招喚語
                             if (drawResult[0] > 0) {
@@ -218,7 +228,7 @@ function fgoDraw10Times(result) {
 
 
 function fgoOutputResultText(star, data, isHero, num) {
-    console.log(">>>>>Enter fgoOutputResultText,  param = " + star +", d " + data + ", " + isHero + ", " + num);
+    console.log(">>>>>Enter fgoOutputResultText,  param = " + star + ", d " + data + ", " + isHero + ", " + num);
     let returnText = isHero ? star + "星從者：" : star + "星禮裝：";
     //不輸出
     if (num == 0)
