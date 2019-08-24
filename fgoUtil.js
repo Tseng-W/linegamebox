@@ -241,7 +241,7 @@ function fgoOutputResultText(star, data, isHero, num) {
                 target.push(content.servantName);
             });
             tempResultText += sortData(target);
-            console.log("<<<<<Exit fgoOutputResultText return = " + returnText);
+            console.log("<<<<<Exit fgoOutputResultText return = " + tempResultText);
 
             return tempResultText;
         }
