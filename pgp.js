@@ -11,7 +11,7 @@ const db = pgp(connectionString);
 
 module.exports = {
     initalUserData: async function(id, drawTimes, sPu5, s5) {
-        return db.any(`INSERT INTO PUBLIC."user_data" VALUES ('$1',$2,$3,$4)`,[id,drawTimes,sPu5,s5])
+        return db.any(`INSERT INTO PUBLIC."user_data" VALUES ('$1',$2,$3,$4)`, [id, drawTimes, sPu5, s5])
             .then(data => {
                 console.log(data);
                 return "初始化成功~";
@@ -27,10 +27,13 @@ module.exports = {
                 console.log(data);
                 return data;
             })
-            .catch(err => { return (err); });
+            .catch(err => {
+                console.log(err);
+                return (err);
+            });
     },
     updateUserDataById: async function(id, drawTimes, s5Pu, s5) {
-        return db.any(`UPDATE PUBLIC."user_data" SET "drawTimes" = $2 AND "servantPu5" = $3 AND "servant5" = $4 WHERE "id" = '$1'`,[id,drawTimes,sPu5,s5]);
+        return db.any(`UPDATE PUBLIC."user_data" SET "drawTimes" = $2 AND "servantPu5" = $3 AND "servant5" = $4 WHERE "id" = '$1'`, [id, drawTimes, sPu5, s5]);
     },
     getServants: async function(star, islimited, isPickUp) {
         let sql;
@@ -49,7 +52,7 @@ module.exports = {
 
         return db.any(sql)
             .then(data => {
-                console.log('PGP.js -------  get data : ', data);
+                //console.log('PGP.js -------  get data : ', data);
                 return (data);
             })
             .catch(err => {
@@ -60,7 +63,7 @@ module.exports = {
     getCurrentPU: async function() {
         return db.any(`SELECT * FROM public."servant_data" WHERE "isPickUp" = true`)
             .then(data => {
-                console.log('PGP.js -------  get data : ', data);
+                //console.log('PGP.js -------  get data : ', data);
                 return (data);
             })
             .catch(err => {
