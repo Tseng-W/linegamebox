@@ -176,7 +176,6 @@ function initial() {
 
 function fgoDraw(result, isGuarantee) {
     let randomNumber = Math.random() * 100;
-    //console.log("randomNumber = "+randomNumber);
     let propertyLevel = 0;
     if (isGuarantee) {
         console.log("<<<<<<<此抽保底>>>>>>");
@@ -194,7 +193,6 @@ function fgoDraw(result, isGuarantee) {
             break;
         }
     }
-    console.log("-----------------");
     return result;
 }
 
@@ -203,7 +201,6 @@ function fgoDraw10Times(result) {
     for (let draw = 1; draw < 11; draw++) {
         if (draw == 10) {
             let nonThree = result.slice(0, 4);
-            console.log(nonThree);
             isGuarantee = true;
             nonThree.forEach(data => {
                 if (data > 0) isGuarantee = false;
@@ -279,6 +276,7 @@ function setUserData(id, drawTimes, drawResult, callback) {
             if (!userData) {
                 db.initalUserData(id, drawTimes, drawResult[0], drawResult[1])
                     .then(initalResult => {
+                        console.log("!userData : "+userData);
                         callback("\n首次抽卡！歐度為：" + getLucky(drawTimes, drawResult[0], drawResult[1]) + "\n");
                     });
             } else {
