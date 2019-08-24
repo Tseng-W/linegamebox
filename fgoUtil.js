@@ -218,6 +218,7 @@ function fgoDraw10Times(result) {
 
 
 function fgoOutputResultText(star, data, isHero, num) {
+    console.log(">>>>>Enter fgoOutputResultText,  param = " + star ", d.length " + data.length + ", " + isHero + ", " + num);
     let returnText = isHero ? star + "星從者：" : star + "星禮裝：";
     //不輸出
     if (num == 0)
@@ -230,9 +231,12 @@ function fgoOutputResultText(star, data, isHero, num) {
                 target.push(content.servantName);
             });
             returnText += sortData(target);
+            console.log("<<<<<Exit fgoOutputResultText return = " + returnText);
 
             return returnText;
         }
+        console.log("<<<<<Exit fgoOutputResultText return = " + returnText);
+
         return "";
         //num>0，代表為常駐
     } else {
@@ -246,11 +250,13 @@ function fgoOutputResultText(star, data, isHero, num) {
             });
 
             returnText += sortData(target);
-
+            console.log("<<<<<Exit fgoOutputResultText return = " + returnText);
             return returnText;
 
         } else {
             returnText += num + "\n";
+            console.log("<<<<<Exit fgoOutputResultText return = " + returnText);
+
             return returnText;
         }
     }
