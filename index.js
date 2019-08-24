@@ -123,6 +123,22 @@ bot.on('message', function(event) {
                     //         }
                     //     });
                     //     break;
+                case '歐度':
+                case '超歐':
+                case '超非':
+                case '紀錄':
+                case '人品':
+                case '累計':
+                    event.source.profile()
+                        .then(function(profile){
+                            fgoUtil.getDrawHistory(profile, result=>{
+                                event.reply(result)
+                                .then(replyResult =>{
+                                    console.log(replyResult);
+                                });
+                            })
+                        });
+                    break;
                 case '抽卡測試':
                     event.source.profile()
                         .then(function(profile) {

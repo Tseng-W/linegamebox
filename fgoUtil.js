@@ -25,6 +25,23 @@ module.exports = {
                     callback(userData);
             });
     },
+    getDrawHistory: function(user, callback) {
+        db.getUserDataById(user.userId)
+            .then(data => {
+                let totalDT = data.drawTimes;
+                let totalsP5 = data.servantPu5;
+                let totals5 = data.servant5;
+                let currentLuk = getLucky(totalDT, totalsP5, totals5);
+                let tempText = "\n累積抽卡" + totalDT + "次並歐出PU5星" + totalsP5 + "位、歪出常駐5星" + totals5 + "位！\n";
+                tempText += "歐度為" + getLucky(totalDT, totalsP5, totals5);
+                console.log("getDrawHistory return :" + data);
+                callback(tempText);
+            })
+            .catch(err => {
+                console.log("getDrawHistory err :" + err);
+                callback("好像有什麼東西壞掉了！");
+            });
+    },
     setPU: function(heros, callback) {
         console.log("fgo.js ---- heros:" + heros);
         db.setPickUpServants(heros)
@@ -104,6 +121,8 @@ module.exports = {
             returnText = [user.displayName + " 抽卡總次數: " + drawTimes + "次。"];
         else returnText = [user.displayName + " " + getEmoji("hand", drawPerPU) + "抽卡總次數: " + drawTimes + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
 
+        updateUserData(user.userId, drawTimes, drawResult);
+
         //將英雄資訊依照抽卡結果組成輸出文案
         db.getServants(5, null, true)
             .then(limtedData => {
@@ -174,15 +193,6 @@ module.exports = {
                         }
                         console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
                         callback(returnText);
-                        // setUserData(user.userId, drawTimes, drawResult, result => {
-                        //     returnText += result;
-
-                        // addPicture(returnText, drawResult[0], getLimitedHero, limtedData, finalResult => {
-                        //     console.log('fgoUtil.js(with5) ---- finalResult : ' + finalResult);
-                        //     callback(finalResult);
-                        // });
-
-                        // });
                     })
                     .catch(err => {
                         console.log(err);
@@ -301,8 +311,8 @@ function getEmoji(type, param) {
     return emoji;
 }
 
-function setUserData(id, drawTimes, drawResult, callback) {
-    console.log("Enter setUserData");
+function updateUserData(id, drawTimes, drawResult) {
+    console.log("Enter updateUserData");
     let tempResult = drawResult;
     db.getUserDataById(id)
         .then(userData => {
@@ -310,7 +320,7 @@ function setUserData(id, drawTimes, drawResult, callback) {
                 db.initalUserData(id, drawTimes, tempResult[0], tempResult[1])
                     .then(initalResult => {
                         console.log("!userData : " + userData);
-                        callback("\n首次抽卡！歐度為：" + getLucky(drawTimes, tempResult[0], tempResult[1]) + "\n");
+                        // callback("\n首次抽卡！歐度為：" + getLucky(drawTimes, tempResult[0], tempResult[1]) + "\n");
                     });
             } else {
                 let originalLuk = getLucky(userData.drawTimes, userData.servantPu5, userData.servant5);
@@ -318,16 +328,16 @@ function setUserData(id, drawTimes, drawResult, callback) {
                 let totalsP5 = drawResult[0] + parseInt(userData.servantPu5);
                 let totals5 = drawResult[1] + parseInt(userData.servant5);
                 let currentLuk = getLucky(totalDT, totalsP5, totals5);
-                let resultText = "\n累積抽卡" + totalDT + "次並歐出PU5星" + totalsP5 + "位、歪出常駐5星" + totals5 + "位！\n";
+                let tempResultText = "\n累積抽卡" + totalDT + "次並歐出PU5星" + totalsP5 + "位、歪出常駐5星" + totals5 + "位！\n";
                 if (originalLuk == currentLuk)
-                    resultText += "膚色沒有變化\n";
+                    tempResultText += "膚色沒有變化\n";
                 else if (originalLuk - currentLuk < 0)
-                    resultText += "歐度從" + originalLuk + "增加到" + currentLuk + "！\n";
-                else resultText += "歐度從" + originalLuk + "下降到" + currentLuk + "！\n";
+                    tempResultText += "歐度從" + originalLuk + "增加到" + currentLuk + "！\n";
+                else tempResultText += "歐度從" + originalLuk + "下降到" + currentLuk + "！\n";
                 db.updateUserDataById(id, totalDT, totalsP5, totals5)
                     .then(result => {
-                        console.log("userData update success, and return" + resultText);
-                        callback(resultText);
+                        console.log("userData update success, and return" + tempResultText);
+                        // callback(tempResultText);
                     })
                     .catch(err => {
                         console.log("userData update err = " + err);
@@ -347,33 +357,6 @@ function getLucky(drawTimes, sPu5Num, s5Num) {
     let luckyPu = sPu5Num / expectedPu5 * (1 + bounes);
     let lucky = s5Num / expected5 * (1 + bounes);
     return Math.floor(luckyPu * 100) / 100;
-}
-
-function addPicture(finalResult, puNums, puServants, servantData, callback) {
-    //若抽到PU五星，從所有PU五星中抽取並加入英雄名、立繪和招喚語
-    if (puNums > 0) {
-        let image;
-        puServants = puServants.filter(function(elem, pos) {
-            return puServants.indexOf(elem) == pos;
-        })
-
-        puServants.forEach(index => {
-            if (servantData[index].picture) {
-                image = { type: 'image', originalContentUrl: servantData[index].picture, previewImageUrl: servantData[index].picture };
-                console.log('image url:', image);
-                if (finalResult.length < 5)
-                    finalResult.push(image);
-            } else if (finalResult.length < 5)
-                finalResult.push(defaultImage);
-
-            if (servantData[index].summonDialog) {
-                if (finalResult.length < 5)
-                    finalResult.push(servantData[index].summonDialog);
-            }
-            console.log("imtedData[index].summonDialog = " + servantData[index].summonDialog);
-        });
-    }
-    callback(finalResult);
 }
 
 function sortData(target) {
