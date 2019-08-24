@@ -314,7 +314,7 @@ function getLucky(drawTimes, sPu5Num, s5Num) {
     let expected5 = drawTimes * fgoDrawProperty[1] / 100;
     let luckyPu = sPu5Num / expectedPu5 * (1 + bounes);
     let lucky = s5Num / expected5 * (1 + bounes);
-    return luckyPu;
+    return Math.floor(luckyPu*100)/100;
 }
 
 function sortData(target) {
