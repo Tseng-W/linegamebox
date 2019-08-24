@@ -152,32 +152,13 @@ module.exports = {
                         setUserData(user.userId, drawTimes, drawResult, result => {
                             returnText += result;
 
-                            //若抽到PU五星，從所有PU五星中抽取並加入英雄名、立繪和招喚語
-                            if (drawResult[0] > 0) {
-                                let image;
-                                getLimitedHero = getLimitedHero.filter(function(elem, pos) {
-                                    return getLimitedHero.indexOf(elem) == pos;
-                                })
+                            addPicture(drawResult[0], getLimitedHero, limtedData, picture => {
+                                console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
+                                returnText.push(picture);
+                                callback(returnText);
+                            });
 
-                                getLimitedHero.forEach(index => {
-                                    if (limtedData[index].picture) {
-                                        image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
-                                        console.log('image url:', image);
-                                        if (returnText.length < 5)
-                                            returnText.push(image);
-                                    } else if (returnText.indexOf(defaultImage) == -1)
-                                        if (returnText.length < 5)
-                                            returnText.push(defaultImage);
-                                    if (limtedData[index].summonDialog) {
-                                        if (returnText.length < 5)
-                                            returnText.push(limtedData[index].summonDialog);
-                                    }
-                                    console.log("imtedData[index].summonDialog = " + limtedData[index].summonDialog);
-                                });
-                            }
                         });
-                        console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
-                        callback(returnText);
                     })
                     .catch(err => {
                         console.log(err);
@@ -342,6 +323,31 @@ function getLucky(drawTimes, sPu5Num, s5Num) {
     let luckyPu = sPu5Num / expectedPu5 * (1 + bounes);
     let lucky = s5Num / expected5 * (1 + bounes);
     return Math.floor(luckyPu * 100) / 100;
+}
+
+function addPicture(puNums, puServants, servantData, callback) {
+    let pictureResult = [];
+    //若抽到PU五星，從所有PU五星中抽取並加入英雄名、立繪和招喚語
+    if (puNums > 0) {
+        let image;
+        puServants = puServants.filter(function(elem, pos) {
+            return puServants.indexOf(elem) == pos;
+        })
+
+        puServants.forEach(index => {
+            if (servantData[index].picture) {
+                image = { type: 'image', originalContentUrl: servantData[index].picture, previewImageUrl: servantData[index].picture };
+                console.log('image url:', image);
+                pictureResult.push(image);
+            } else
+                pictureResult.push(defaultImage);
+
+            if (servantData[index].summonDialog) {
+                pictureResult.push(servantData[index].summonDialog);
+            }
+            console.log("imtedData[index].summonDialog = " + servantData[index].summonDialog);
+        });
+    }
 }
 
 function sortData(target) {
