@@ -104,9 +104,9 @@ module.exports = {
             returnText = [user.displayName + " 抽卡總次數: " + drawTimes + "次。"];
         else returnText = [user.displayName + " " + getEmoji("hand", drawPerPU) + "抽卡總次數: " + drawTimes + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
 
-        // setUserData(user.userId, drawTimes, drawResult, result => {
-        //     returnText += result;
-        // });
+        setUserData(user.userId, drawTimes, drawResult, result => {
+            returnText += result;
+        });
 
         //將英雄資訊依照抽卡結果組成輸出文案
         db.getServants(5, null, true)
@@ -304,17 +304,17 @@ function setUserData(id, drawTimes, drawResult, callback) {
                     });
             } else {
                 let originalLuk = getLucky(userData.drawTimes, userData.servantPu5, userData.servant5);
-                drawTimes += parseInt(userData.drawTimes);
-                tempResult[0] += parseInt(userData.servantPu5);
-                tempResult[1] += parseInt(userData.servant5);
-                let currentLuk = getLucky(drawTimes, tempResult[0], tempResult[1]);
-                let resultText = "\n累積抽卡" + userData.drawTimes + "次並歐出PU5星" + userData.servantPu5 + "位、歪出常駐5星" + userData.servant5 + "位！\n";
-                if (originalLuk = currentLuk)
+                let totalDT = drawTimes + parseInt(userData.drawTimes);
+                let totalsP5 = drawResult[0] + parseInt(userData.servantPu5);
+                let totals5 = drawResult[1] + parseInt(userData.servant5);
+                let currentLuk = getLucky(totalDT, totalsP5, totals5);
+                let resultText = "\n累積抽卡" + totalDT + "次並歐出PU5星" + totalsP5 + "位、歪出常駐5星" + totals5 + "位！\n";
+                if (originalLuk == currentLuk)
                     resultText += "膚色沒有變化\n";
                 else if (originalLuk - currentLuk < 0)
                     resultText += "歐度從" + originalLuk + "增加到" + currentLuk + "！\n";
                 else resultText += "歐度從" + originalLuk + "下降到" + currentLuk + "！\n";
-                db.updateUserDataById(id, drawTimes, tempResult[0], tempResult[1])
+                db.updateUserDataById(id, totalDT, totalsP5, totals5)
                     .then(result => {
                         console.log("userData update success, and return" + resultText);
                         callback(resultText);
