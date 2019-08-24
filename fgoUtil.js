@@ -132,8 +132,8 @@ module.exports = {
                         console.log("-----After add text, returnText = " + returnText);
 
 
-                        temp= fgoOutputResultText(5, unlimitedData, true, drawResult[1]);
-                                                returnText[returnText.length - 1] += temp;
+                        temp = fgoOutputResultText(5, unlimitedData, true, drawResult[1]);
+                        returnText[returnText.length - 1] += temp;
 
                         console.log("-----After add text, returnText = " + returnText);
 
