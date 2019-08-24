@@ -273,27 +273,28 @@ function getEmoji(type, param) {
 
 function setUserData(id, drawTimes, drawResult, callback) {
     console.log("Enter setUserData");
+    let tempResult = drawResult;
     db.getUserDataById(id)
         .then(userData => {
             if (!userData) {
-                db.initalUserData(id, drawTimes, drawResult[0], drawResult[1])
+                db.initalUserData(id, drawTimes, tempResult[0], tempResult[1])
                     .then(initalResult => {
                         console.log("!userData : "+userData);
-                        callback("\n首次抽卡！歐度為：" + getLucky(drawTimes, drawResult[0], drawResult[1]) + "\n");
+                        callback("\n首次抽卡！歐度為：" + getLucky(drawTimes, tempResult[0], tempResult[1]) + "\n");
                     });
             } else {
                 let originalLuk = getLucky(userData.drawTimes, userData.servantPu5, userData.servant5);
-                drawTimes += userData.drawTimes;
-                drawResult[0] += userData.servantPu5;
-                drawResult[1] += userData.servant5;
-                let currentLuk = getLucky(drawTimes, drawResult[0], drawResult[1]);
+                drawTimes += parseInt(serData.drawTimes);
+                tempResult[0] += parseInt(userData.servantPu5);
+                tempResult[1] += parseInt(userData.servant5);
+                let currentLuk = getLucky(drawTimes, tempResult[0], tempResult[1]);
                 let resultText = "\n累積抽卡" + userData.drawTimes + "次並歐出PU5星" + userData.servantPu5 + "位、歪出常駐5星" + userData.servant5 + "位！\n";
                 if (originalLuk - currentLuk > 0)
                     resultText += "\n歐度從" + originalLuk + "增加到" + currentLuk + "！\n";
                 else resultText += "\n歐度從" + originalLuk + "下降到" + currentLuk + "！\n";
-                db.updateUserDataById(id, drawTimes, drawResult[0], drawResult[1])
+                db.updateUserDataById(id, drawTimes, tempResult[0], tempResult[1])
                     .then(result => {
-                        console.log("userData update result = " + result);
+                        console.log("userData update success, and return" + resultText);
                         callback(resultText);
                     })
                     .catch(err => {
