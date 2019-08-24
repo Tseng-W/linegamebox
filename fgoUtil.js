@@ -158,6 +158,7 @@ module.exports = {
                                 getLimitedHero = getLimitedHero.filter(function(elem, pos) {
                                     return getLimitedHero.indexOf(elem) == pos;
                                 })
+
                                 getLimitedHero.forEach(index => {
                                     if (limtedData[index].picture) {
                                         image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
@@ -174,10 +175,9 @@ module.exports = {
                                     console.log("imtedData[index].summonDialog = " + limtedData[index].summonDialog);
                                 });
                             }
-
-                            console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
-                            callback(returnText);
                         });
+                        console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
+                        callback(returnText);
                     })
                     .catch(err => {
                         console.log(err);
