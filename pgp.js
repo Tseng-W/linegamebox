@@ -18,7 +18,7 @@ module.exports = {
                 return "初始化成功~";
             })
             .catch(err => {
-                console.log("initalUserData err = " +err);
+                console.log("initalUserData err = " + err);
                 return "好像有東西出錯啦！！";
             });
     },
@@ -34,6 +34,8 @@ module.exports = {
             });
     },
     updateUserDataById: async function(id, drawTimes, sPu5, s5) {
+        console.log("updateUserDataById param = %s %d %d %d",id,drawTimes,sPu5,s5);
+        
         return db.any(`UPDATE PUBLIC."user_data" SET "drawTimes" = $2 AND "servantPu5" = $3 AND "servant5" = $4 WHERE "id" = $1`, [id, drawTimes, sPu5, s5]);
     },
     getServants: async function(star, islimited, isPickUp) {
