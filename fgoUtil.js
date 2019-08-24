@@ -356,8 +356,8 @@ function getLucky(drawTimes, sPu5Num, s5Num) {
     let bounes = drawTimes / 1000;
     let expectedPu5 = drawTimes * fgoDrawProperty[0] / 100;
     let expected5 = drawTimes * fgoDrawProperty[1] / 100;
-    let luckyPu = (sPu5Num - expectedPu5) * (1 + 0);
-    let lucky = (s5Num - expected5) * (1 + 0);
+    let luckyPu = (sPu5Num - expectedPu5) / expectedPu5;
+    let lucky = (s5Num - expected5) / expected5;
     return Math.floor(luckyPu * 100) / 100;
 }
 
