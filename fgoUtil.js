@@ -28,6 +28,8 @@ module.exports = {
     getDrawHistory: function(user, callback) {
         db.getUserDataById(user.userId)
             .then(data => {
+                if(!data)
+                    callback("沒有抽卡紀錄，去吧！驗血統的時間到了！");
                 let totalDT = data.drawTimes;
                 let totalsP5 = data.servantPu5;
                 let totals5 = data.servant5;
