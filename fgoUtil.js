@@ -218,7 +218,7 @@ function fgoDraw10Times(result) {
 
 
 function fgoOutputResultText(star, data, isHero, num) {
-    console.log(">>>>>Enter fgoOutputResultText,  param = " + star ", d.length " + data.length + ", " + isHero + ", " + num);
+    console.log(">>>>>Enter fgoOutputResultText,  param = " + star +", d.length " + data.length + ", " + isHero + ", " + num);
     let returnText = isHero ? star + "星從者：" : star + "星禮裝：";
     //不輸出
     if (num == 0)
