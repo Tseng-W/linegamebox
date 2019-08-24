@@ -149,8 +149,8 @@ module.exports = {
                         returnText[returnText.length - 1] += fgoOutputResultText(3, null, false, drawResult[6]);
                         console.log("-----After add text, returnText = " + returnText);
 
-                        setUserData(user.userId, drawTimes, drawResult, result => {
-                            returnText += result;
+                        // setUserData(user.userId, drawTimes, drawResult, result => {
+                        //     returnText += result;
 
                             addPicture(drawResult[0], getLimitedHero, limtedData, picture => {
                                 console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
@@ -158,7 +158,7 @@ module.exports = {
                                 callback(returnText);
                             });
 
-                        });
+                        // });
                     })
                     .catch(err => {
                         console.log(err);
