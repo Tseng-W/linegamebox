@@ -32,7 +32,7 @@ module.exports = {
                 let totalsP5 = data.servantPu5;
                 let totals5 = data.servant5;
                 let currentLuk = getLucky(totalDT, totalsP5, totals5);
-                let tempText = "\n累積抽卡" + totalDT + "次並歐出PU5星" + totalsP5 + "位、歪出常駐5星" + totals5 + "位！\n";
+                let tempText = "累積抽卡" + totalDT + "次並歐出PU5星" + totalsP5 + "位、歪出常駐5星" + totals5 + "位！\n";
                 tempText += "歐度為" + getLucky(totalDT, totalsP5, totals5);
                 console.log("getDrawHistory return :" + data);
                 callback(tempText);

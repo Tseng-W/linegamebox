@@ -458,9 +458,5 @@ function getRandomInts(max, amount) {
         var value = getRandomInt(max);
         result.push(value);
     }
-    //console.log('getRandomInts---------------');
-    //console.log('max: ' + max);
-    //console.log('result : ' + result);
-    //console.log('----------------------------');
     return result;
 }
