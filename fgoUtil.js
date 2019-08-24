@@ -348,6 +348,7 @@ function addPicture(puNums, puServants, servantData, callback) {
             console.log("imtedData[index].summonDialog = " + servantData[index].summonDialog);
         });
     }
+    callback(pictureResult);
 }
 
 function sortData(target) {
