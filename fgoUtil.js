@@ -286,7 +286,7 @@ function setUserData(id, drawTimes, drawResult, callback) {
                 drawTimes += userData.drawTimes;
                 drawResult[0] += userData.servantPu5;
                 drawResult[1] += userData.servant5;
-                let currentLuk = getLucky(drawTimes, udrawResult[0], drawResult[1]);
+                let currentLuk = getLucky(drawTimes, drawResult[0], drawResult[1]);
                 let resultText = "\n累積抽卡" + userData.drawTimes + "次並歐出PU5星" + userData.servantPu5 + "位、歪出常駐5星" + userData.servant5 + "位！\n";
                 if (originalLuk - currentLuk > 0)
                     resultText += "\n歐度從" + originalLuk + "增加到" + currentLuk + "！\n";
