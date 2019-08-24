@@ -104,54 +104,53 @@ module.exports = {
             returnText = [user.displayName + " 抽卡總次數: " + drawTimes + "次。"];
         else returnText = [user.displayName + " " + getEmoji("hand", drawPerPU) + "抽卡總次數: " + drawTimes + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
 
-        setUserData(user.userId, drawTimes, drawResult, result => {
-            returnText += result;
+        //將英雄資訊依照抽卡結果組成輸出文案
+        db.getServants(5, null, true)
+            .then(limtedData => {
+                db.getServants(5, false, false)
+                    .then(unlimitedData => {
+                        console.log("-----Enter db.getServants(5, false, false)-----");
+                        returnText[returnText.length - 1] += "\n抽卡結果：\n";
+
+                        let getLimitedHero = [];
+                        let getLimitedHeroData = [];
+                        for (let index = 0; index < drawResult[0]; index++)
+                            getLimitedHero.push(Math.floor(Math.random() * limtedData.length));
+
+                        getLimitedHero.forEach(index => {
+                            getLimitedHeroData.push(limtedData[index]);
+                        });
+
+                        let temp;
+                        //將抽獎結果、從者名進行統計與排列
+                        temp = fgoOutputResultText(5, getLimitedHeroData, true, -1);
+                        console.log("-----After add text, temp = " + temp);
+                        returnText[returnText.length - 1] += temp;
+                        console.log("-----After add text, returnText = " + returnText);
 
 
-            //將英雄資訊依照抽卡結果組成輸出文案
-            db.getServants(5, null, true)
-                .then(limtedData => {
-                    db.getServants(5, false, false)
-                        .then(unlimitedData => {
-                            console.log("-----Enter db.getServants(5, false, false)-----");
-                            returnText[returnText.length - 1] += "\n抽卡結果：\n";
+                        temp = fgoOutputResultText(5, unlimitedData, true, drawResult[1]);
+                        console.log("-----After add text, temp = " + temp);
+                        returnText[returnText.length - 1] += temp;
+                        console.log("-----After add text, returnText = " + returnText);
 
-                            let getLimitedHero = [];
-                            let getLimitedHeroData = [];
-                            for (let index = 0; index < drawResult[0]; index++)
-                                getLimitedHero.push(Math.floor(Math.random() * limtedData.length));
+                        returnText[returnText.length - 1] += fgoOutputResultText(5, null, false, drawResult[2]);
+                        console.log("-----After add text, returnText = " + returnText);
 
-                            getLimitedHero.forEach(index => {
-                                getLimitedHeroData.push(limtedData[index]);
-                            });
+                        returnText[returnText.length - 1] += fgoOutputResultText(4, null, true, drawResult[3]);
+                        console.log("-----After add text, returnText = " + returnText);
 
-                            let temp;
-                            //將抽獎結果、從者名進行統計與排列
-                            temp = fgoOutputResultText(5, getLimitedHeroData, true, -1);
-                            console.log("-----After add text, temp = " + temp);
-                            returnText[returnText.length - 1] += temp;
-                            console.log("-----After add text, returnText = " + returnText);
+                        returnText[returnText.length - 1] += fgoOutputResultText(4, null, false, drawResult[4]);
+                        console.log("-----After add text, returnText = " + returnText);
 
+                        returnText[returnText.length - 1] += fgoOutputResultText(3, null, true, drawResult[5]);
+                        console.log("-----After add text, returnText = " + returnText);
 
-                            temp = fgoOutputResultText(5, unlimitedData, true, drawResult[1]);
-                            console.log("-----After add text, temp = " + temp);
-                            returnText[returnText.length - 1] += temp;
-                            console.log("-----After add text, returnText = " + returnText);
+                        returnText[returnText.length - 1] += fgoOutputResultText(3, null, false, drawResult[6]);
+                        console.log("-----After add text, returnText = " + returnText);
 
-                            returnText[returnText.length - 1] += fgoOutputResultText(5, null, false, drawResult[2]);
-                            console.log("-----After add text, returnText = " + returnText);
-
-                            returnText[returnText.length - 1] += fgoOutputResultText(4, null, true, drawResult[3]);
-                            console.log("-----After add text, returnText = " + returnText);
-
-                            returnText[returnText.length - 1] += fgoOutputResultText(4, null, false, drawResult[4]);
-                            console.log("-----After add text, returnText = " + returnText);
-
-                            returnText[returnText.length - 1] += fgoOutputResultText(3, null, true, drawResult[5]);
-                            console.log("-----After add text, returnText = " + returnText);
-
-                            returnText[returnText.length - 1] += fgoOutputResultText(3, null, false, drawResult[6]);
-                            console.log("-----After add text, returnText = " + returnText);
+                        setUserData(user.userId, drawTimes, drawResult, result => {
+                            returnText += result;
 
                             //若抽到PU五星，從所有PU五星中抽取並加入英雄名、立繪和招喚語
                             if (drawResult[0] > 0) {
@@ -178,15 +177,15 @@ module.exports = {
 
                             console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
                             callback(returnText);
-                        })
-                        .catch(err => {
-                            console.log(err);
                         });
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-        });
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+            });
     },
 }
 
