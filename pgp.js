@@ -13,7 +13,8 @@ module.exports = {
     initalUserData: async function(id, drawTimes, sPu5, s5) {
         return db.any(`INSERT INTO PUBLIC."user_data" VALUES ('$1',$2,$3,$4)`, [id, drawTimes, sPu5, s5])
             .then(data => {
-                console.log(data);
+                console.log("initalUserData param = "+id+" "+drawTimes+" "+sPu5+" "+s5);
+                console.log("initalUserData data = "+data);
                 return "初始化成功~";
             })
             .catch(err => {
