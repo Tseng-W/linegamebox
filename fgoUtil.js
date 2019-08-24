@@ -305,7 +305,6 @@ function setUserData(id, drawTimes, drawResult, callback) {
             console.log(err);
             callback("[系統] 打翻了泡麵！資料庫口水直流短路中。");
         });
-    console.log("我是誰，我在哪？ setUserData err");
 }
 
 function getLucky(drawTimes, sPu5Num, s5Num) {
