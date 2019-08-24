@@ -106,66 +106,66 @@ module.exports = {
 
         setUserData(user.userId, drawTimes, drawResult, result => {
             returnText += result;
-        });
 
-        //將英雄資訊依照抽卡結果組成輸出文案
-        db.getServants(5, null, true)
-            .then(limtedData => {
-                db.getServants(5, false, false)
-                    .then(unlimitedData => {
-                        returnText[returnText.length - 1] += "\n抽卡結果：\n";
+            //將英雄資訊依照抽卡結果組成輸出文案
+            db.getServants(5, null, true)
+                .then(limtedData => {
+                    db.getServants(5, false, false)
+                        .then(unlimitedData => {
+                            returnText[returnText.length - 1] += "\n抽卡結果：\n";
 
-                        let getLimitedHero = [];
-                        let getLimitedHeroData = [];
-                        for (let index = 0; index < drawResult[0]; index++)
-                            getLimitedHero.push(Math.floor(Math.random() * limtedData.length));
+                            let getLimitedHero = [];
+                            let getLimitedHeroData = [];
+                            for (let index = 0; index < drawResult[0]; index++)
+                                getLimitedHero.push(Math.floor(Math.random() * limtedData.length));
 
-                        getLimitedHero.forEach(index => {
-                            getLimitedHeroData.push(limtedData[index]);
-                        })
-
-                        //將抽獎結果、從者名進行統計與排列
-                        returnText[returnText.length - 1] += fgoOutputResultText(5, getLimitedHeroData, true, -1);
-                        returnText[returnText.length - 1] += fgoOutputResultText(5, unlimitedData, true, drawResult[1]);
-                        returnText[returnText.length - 1] += fgoOutputResultText(5, null, false, drawResult[2]);
-                        returnText[returnText.length - 1] += fgoOutputResultText(4, null, true, drawResult[3]);
-                        returnText[returnText.length - 1] += fgoOutputResultText(4, null, false, drawResult[4]);
-                        returnText[returnText.length - 1] += fgoOutputResultText(3, null, true, drawResult[5]);
-                        returnText[returnText.length - 1] += fgoOutputResultText(3, null, false, drawResult[6]);
-
-                        //若抽到PU五星，從所有PU五星中抽取並加入英雄名、立繪和招喚語
-                        if (drawResult[0] > 0) {
-                            let image;
-                            getLimitedHero = getLimitedHero.filter(function(elem, pos) {
-                                return getLimitedHero.indexOf(elem) == pos;
-                            })
                             getLimitedHero.forEach(index => {
-                                if (limtedData[index].picture) {
-                                    image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
-                                    console.log('image url:', image);
-                                    if (returnText.length < 5)
-                                        returnText.push(image);
-                                } else if (returnText.indexOf(defaultImage) == -1)
-                                    if (returnText.length < 5)
-                                        returnText.push(defaultImage);
-                                if (limtedData[index].summonDialog) {
-                                    if (returnText.length < 5)
-                                        returnText.push(limtedData[index].summonDialog);
-                                }
-                                console.log(limtedData[index].summonDialog);
-                            });
-                        }
+                                getLimitedHeroData.push(limtedData[index]);
+                            })
 
-                        console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
-                        callback(returnText);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-            })
-            .catch(err => {
-                console.log(err);
-            });
+                            //將抽獎結果、從者名進行統計與排列
+                            returnText[returnText.length - 1] += fgoOutputResultText(5, getLimitedHeroData, true, -1);
+                            returnText[returnText.length - 1] += fgoOutputResultText(5, unlimitedData, true, drawResult[1]);
+                            returnText[returnText.length - 1] += fgoOutputResultText(5, null, false, drawResult[2]);
+                            returnText[returnText.length - 1] += fgoOutputResultText(4, null, true, drawResult[3]);
+                            returnText[returnText.length - 1] += fgoOutputResultText(4, null, false, drawResult[4]);
+                            returnText[returnText.length - 1] += fgoOutputResultText(3, null, true, drawResult[5]);
+                            returnText[returnText.length - 1] += fgoOutputResultText(3, null, false, drawResult[6]);
+
+                            //若抽到PU五星，從所有PU五星中抽取並加入英雄名、立繪和招喚語
+                            if (drawResult[0] > 0) {
+                                let image;
+                                getLimitedHero = getLimitedHero.filter(function(elem, pos) {
+                                    return getLimitedHero.indexOf(elem) == pos;
+                                })
+                                getLimitedHero.forEach(index => {
+                                    if (limtedData[index].picture) {
+                                        image = { type: 'image', originalContentUrl: limtedData[index].picture, previewImageUrl: limtedData[index].picture };
+                                        console.log('image url:', image);
+                                        if (returnText.length < 5)
+                                            returnText.push(image);
+                                    } else if (returnText.indexOf(defaultImage) == -1)
+                                        if (returnText.length < 5)
+                                            returnText.push(defaultImage);
+                                    if (limtedData[index].summonDialog) {
+                                        if (returnText.length < 5)
+                                            returnText.push(limtedData[index].summonDialog);
+                                    }
+                                    console.log(limtedData[index].summonDialog);
+                                });
+                            }
+
+                            console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
+                            callback(returnText);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        });
     },
 }
 
@@ -279,7 +279,7 @@ function setUserData(id, drawTimes, drawResult, callback) {
             if (!userData) {
                 db.initalUserData(id, drawTimes, tempResult[0], tempResult[1])
                     .then(initalResult => {
-                        console.log("!userData : "+userData);
+                        console.log("!userData : " + userData);
                         callback("\n首次抽卡！歐度為：" + getLucky(drawTimes, tempResult[0], tempResult[1]) + "\n");
                     });
             } else {
@@ -314,7 +314,7 @@ function getLucky(drawTimes, sPu5Num, s5Num) {
     let expected5 = drawTimes * fgoDrawProperty[1] / 100;
     let luckyPu = sPu5Num / expectedPu5 * (1 + bounes);
     let lucky = s5Num / expected5 * (1 + bounes);
-    return Math.floor(luckyPu*100)/100;
+    return Math.floor(luckyPu * 100) / 100;
 }
 
 function sortData(target) {
