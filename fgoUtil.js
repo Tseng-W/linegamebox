@@ -293,11 +293,11 @@ function setUserData(id, drawTimes, drawResult, callback) {
                 else resultText += "\n歐度從" + originalLuk + "下降到" + currentLuk + "！\n";
                 db.updateUserDataById(id, userData.drawTimes, userData.servantPu5, userData.servant5)
                     .then(result => {
-                        console.log("usderData update result = " + result);
+                        console.log("userData update result = " + result);
                         callback(resultText);
                     })
                     .catch(err => {
-                        console.log("usderData update err = " + err);
+                        console.log("userData update err = " + err);
                     });
             }
         })

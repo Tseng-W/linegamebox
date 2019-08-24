@@ -34,9 +34,9 @@ module.exports = {
             });
     },
     updateUserDataById: async function(id, drawTimes, sPu5, s5) {
-        console.log("updateUserDataById param = %s %d %d %d",id,drawTimes,sPu5,s5);
-        
-        return db.any(`UPDATE PUBLIC."user_data" SET "drawTimes" = $2 AND "servantPu5" = $3 AND "servant5" = $4 WHERE "id" = $1`, [id, drawTimes, sPu5, s5]);
+        let sql = `UPDATE PUBLIC."user_data" SET "drawTimes" = ` + drawTimes + ` AND "servantPu5" = ` + sPu5 + ` AND "servant5" = ` + s5 + ` WHERE "id" = '` + id + `'`;
+        console.log("updateUserDataById sql = " + sql);
+        return db.any(sql);
     },
     getServants: async function(star, islimited, isPickUp) {
         let sql;
