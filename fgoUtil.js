@@ -112,6 +112,7 @@ module.exports = {
                 .then(limtedData => {
                     db.getServants(5, false, false)
                         .then(unlimitedData => {
+                            console.log("-----Enter db.getServants(5, false, false)-----");
                             returnText[returnText.length - 1] += "\n抽卡結果：\n";
 
                             let getLimitedHero = [];
@@ -132,6 +133,9 @@ module.exports = {
                             returnText[returnText.length - 1] += fgoOutputResultText(3, null, true, drawResult[5]);
                             returnText[returnText.length - 1] += fgoOutputResultText(3, null, false, drawResult[6]);
 
+                            console.log("-----After add text, returnText = " + returnText);
+
+
                             //若抽到PU五星，從所有PU五星中抽取並加入英雄名、立繪和招喚語
                             if (drawResult[0] > 0) {
                                 let image;
@@ -151,7 +155,7 @@ module.exports = {
                                         if (returnText.length < 5)
                                             returnText.push(limtedData[index].summonDialog);
                                     }
-                                    console.log(limtedData[index].summonDialog);
+                                    console.log("imtedData[index].summonDialog = " + limtedData[index].summonDialog);
                                 });
                             }
 
@@ -289,9 +293,11 @@ function setUserData(id, drawTimes, drawResult, callback) {
                 tempResult[1] += parseInt(userData.servant5);
                 let currentLuk = getLucky(drawTimes, tempResult[0], tempResult[1]);
                 let resultText = "\n累積抽卡" + userData.drawTimes + "次並歐出PU5星" + userData.servantPu5 + "位、歪出常駐5星" + userData.servant5 + "位！\n";
-                if (originalLuk - currentLuk > 0)
-                    resultText += "\n歐度從" + originalLuk + "增加到" + currentLuk + "！\n";
-                else resultText += "\n歐度從" + originalLuk + "下降到" + currentLuk + "！\n";
+                if (originalLuk = currentLuk)
+                    resultText += "膚色沒有變化\n";
+                else if (originalLuk - currentLuk < 0)
+                    resultText += "歐度從" + originalLuk + "增加到" + currentLuk + "！\n";
+                else resultText += "歐度從" + originalLuk + "下降到" + currentLuk + "！\n";
                 db.updateUserDataById(id, drawTimes, tempResult[0], tempResult[1])
                     .then(result => {
                         console.log("userData update success, and return" + resultText);
