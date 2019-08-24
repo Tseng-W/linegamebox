@@ -125,11 +125,16 @@ module.exports = {
                             getLimitedHeroData.push(limtedData[index]);
                         });
 
+                        let temp;
                         //將抽獎結果、從者名進行統計與排列
-                        returnText[returnText.length - 1] += fgoOutputResultText(5, getLimitedHeroData, true, -1);
+                        temp = fgoOutputResultText(5, getLimitedHeroData, true, -1);
+                        returnText[returnText.length - 1] += temp;
                         console.log("-----After add text, returnText = " + returnText);
 
-                        returnText[returnText.length - 1] += fgoOutputResultText(5, unlimitedData, true, drawResult[1]);
+
+                        temp= fgoOutputResultText(5, unlimitedData, true, drawResult[1]);
+                                                returnText[returnText.length - 1] += temp;
+
                         console.log("-----After add text, returnText = " + returnText);
 
                         returnText[returnText.length - 1] += fgoOutputResultText(5, null, false, drawResult[2]);
