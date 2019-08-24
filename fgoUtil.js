@@ -284,7 +284,7 @@ function setUserData(id, drawTimes, drawResult, callback) {
                     });
             } else {
                 let originalLuk = getLucky(userData.drawTimes, userData.servantPu5, userData.servant5);
-                drawTimes += parseInt(serData.drawTimes);
+                drawTimes += parseInt(userData.drawTimes);
                 tempResult[0] += parseInt(userData.servantPu5);
                 tempResult[1] += parseInt(userData.servant5);
                 let currentLuk = getLucky(drawTimes, tempResult[0], tempResult[1]);
