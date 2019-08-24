@@ -103,6 +103,7 @@ module.exports = {
         if (tenDrawTimes == 0)
             returnText = [user.displayName + " 抽卡總次數: " + drawTimes + "次。"];
         else returnText = [user.displayName + " " + getEmoji("hand", drawPerPU) + "抽卡總次數: " + drawTimes + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
+
         setUserData(user.userId, drawTimes, drawResult, result => {
             returnText += result;
         });
@@ -271,6 +272,7 @@ function getEmoji(type, param) {
 }
 
 function setUserData(id, drawTimes, drawResult, callback) {
+    console.log("Enter setUserData");
     db.getUserDataById(id)
         .then(userData => {
             if (!userData) {
@@ -289,7 +291,7 @@ function setUserData(id, drawTimes, drawResult, callback) {
                 if (originalLuk - currentLuk > 0)
                     resultText += "\n歐度從" + originalLuk + "增加到" + currentLuk + "！\n";
                 else resultText += "\n歐度從" + originalLuk + "下降到" + currentLuk + "！\n";
-                db.updateUserDataById(userData.id, userData.drawTimes, userData.servantPu5, userData.servant5)
+                db.updateUserDataById(id, userData.drawTimes, userData.servantPu5, userData.servant5)
                     .then(result => {
                         console.log("usderData update result = " + result);
                         callback(resultText);
@@ -302,7 +304,8 @@ function setUserData(id, drawTimes, drawResult, callback) {
         .catch(err => {
             console.log(err);
             callback("[系統] 打翻了泡麵！資料庫口水直流短路中。");
-        })
+        });
+    console.log("我是誰，我在哪？ setUserData err");
 }
 
 function getLucky(drawTimes, sPu5Num, s5Num) {
