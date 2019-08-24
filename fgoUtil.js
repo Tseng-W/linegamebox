@@ -104,9 +104,9 @@ module.exports = {
             returnText = [user.displayName + " 抽卡總次數: " + drawTimes + "次。"];
         else returnText = [user.displayName + " " + getEmoji("hand", drawPerPU) + "抽卡總次數: " + drawTimes + "次。\n課了 " + Math.ceil(tenDrawTimes * 30 / 155) + " 單！"];
 
-        setUserData(user.userId, drawTimes, drawResult, result => {
-            returnText += result;
-        });
+        // setUserData(user.userId, drawTimes, drawResult, result => {
+        //     returnText += result;
+        // });
 
         //將英雄資訊依照抽卡結果組成輸出文案
         db.getServants(5, null, true)
