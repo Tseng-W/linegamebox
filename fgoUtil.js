@@ -152,11 +152,10 @@ module.exports = {
                         // setUserData(user.userId, drawTimes, drawResult, result => {
                         //     returnText += result;
 
-                            addPicture(drawResult[0], getLimitedHero, limtedData, picture => {
-                                console.log('fgoUtil.js(with5) ---- returnText : ' + returnText);
-                                returnText.push(picture);
-                                callback(returnText);
-                            });
+                        addPicture(returnText, drawResult[0], getLimitedHero, limtedData, finalResult => {
+                            console.log('fgoUtil.js(with5) ---- finalResult : ' + finalResult);
+                            callback(finalResult);
+                        });
 
                         // });
                     })
@@ -325,8 +324,7 @@ function getLucky(drawTimes, sPu5Num, s5Num) {
     return Math.floor(luckyPu * 100) / 100;
 }
 
-function addPicture(puNums, puServants, servantData, callback) {
-    let pictureResult = [];
+function addPicture(finalResult, puNums, puServants, servantData, callback) {
     //若抽到PU五星，從所有PU五星中抽取並加入英雄名、立繪和招喚語
     if (puNums > 0) {
         let image;
@@ -338,17 +336,19 @@ function addPicture(puNums, puServants, servantData, callback) {
             if (servantData[index].picture) {
                 image = { type: 'image', originalContentUrl: servantData[index].picture, previewImageUrl: servantData[index].picture };
                 console.log('image url:', image);
-                pictureResult.push(image);
-            } else
-                pictureResult.push(defaultImage);
+                if (finalResult.length < 5)
+                    finalResult.push(image);
+            } else if (finalResult.length < 5)
+                finalResult.push(defaultImage);
 
             if (servantData[index].summonDialog) {
-                pictureResult.push(servantData[index].summonDialog);
+                if (finalResult.length < 5)
+                    finalResult.push(servantData[index].summonDialog);
             }
             console.log("imtedData[index].summonDialog = " + servantData[index].summonDialog);
         });
     }
-    callback(pictureResult);
+    callback(finalResult);
 }
 
 function sortData(target) {
